@@ -1,0 +1,51 @@
+<?php
+/**
+ * Implement hook_block_info().
+ */ 
+
+function responsive_pop_up_block_info() {
+  $blocks = array();
+  $blocks['normal_pop_up'] = array(
+    'info' => t('Responsive Pop Up'),
+  );
+  return $blocks;
+}
+
+/**
+* Implements hook_block_view().
+*/
+function responsive_pop_up_block_view($delta = '') {
+  global $language;
+  $block = array();
+  switch ($delta) {
+    case 'normal_pop_up':
+      $block['subject'] = 'Responsive Pop Up';
+      $block['content'] = $language->language == 'en' ? _responsive_pop_up_block_content(variable_get('normal_pop_up_content')) : _responsive_pop_up_block_content(variable_get('normal_pop_up_content_fr'));
+      break;
+  }
+  return $block;
+}
+
+function _responsive_pop_up_block_content($body) {
+	drupal_add_js(array('responsive_pop_up' => array('type' => 'setting')));
+  $output = "<div class='responsive-pop-up'><div class='overlay-block'></div><div class='text-block'>" . $body . "</div></div>";  
+  return $output;
+}
+
+
+/**
+* Implement hook_menu().
+* 
+*/
+function responsive_pop_up_menu() {
+  $items['admin/config/system/responsive_pop_up'] = array(
+    'title' => t('Responsive Pop Up Setting'),
+    'page callback' => 'responsive_pop_up_form',
+    'access arguments' => array('access content'),
+		'file' => 'includes/responsive_pop_up.admin.inc',
+  );
+  return $items;
+}
+
+
+

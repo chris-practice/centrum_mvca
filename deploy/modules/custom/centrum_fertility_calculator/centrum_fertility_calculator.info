@@ -1,0 +1,5 @@
+name = Fertility Calulator
+description = This module will provide monthly datails about fertility days.
+dependencies[] = date_popup
+dependencies[] = jquery_update
+core = 7.x

@@ -1,0 +1,7 @@
+.data-hidden {
+	height: 0px;
+}
+
+.data-visible{
+	height: auto;
+}

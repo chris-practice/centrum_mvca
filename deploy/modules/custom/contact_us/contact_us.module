@@ -1,0 +1,355 @@
+<?php
+ 
+function contact_us_menu() {
+  $items = array();
+  /* 
+  $items['contact-us'] = array( //this creates a URL that will call this form at "menu/first-menu"
+  'title' => t('Contact Us'), //page title
+  //'description' => 'my contact us.',
+  'page callback'=> 'drupal_get_form',
+  'page arguments' => array('contact_us_form'),
+  'access callback' => TRUE,
+  //'type' => MENU_CALLBACK,
+  ); */
+  $items['admin/config/user-interface/contact_us'] = array(
+    'title' => 'contact_us',
+    'description' => 'description',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('my_admin_function'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'contact_us.admin.inc',
+);
+
+$items['admin/config/user-interface/contact_us/manage'] = array(
+    'title' => 'contact_us',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'description' => 'description',
+    'weight' => -10,
+    'file' => 'contact_us.admin.inc',
+);
+  
+  return $items;
+}
+
+function product_title() {	
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')->entityCondition('bundle', 'products')->propertyCondition('status', 1);
+  $result           = $query->execute();
+  $product_id       = array();
+  $product_id['-1'] = t('-Select-');
+  foreach ($result as $key => $values) {
+    foreach ($values as $key1 => $values1) {
+      $product_id[node_load($key1)->nid] = node_load($key1)->title;
+    }
+  }
+  return $product_id;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+
+function contact_us_block_info() {
+  $blocks['contact_us'] = array(
+    'info' => t('Contact Us'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+
+function contact_us_block_view($delta = '') {
+  $block = array();
+  
+  switch ($delta) {
+    case 'contact_us':
+      $block['subject'] = 'Contact Us';
+      $block['content'] = drupal_get_form('contact_us_form');
+      break;
+  }
+  return $block;
+}
+
+function contact_us_form($form, &$form_state) {  
+  global $user;
+  $current_role  = $user->roles;
+  $product_title = product_title();
+  
+  $form['firstname'] = array(
+    '#title' => '<span class = "star">' . '*' . '</span><span>' . t('First Name:') . '</span>',
+    //'#required' => TRUE,
+    '#type' => 'textfield',
+    '#id' => 'firstname'
+  );
+  
+  $form['lastname'] = array(
+    '#title' => '<span class = "star">' . '*' . '</span><span>' . t('Last Name:') . '</span>',
+    '#type' => 'textfield',
+    '#id' => 'lastname'
+  );
+  
+  $form['personalinfo']['emailaddress'] = array(
+    '#type' => 'textfield',
+    '#title' => '<span class = "star">' . '*' . '</span><span>' . t('Email Address:') . '</span>',
+    '#default_value' => "",
+    // '#description' => "Please enter your email.",
+    '#size' => 200,
+    '#maxlength' => 200,
+    '#id' => 'emailaddress'
+    //'#element_validate' => array('MODULE_email_element_validate'),
+  );
+  
+  $form['mailingaddress'] = array(
+    '#title' => t('Mailing Address:'),
+    '#type' => 'textfield'
+  );
+  
+  $form['addressline2'] = array(
+    '#title' => t('Address Line 2:'),
+    '#type' => 'textfield'
+  );
+  
+  $form['city'] = array(
+    '#title' => '<span class = "star">' . '*' . '</span><span>' . t('City:') . '</span>',
+    '#type' => 'textfield',
+    '#id' => 'city'
+  );
+  
+  $form['type_options'] = array(
+    '#title' => t('Province:'),
+    '#type' => 'select',
+    '#id' => 'province',
+    '#options' => array(
+      '-Select-' => t('-Select-'),
+      'Alberta' => t('Alberta'),
+      'British Columbia' => t('British Columbia'),
+      'Manitoba' => t('Manitoba'),
+      'New Brunswick' => t('New Brunswick'),
+      'Newfoundland & Labrador' => t('Newfoundland & Labrador'),
+      'Nova Scotia' => t('Nova Scotia'),
+      'Northwest Territories' => t('Northwest Territories'),
+      'Nunavut' => t('Nunavut'),
+      'Ontario' => t('Ontario'),
+      'Prince Edward Island' => t('Prince Edward Island'),
+      'Quebec' => t('Quebec'),
+      'Saskatchewan' => t('Saskatchewan'),
+      'Yukon Territories' => t('Yukon Territories')
+    )
+  );
+  
+  $form['postalcode'] = array(
+    '#title' => '<span class = "star">' . '*' . '</span><span>' . t('Postal Code:') . '</span>',
+    '#type' => 'textfield',
+    '#id' => 'postalcode'
+  );
+  
+  $form['product_title'] = array(
+    '#title' => t('Which Product is Your Email About?'),
+    '#type' => 'select',
+    '#options' => $product_title
+  );
+  
+  $form['yourmessage'] = array(
+    '#title' => '<span class = "star">' . '*' . '</span><span>' . t('Your Message:') . '</span>',
+    '#type' => 'textarea',
+    '#id' => 'yourmessage'
+  );
+  
+  $form['submit'] = array(
+    '#value' => t('SEND MESSAGE'),
+    '#type' => 'submit',
+    '#id' => 'send_btn',
+    '#attributes' => array(
+      'class' => array(
+        'big',
+        'blue',
+        'box-shadow'
+      )
+    )
+  );
+  
+ /*  if (in_array('authenticated user', $current_role)) {
+    $form['export'] = array(
+      '#value' => 'Export',
+      '#type' => 'submit',
+      "#limit_validation_errors" => array(),
+      '#submit' => array(
+        'contact_us_export'
+      )
+    );
+  } */
+  
+  watchdog('product_title' , '<pre>' . print_r($form_state['values']['product_title'] , true) . '</pre>');
+  watchdog('form_state' , '<pre>' . print_r($form_state , true) . '</pre>');
+  return $form;
+}
+
+// Validation
+function contact_us_form_validate($form, &$form_state) {  
+  if ($form_state['values']['firstname'] == "") {
+    form_set_error('firstname', t('First name is a required field.'));
+  }
+  if ($form_state['values']['lastname'] == "") {
+    form_set_error('lastname', t('Last name is a required field.'));
+  }
+  if ($form_state['values']['emailaddress']['#emailaddress'] == "") {
+    form_set_error('emailaddress', t('Please enter a valid email address.'));
+  }
+  elseif (!valid_email_address($form_state['values']['emailaddress'])) {
+    form_set_error('emailaddress', t('Please enter a valid e-mail address.'));
+  }
+  if ($form_state['values']['city'] == "") {
+    form_set_error('city', t('City is a required field.'));
+  }
+  if ($form_state['values']['type_options'] == "") {
+    form_set_error('type_options', t('Province is a required field. '));
+  }
+  if ($form_state['values']['yourmessage'] == "") {
+    form_set_error('yourmessage', t('Please enter your message'));
+  }
+  if ($form_state['values']['postalcode'] == "") {
+    form_set_error('postalcode', t('Please enter a valid Canadian postal code.'));
+  }
+  elseif (!preg_match("/^([a-zA-Z]\d[a-zA-Z])\ {0,1}(\d[a-zA-Z]\d)$/", $form_state['values']['postalcode'])) {
+    form_set_error('postalcode', t('Please enter a valid Canadian postal code.'));
+  }
+
+}
+
+
+
+function contact_us_theme() {
+  return array(
+    'contact_us_template' => array(
+      'variables' => array(
+        'items' => NULL
+      ),
+      'template' => 'templates/contact-us-template'
+    )
+  );
+}
+
+function contact_us_form_submit($form, &$form_state) {
+
+  $language                = $GLOBALS['language']->language;
+ //$to                      ='pchinfo@healthconnect.ca,saurabh.maheshwari@pfizer.com,jeffery.bennett@pfizer.com,jeffery.a.bennett@gmail.com';
+  $to                        =  variable_get('send_mail_to');
+  //$from                    = 'noreply@pfizer.com';
+  $from                     = variable_get('mail_send_form');
+  $params                  = array();
+ // /$subject                 = "[Centrum.ca] Form Submission from Contact Us";
+ $subject                  = variable_get('mail_subject');
+   if(isset($_SERVER['AH_SITE_ENVIRONMENT']) && $_SERVER['AH_SITE_ENVIRONMENT'] && strtolower($_SERVER['AH_SITE_ENVIRONMENT']) != 'prod') {   
+      $params['subject'] = $_ENV['AH_SITE_ENVIRONMENT'].' - '.$subject;
+   }else{
+   $params['subject']=$subject;
+   }
+   
+  $items                   = array();
+  $items['firstname']      = $form_state['values']['firstname'];
+  $items['lastname']       = $form_state['values']['lastname'];
+  $items['emailaddress']     = $form_state['values']['emailaddress'];
+  $items['mailingaddress'] = $form_state['values']['mailingaddress'];
+  $items['addressline2']   = $form_state['values']['addressline2'];
+  $items['city']           = $form_state['values']['city'];
+  $items['type_options']   = $form_state['values']['type_options'];
+  $node=node_load($form_state['values']['product_title']);  
+  $items['product_title']  = $node->title;
+  $items['postalcode']     = $form_state['values']['postalcode'];
+  $items['yourmessage']    = $form_state['values']['yourmessage'];
+  
+  $params['body'] = theme('contact_us_template', array(
+    'items' => $items
+  ));
+  
+  drupal_mail('contact_us', 'user_info_mail', $to, language_default(), $params, $from, TRUE);
+  
+  $user_info = db_insert('contact_us')->fields(array(
+    'firstname' => $items['firstname'],
+    'lastname' => $items['lastname'],
+    'mailingaddress' => $items['mailingaddress']
+  ))->execute();
+  
+ // drupal_set_message(t('mail has been sent'));
+  
+  //$thankyou_page = drupal_get_path_alias('node/371');
+  drupal_goto('node/416');
+}
+
+function contact_us_mail($key, &$message, $params = array()) {
+  //print_r($params);die;
+  switch ($key) {
+    case 'user_info_mail':
+      $message['subject'] = $params['subject'];
+      $message['body'][]  = $params['body'];
+      break;
+  }
+}
+
+/* 
+function contact_us_export() {  
+  require_once(getcwd() . '/' . libraries_get_path('PHPExcel') . '/Classes/PHPExcel.php');
+  $objPHPExcel = new PHPExcel();
+  
+  $query = db_select('contact_us', 'contact')->fields('contact', array(
+    'firstname',
+    'lastname',
+    'mailingaddress'
+  ));
+  
+  $user_details = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+    
+  $rows;
+  foreach ($user_details as $key => $val) {
+    $rows[$key] = array(
+      $val['firstname'],
+      $val['lastname'],
+      $val['mailingaddress']
+    );
+  }
+  // Set document properties
+  $objPHPExcel->getProperties()->setCreator("Admin")->setLastModifiedBy("Admin")->setTitle("Office 2007 XLSX gmp_testbit(a, index) Document")->setSubject("Office 2007 XLSX Test Document")->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")->setKeywords("office 2007 openxml php")->setCategory("contact us report");
+
+  $header = array(
+    'First Name',
+    'Last Name',
+    'Mailing Address'
+  );
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', 'Contact us report');
+  
+  for ($i = 0; $i <= sizeof($header); $i++) {
+    $j      = 65 + $i;
+    // store the character
+    $letter = chr($j);
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($letter . '2', $header[$i]);
+  }
+  // Add some data
+  $ews = $objPHPExcel->getSheet(0);
+  $ews->fromArray($rows, ' ', 'A3');
+  //Rename worksheet
+  $objPHPExcel->getActiveSheet()->setTitle('Contact Us User report');
+  
+  
+  // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+  $objPHPExcel->setActiveSheetIndex(0);
+  $objPHPExcel->getActiveSheet()->getStyle('A2:Z2')->getFont()->setBold(true);
+  $objPHPExcel->getActiveSheet()->getStyle('A2:Z2')->getFill()->applyFromArray(array(
+    'type' => PHPExcel_Style_Fill::FILL_SOLID,
+    'startcolor' => array(
+      'rgb' => 'D60093'
+    )
+  ));
+  
+  $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+  ob_end_clean();
+  
+  header('Content-type: application/vnd.ms-excel');
+  header('Content-Disposition: attachment; filename="contact_us.xlsx"');
+  
+  $objWriter->save('php://output'); //to download in browser
+  
+} */
+

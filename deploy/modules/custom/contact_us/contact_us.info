@@ -1,0 +1,4 @@
+name = contact_us
+description = contact us module.
+package = Drupal 7 Development
+core = 7.x

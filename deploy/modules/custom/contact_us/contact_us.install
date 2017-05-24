@@ -1,0 +1,34 @@
+<?php
+
+function contact_us_schema() {
+  $schema['contact_us'] = array(
+    'description' => 'Information of users',
+    'fields' => array(
+
+      'firstname' => array(
+        'description' => 'First name of the user',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    
+      'lastname' => array(
+        'description' => 'Last name of the user',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    
+      'mailingaddress' => array(
+        'description' => 'Email address of the user.',
+        'type' => 'varchar',
+        'length' => 50,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    )
+  );   
+  return $schema;
+}

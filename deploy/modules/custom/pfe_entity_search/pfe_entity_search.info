@@ -1,0 +1,7 @@
+name = Custom Entity Search
+description = Custom Search
+package = Drupal 7 Development
+core = 7.x
+
+
+scripts[] = js/pfe_entity_search.js

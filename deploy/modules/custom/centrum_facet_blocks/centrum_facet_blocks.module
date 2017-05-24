@@ -1,0 +1,30 @@
+<?php
+
+
+/**
+ * Implements hook_block_info().
+ */
+function centrum_facet_blocks_block_info() { 
+  $blocks['vitamins'] = array(
+    'info' => t('Vitamins facet page'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+   return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function centrum_facet_blocks_block_view($delta = '') {
+  global $base_url;	
+  $vitamins_page = $base_url . '/test-facet?f[0]=field_vitamins%253Afield_vita%3A104';
+  $block = array();
+  switch ($delta) {
+    case 'vitamins':
+      $block['subject'] = t('vitamins block');
+      $block['content'] = '<a href = ' . $vitamins_page . '>' . t('Vitamin A') . '</a>';
+	  break;
+	}	  
+  return $block;
+}
+

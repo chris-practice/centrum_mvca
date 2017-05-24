@@ -1,0 +1,1 @@
+# sub queries that needs to be executed after deployment

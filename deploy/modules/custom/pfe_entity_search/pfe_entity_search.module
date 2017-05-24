@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function pfe_entity_search_block_info() {
+  $blocks = array();
+
+  $blocks['search_custom'] = array(
+    'info' => t('Custom Entity Search Block'), 
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function pfe_entity_search_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'search_custom':
+      $block['subject'] = t('Custom Search Block');
+      $block['content'] = drupal_get_form('pfe_entity_form');
+    break;
+  }
+  return $block;
+}
+
+/**
+ * Custom form.
+ */
+function pfe_entity_form($form, &$form_state) {
+
+  $form['search'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Search'),
+	'#attributes' =>array('placeholder' => t('Search')),
+    '#prefix' => '<div id="custom-entity-form">',
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Go'),
+    '#suffix' => '</div>',
+  );
+  return $form;
+}
+
+function pfe_entity_form_validate($form, &$form_state){
+	$str_length = strlen(trim($form_state['values']['search']));
+	if ($form_state['values']['search'] == '' || $str_length <= 2) {
+		form_set_error('search', '<div id="search_validation_msg">'.t('Please enter some keywords. <br/> You must include at least one positive keyword with 3 characters or more.').'</div>');
+	}
+}
+
+/**
+ * Custom form submit function.
+ */
+function pfe_entity_form_submit($form, &$form_state) {
+  drupal_goto("view_search", array('query' => array('combine' => $form_state['values']['search'])));
+}
+
+
+/**
+ * Implements hook_views_query_alter().
+ *
+ * Allow users to search the in the 'help' view by title OR body.
+ */
+function pfe_entity_search_views_query_alter(&$view, &$query) {
+  // Only do anything when using the 'help' view.
+	global $language ;
+	$lang_name = $language->language;
+	
+	if (isset($_GET['combine'])) {
+		$search_body = ' '.mb_convert_encoding($_GET['combine'], 'ISO-8859-15', 'utf-8').' ';
+		$search_title = mb_convert_encoding($_GET['combine'], 'ISO-8859-15', 'utf-8');
+ 
+		if ($view->name == 'view_search') {
+			if (!empty($_GET['combine'])) {
+
+				//print_r($query->table_queue);
+
+				$languages = array($language->language);
+				$language_join = array(
+					'field' => 'language',
+					'value' => $languages,
+				);
+				foreach ($query->table_queue as $table_name => $table) {
+					if (strpos($table_name, 'field_data') !== FALSE) {
+						$query->table_queue[$table_name]['join']->extra[] = $language_join;
+						$query->table_queue[$table_name]['join']->definition['extra'][] = $language_join;
+					}
+				}
+				$query->add_where(1, db_or()->condition('field_data_title_field.title_field_value', '%' . $search_title . '%', 'LIKE')->condition('field_data_body.body_value', '%' . $search_body . '%', 'LIKE'));
+
+			}
+		} 
+	}
+}

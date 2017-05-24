@@ -1,0 +1,6 @@
+name = Find Your Centrum
+description = Find your centrum module.
+core = 7.x
+version = "7.x-1.x-dev"
+core = "7.x"
+scripts[] = js/find_your_centrum.js

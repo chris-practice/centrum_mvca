@@ -1,0 +1,4 @@
+name = New Coupons
+description = Centrum new coupons system
+core = 7.x
+package = pfizer

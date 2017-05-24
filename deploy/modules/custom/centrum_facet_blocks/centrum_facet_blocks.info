@@ -1,0 +1,3 @@
+name = centrum facet block
+description = redirect blocks to facets page
+core = 7.x

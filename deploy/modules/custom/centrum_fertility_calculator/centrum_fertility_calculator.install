@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_unistall().
+ */
+function centrum_fertility_calculator_unistall() {
+  variable_delete('date_range');
+}

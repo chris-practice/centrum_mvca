@@ -1,0 +1,300 @@
+<?php
+/**
+ * @file
+ * Default theme implementation to display a single Drupal page.
+ *
+ * The doctype, html, head and body tags are not in this template. Instead they
+ * can be found in the html.tpl.php template in this directory.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - $base_path: The base URL path of the Drupal installation. At the very
+ *   least, this will always default to /.
+ * - $directory: The directory the template is located in, e.g. modules/system
+ *   or themes/bartik.
+ * - $is_front: TRUE if the current page is the front page.
+ * - $logged_in: TRUE if the user is registered and signed in.
+ * - $is_admin: TRUE if the user has permission to access administration pages.
+ *
+ * Site identity:
+ * - $front_page: The URL of the front page. Use this instead of $base_path,
+ *   when linking to the front page. This includes the language domain or
+ *   prefix.
+ * - $logo: The path to the logo image, as defined in theme configuration.
+ * - $site_name: The name of the site, empty when display has been disabled
+ *   in theme settings.
+ * - $site_slogan: The slogan of the site, empty when display has been disabled
+ *   in theme settings.
+ *
+ * Navigation:
+ * - $main_menu (array): An array containing the Main menu links for the
+ *   site, if they have been configured.
+ * - $secondary_menu (array): An array containing the Secondary menu links for
+ *   the site, if they have been configured.
+ * - $breadcrumb: The breadcrumb trail for the current page.
+ *
+ * Page content (in order of occurrence in the default page.tpl.php):
+ * - $title_prefix (array): An array containing additional output populated by
+ *   modules, intended to be displayed in front of the main title tag that
+ *   appears in the template.
+ * - $title: The page title, for use in the actual HTML content.
+ * - $title_suffix (array): An array containing additional output populated by
+ *   modules, intended to be displayed after the main title tag that appears in
+ *   the template.
+ * - $messages: HTML for status and error messages. Should be displayed
+ *   prominently.
+ * - $tabs (array): Tabs linking to any sub-pages beneath the current page
+ *   (e.g., the view and edit tabs when displaying a node).
+ * - $action_links (array): Actions local to the page, such as 'Add menu' on the
+ *   menu administration interface.
+ * - $feed_icons: A string of all feed icons for the current page.
+ * - $node: The node object, if there is an automatically-loaded node
+ *   associated with the page, and the node ID is the second argument
+ *   in the page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * Regions:
+ * - $page['help']: Dynamic help text, mostly for admin pages.
+ * - $page['highlighted']: Items for the highlighted content region.
+ * - $page['content']: The main content of the current page.
+ * - $page['sidebar_first']: Items for the first sidebar.
+ * - $page['sidebar_second']: Items for the second sidebar.
+ * - $page['header']: Items for the header region.
+ * - $page['footer']: Items for the footer region.
+ *
+ * @see bootstrap_preprocess_page()
+ * @see template_preprocess()
+ * @see template_preprocess_page()
+ * @see bootstrap_process_page()
+ * @see template_process()
+ * @see html.tpl.php
+ *
+ * @ingroup templates
+ */
+?>
+<?php if (!empty($page['top_bar'])): ?>
+		<div class="top-bar">
+			<?php print render($page['top_bar']); ?>
+		</div>
+<?php endif; ?>
+	
+<header id="navbar" role="banner" class="<?php print $navbar_classes; ?>">
+  <div class="<?php print $container_class; ?>">
+    <div class="navbar-header">
+      <?php if ($logo): ?>
+        <a class="logo navbar-btn " href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+        </a>
+      <?php endif; ?>
+
+      <?php if (!empty($site_name)): ?>
+        <a class="name navbar-brand" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>"><?php print $site_name; ?></a>
+      <?php endif; ?>
+
+      <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only"><?php print t('Toggle navigation'); ?></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      <?php endif; ?>
+    </div>
+
+    <?php if (!empty($primary_nav) || !empty($secondary_nav) || !empty($page['navigation'])): ?>
+      <div class="navbar-collapse collapse">
+        <nav role="navigation">
+          <?php if (!empty($primary_nav)): ?>
+            <?php print render($primary_nav); ?>
+          <?php endif; ?>
+          <?php if (!empty($secondary_nav)): ?>
+            <?php print render($secondary_nav); ?>
+          <?php endif; ?>
+          <?php if (!empty($page['navigation'])): ?>
+         <?php print render($page['navigation']); ?>
+          <?php endif; ?>
+        </nav>
+      </div>
+    <?php endif; ?>
+  </div>
+</header>
+
+ <?php if (!empty($page['highlighted'])): ?>
+		<div class="banner">
+		
+			<div class="highlighted"><?php print render($page['highlighted']); ?>
+<?php global $base_url; 
+/* 			$arg = arg();
+			$all_products = $arg[0]; */
+			$url = $base_url . $_SERVER["REQUEST_URI"];
+			$url_centrum_for_kids = $base_url . '/products?f[0]=field_product_type%3A165';
+			$url_centrum_for_kids_fr = $base_url . '/fr/products?f[0]=field_product_type%3A165';
+ 			$url_gummies_and_chews = $base_url . '/products?f[0]=field_product_type%3A164';
+ 			$url_gummies_and_chews_fr = $base_url . '/fr/products?f[0]=field_product_type%3A164';
+ 			$url_centrum_prenetal = $base_url . '/products?f[0]=field_product_type%3A163';
+ 			$url_centrum_prenetal_fr = $base_url . '/fr/products?f[0]=field_product_type%3A163';
+ 			$url_centrum_category = $base_url . '/products?f[0]=field_product_type%3A162';
+ 			$url_centrum_category_fr = $base_url . '/fr/products?f[0]=field_product_type%3A162';
+			
+			$kids = $base_url . '/products?f%5B0%5D=field_product_type%3A165';
+			$kids_fr = $base_url . '/fr/products?f%5B0%5D=field_product_type%3A165';
+ 			$gummies_and_chews = $base_url . '/products?f%5B0%5D=field_product_type%3A164';
+ 			$gummies_and_chews_fr = $base_url . '/fr/products?f%5B0%5D=field_product_type%3A164';
+ 			$centrum_prenetal = $base_url . '/products?f%5B0%5D=field_product_type%3A163';
+ 			$centrum_prenetal_fr = $base_url . '/fr/products?f%5B0%5D=field_product_type%3A163';
+ 			$centrum_category = $base_url . '/products?f%5B0%5D=field_product_type%3A162';
+ 			$centrum_category_fr = $base_url . '/fr/products?f%5B0%5D=field_product_type%3A162';
+			
+			if($url == $url_centrum_for_kids || $url == $url_centrum_for_kids_fr || $url == $kids || $url == $kids_fr){
+		       //$centrum_for_kids_content = module_invoke('block', 'block_view', '66');
+			   //print render($centrum_for_kids_content['content']);
+               $block_id = 66;
+               $block = block_block_view($block_id);
+               $block['content'] = i18n_string(array('blocks', 'block', $block_id, 'body'), $block['content']);
+               print render($block['content']);				   
+			}
+			else if($url == $url_gummies_and_chews || $url == $url_gummies_and_chews_fr || $url == $gummies_and_chews || $url == $gummies_and_chews_fr){
+			   //$gummies_and_chews_content = module_invoke('block', 'block_view', '76');
+			   //print render($gummies_and_chews_content['content']);
+               $block_id = 76;
+               $block = block_block_view($block_id);
+               $block['content'] = i18n_string(array('blocks', 'block', $block_id, 'body'), $block['content']);
+               print render($block['content']);			   
+			}
+			else if($url == $url_centrum_prenetal  || $url == $url_centrum_prenetal_fr || $url == $centrum_prenetal  || $url == $centrum_prenetal_fr){
+			   //$centrum_prenetal_content = module_invoke('block', 'block_view', '71');
+			   //print render($centrum_prenetal_content['content']);
+               $block_id = 71;
+               $block = block_block_view($block_id);
+               $block['content'] = i18n_string(array('blocks', 'block', $block_id, 'body'), $block['content']);
+               print render($block['content']);			   
+			}
+			else if($url == $url_centrum_category  || $url == $url_centrum_category_fr || $url == $centrum_category  || $url == $centrum_category_fr){
+			   $block_id = 81;
+               $block = block_block_view($block_id);
+               $block['content'] = i18n_string(array('blocks', 'block', $block_id, 'body'), $block['content']);
+               print render($block['content']);	
+			}
+			else if($url == $base_url . '/products' || $url == $base_url . '/fr/products'){
+			   //$centrum_category_content = module_invoke('block', 'block_view', '96');
+			   //print render($centrum_category_content['content']);
+               $block_id = 96;
+               $block = block_block_view($block_id);
+               $block['content'] = i18n_string(array('blocks', 'block', $block_id, 'body'), $block['content']);
+               print render($block['content']);			   
+			}
+		?>	
+			</div>
+		</div>
+	<?php endif; ?>
+	 <?php if (!empty($breadcrumb)): print $breadcrumb; endif;?>
+ <?php if (!empty($page['top-content'])): ?>
+		<div class="top-content">
+			<?php print render($page['top-content']); ?>
+		</div>
+	<?php endif; ?>			
+			
+<div class="main-container <?php print $container_class; ?>">
+
+  <header role="banner" id="page-header">
+    <?php if (!empty($site_slogan)): ?>
+      <p class="lead"><?php print $site_slogan; ?></p>
+    <?php endif; ?>
+
+    <?php print render($page['header']); ?>
+  </header> <!-- /#page-header -->
+	
+  <div class="row">
+
+    <?php if (!empty($page['sidebar_first'])): ?>
+      <aside class="col-sm-3" role="complementary">
+        <div class="sidebar-wrapper"><?php print render($page['sidebar_first']); ?></div>
+      </aside>  <!-- /#sidebar-first -->
+    <?php endif; ?>
+
+    <section<?php print $content_column_class; ?>>
+     
+     
+      <a id="main-content"></a>
+      <?php print render($title_prefix); ?>
+		<?php	if ($node->type != 'products') : ?> 
+
+      <?php if (!empty($title)): ?>
+        <h1 class="page-header"><?php print $title; ?></h1>
+      <?php endif; ?>
+			<?php endif; ?>
+      <?php print render($title_suffix); ?>
+      <?php print $messages; ?>
+      <?php if (!empty($tabs)): ?>
+        <?php print render($tabs); ?>
+      <?php endif; ?>
+      <?php if (!empty($page['help'])): ?>
+        <?php print render($page['help']); ?>
+      <?php endif; ?>
+      <?php if (!empty($action_links)): ?>
+        <ul class="action-links"><?php print render($action_links); ?></ul>
+      <?php endif; ?>
+      <?php print render($page['content']); ?>
+    </section>
+
+    <?php if (!empty($page['sidebar_second'])): ?>
+      <aside class="col-sm-3" role="complementary">
+        <?php print render($page['sidebar_second']); ?>
+      </aside>  <!-- /#sidebar-second -->
+    <?php endif; ?>
+
+  </div>
+</div> 
+<?php if (!empty($page['promo_banner'])): ?>
+  <div class="promo-banner">
+    <div class="">
+      <?php print render($page['promo_banner']); ?>
+			
+			<?php
+				
+			
+					if($url == $url_centrum_for_kids || $url == $url_centrum_for_kids_fr || $url == $kids || $url == $kids_fr){
+			   
+							 $custom_block = views_embed_view('pfe_facet_filter_promo_banner', 'block_2');
+							 print render($custom_block);	
+			}
+			else if($url == $url_gummies_and_chews || $url == $url_gummies_and_chews_fr || $url == $gummies_and_chews || $url == $gummies_and_chews_fr){
+			
+               $custom_block = views_embed_view('pfe_facet_filter_promo_banner', 'block_1');
+							 print render($custom_block);		   
+			}
+			else if($url == $url_centrum_prenetal  || $url == $url_centrum_prenetal_fr || $url == $centrum_prenetal  || $url == $centrum_prenetal_fr){
+							$custom_block = views_embed_view('pfe_facet_filter_promo_banner', 'block_3');
+							print render($custom_block);		   
+			}
+			else if($url == $url_centrum_category  || $url == $url_centrum_category_fr || $url == $centrum_category  || $url == $centrum_category_fr){
+							$custom_block = views_embed_view('pfe_facet_filter_promo_banner', 'block_4');
+							 print render($custom_block);	
+			}
+			else if($url == $base_url . '/products' || $url == $base_url . '/fr/products'){
+							$custom_block = views_embed_view('pfe_facet_filter_promo_banner', 'block');
+							 print render($custom_block);	
+}
+
+
+			?>
+			
+			
+    </div>
+  </div>
+<?php endif; ?>
+<?php if (!empty($page['pre_footer'])): ?>
+  <footer class="pre_footer">
+    <div class="<?php print $container_class; ?>">
+      <?php print render($page['pre_footer']); ?>
+    </div>
+  </footer>
+<?php endif; ?>
+<?php if (!empty($page['footer'])): ?>
+  <footer class="footer">
+    <div class="<?php print $container_class; ?>">
+      <?php print render($page['footer']); ?>
+    </div>
+  </footer>
+<?php endif; ?>

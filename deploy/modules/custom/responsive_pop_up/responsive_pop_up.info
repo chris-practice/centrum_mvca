@@ -1,0 +1,7 @@
+name = Responsive Pop Up
+description = Responsive Pop Up Module.
+package = Custom
+core = 7.x
+stylesheets[all][] = css/responsive_pop_up.css
+scripts[] = js/responsive_pop_up.js
+

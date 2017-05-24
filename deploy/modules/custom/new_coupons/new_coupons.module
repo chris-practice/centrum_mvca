@@ -1,0 +1,279 @@
+<?php
+
+/**
+ * @file
+ * Implements hook_menu()
+ */
+function new_coupons_menu() {
+  $items['get-coupons/%'] = array(
+    'page callback'     => 'get_category_coupons',
+    'page arguments'    => array(1),
+    'access arguments'  => array('access content'),
+    'type'              => MENU_CALLBACK,
+  );
+  
+  $items['coupon-image/%node'] = array(
+    'title'             => 'Coupons images',
+    'description'       => 'Generate coupon image',
+    'page callback'     => 'coupons_generate_image',
+    'page arguments'    => array(1),
+    'access arguments'  => array('access content'),
+    'type'              => MENU_CALLBACK,
+    'file'              => 'new_coupons.image.inc',
+  );
+  
+  $items['generate-coupon/%node'] = array(
+    'title'             => 'Generate Coupons',
+    'description'       => 'Generate coupon',
+    'page callback'     => 'coupons_generate_coupon',
+    'page arguments'    => array(1),
+    'access arguments'  => array('access content'),
+    'type'              => MENU_CALLBACK,
+    'file'              => 'new_coupons.image.inc',
+    'delivery callback' => 'coupons_iframe_content',
+  );
+  
+  return $items;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function new_coupons_block_info() { 
+  $blocks['prenatalCoupon'] = array(
+    'info' => t('Prenatal coupon block'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+   return $blocks;
+}
+
+/**
+ * Display coupons associated with Coupon category.
+ */
+function get_category_coupons($tid) {
+  global $base_url;
+  // Add Print Functionality and css for screen
+  drupal_add_js(drupal_get_path('module', 'new_coupons') . '/scripts/coupons.print.js');
+  drupal_add_css(drupal_get_path('module', 'new_coupons') . '/styles/coupons.page.css', array('media' => 'screen'));
+
+  $result = array();
+  $language =  $GLOBALS['language']->language;
+  $coupon_nids = array();
+  $coupon_nids = taxonomy_select_nodes($tid);
+
+  if ($language == 'en') {
+  $webform_id = '311';
+  $print_button_class = '<span class="engl">PRINT COUPON</span>';
+  $share_button = '<a class="big blue box-shadow shareit">Share Coupon</a>';
+  }
+  else {
+  $webform_id = '316';
+  $print_button_class = '<span class="fren">IMPRIMER LE COUPON</span>';
+  $share_button = '<a class="big blue box-shadow shareit">PARTAGER LE BON DE RÉDUCTION</a>';
+  }
+  $count = 0;
+  
+  $common_class = 'coupon-container';
+  foreach ($coupon_nids as $key => $value) {
+  $coupon_node = node_load($value);
+
+  $coupon_node_alias = drupal_get_path_alias(current_path());
+  $generation_path = '/generate-coupon/' . $coupon_node->nid;
+  if ($language != 'en') {
+	$coupon_node_alias = 'fr/' . $coupon_node_alias;
+    $generation_path = '/fr/generate-coupon/' . $coupon_node->nid;	
+  }
+
+  $coupon_node_title = $coupon_node->title;
+  $coupon_sample_image = field_view_field('node', $coupon_node, 'field_coupon_image_sample');
+  $diff_class =  'coupon-container-' . $count;
+  $iframe_id = 'iframe-coupon-image' . $count;
+
+  $result[] = array(
+      'title' => array(
+        '#type' => 'markup',
+        '#markup' => '<h1>' . $coupon_node->title . '</h1>',
+        '#prefix' => '<div class="' . $common_class . ' ' . $diff_class . '"><div class="coupon-title">',
+        '#suffix' => '</div>',
+      ),
+  'printnote' => array(
+        '#type' => 'markup',
+        '#markup' => t('Print this coupon to save on your next purchase.'),
+        '#prefix' => '<div class="coupon-print-note">',
+        '#suffix' => '</div>',
+  ),
+  'sampleimage' => array(
+        '#type' => 'markup',
+        '#markup' => render($coupon_sample_image),
+        '#prefix' => '<div class="grey-coupons"><div class="coupon-sample-image">',
+        '#suffix' => '</div>',
+  ),
+  'subtitle' => array(
+        '#type' => 'markup',
+        '#markup' => '<strong>' . $coupon_node->field_subtitle_text[$language][0]['value'] . '</strong>',
+        '#prefix' => '<div class="coupon-sub-title">',
+        '#suffix' => '</div>',
+  ),
+  'printcoupon' => array(
+        '#type' => 'markup',
+        '#markup' => '<a href="#" id="btnPrintCoupon">' . $print_button_class . '</a>',
+        '#prefix' => '<div class="coupon-buttons"><div class="print-coupon-btn">',
+        '#suffix' => '</div>',
+  ),
+  'emailcoupon' => array(
+        '#type' => 'markup',
+        '#markup' => l(t('EMAIL COUPON'), 'modal_forms/nojs/webform/' . $webform_id, array('query' => array('coupon' => $coupon_node->nid, 'currentpage' => $coupon_node_alias), 'attributes' => array('class' => array('ctools-use-modal', 'ctools-modal-modal-popup-large')))),
+        '#prefix' => '<div class="email-coupon">',
+        '#suffix' => '</div>',
+  ),
+  'sharecoupon' => array(
+        '#type' => 'markup',
+        '#markup' => '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4ef48e4e04fb79af"></script>
+		<div class="addthis_toolbox" addthis:url="' . $base_url . '/' . $coupon_node_alias . '" addthis:title="' . $coupon_node_title . '">
+        ' . $share_button . '
+        <div class="custom_images">
+        <a class="addthis_button_facebook">Facebook</a>		
+        <a class="addthis_button_twitter">Twitter</a>	
+        </div>
+		</div>',
+        '#prefix' => '<div class="share-coupon-btn">',
+        '#suffix' => '</div></div>',
+  ),
+  'footernote' => array(
+        '#type' => 'markup',
+        '#markup' => t('NOTE:Retailers require printed coupons.'),
+        '#prefix' => '<div class="coupon-footer-note">',
+        '#suffix' => '</div></div>',
+  ),
+  'iframe-content' => array(
+        '#type' => 'markup',
+        '#markup' => '<iframe src="' . $generation_path . '"
+          name="iframecouponimage"
+          id="' . $iframe_id . '"
+          frameborder="0"
+          scrolling="no"
+          width="1"
+          height="1"
+          class="coupon-image-code"></iframe>',
+        '#prefix' => '<div class="iframe-content">',
+        '#suffix' => '</div>',
+  ),
+  'morecoupons' => array(
+        '#type' => 'markup',
+        '#markup' => l(t('Click here for more Centrum coupons'), 'coupons'),
+        '#prefix' => '<div class="more-coupons">',
+        '#suffix' => '</div></div>',
+  ),
+  );
+
+  $count++;
+  }
+  
+  return $result;
+}
+
+function new_coupons_block_view($delta = '') {
+  global $base_url;
+  $language =  $GLOBALS['language']->language;
+  
+  drupal_add_js(drupal_get_path('module', 'new_coupons') . '/scripts/coupons.print.js');
+  drupal_add_css(drupal_get_path('module', 'new_coupons') . '/styles/coupons.page.css', array('media' => 'screen'));
+
+  $prenatal_coupon_node = node_load('306');
+  //$prenatal_coupon_node_alias = drupal_get_path_alias('node/306');
+  $prenatal_coupon_node_alias = 'coupons/centrum-prenatal';
+  $prenatal_coupon_node_title = $prenatal_coupon_node->title;
+  $prenatal_coupon_sample_image = field_view_field('node', $prenatal_coupon_node, 'field_coupon_image_sample');
+  $prenatal_coupon_generation_path = '/generate-coupon/306';
+  $prenatal_iframe_id = 'iframe-coupon-image';
+  unset($prenatal_coupon_sample_image['#title']);
+
+  if ($language == 'en') {
+  $webform_id = '311';
+  $print_button_class = '<span class="engl">PRINT COUPON</span>';
+  $share_button = '<a class="big blue box-shadow shareit">Share Coupon</a>';
+  }
+  else {
+  $webform_id = '316';
+  $print_button_class = '<span class="fren">IMPRIMER LE COUPON</span>';
+  $share_button = '<a class="big blue box-shadow shareit">PARTAGER LE BON DE RÉDUCTION</a>';
+  $prenatal_coupon_node_alias = 'fr/' . $prenatal_coupon_node_alias;
+  $prenatal_coupon_generation_path = '/fr/generate-coupon/306';
+  }
+  
+  $block['content'] = array(
+  'sampleimage' => array(
+        '#type' => 'markup',
+        '#markup' => render($prenatal_coupon_sample_image),
+        '#prefix' => '<div class="coupon-container"><div class="grey-coupons"><div class="coupon-sample-image">',
+        '#suffix' => '</div>',
+  ),
+  'subtitle' => array(
+        '#type' => 'markup',
+        '#markup' => '<strong>' . $prenatal_coupon_node->field_subtitle_text[$language][0]['value'] . '</strong>',
+        '#prefix' => '<div class="coupon-sub-title">',
+        '#suffix' => '</div>',
+  ),
+  'printcoupon' => array(
+        '#type' => 'markup',
+        '#markup' => '<a href="#" id="btnPrintCoupon" class="big blue box-shadow">' . $print_button_class . '</a>',
+        '#prefix' => '<div class="coupon-buttons"><div class="print-coupon-btn">',
+        '#suffix' => '</div>',
+  ),
+  'emailcoupon' => array(
+        '#type' => 'markup',
+        '#markup' => l(t('EMAIL COUPON'), 'modal_forms/nojs/webform/' . $webform_id, array('query' => array('coupon' => '306', 'currentpage' => $prenatal_coupon_node_alias), 'attributes' => array('class' => array('ctools-use-modal', 'ctools-modal-modal-popup-large', 'big', 'blue', 'box-shadow')))),
+        '#prefix' => '<div class="email-coupon">',
+        '#suffix' => '</div>',
+  ),
+  'sharecoupon' => array(
+        '#type' => 'markup',
+        '#markup' => '<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4ef48e4e04fb79af"></script>
+		<div class="addthis_toolbox" addthis:url="' . $base_url . '/' . $prenatal_coupon_node_alias . '" addthis:title="' . $prenatal_coupon_node_title . '">
+        ' . $share_button . '
+        <div class="custom_images">
+        <a class="addthis_button_facebook">Facebook</a>		
+        <a class="addthis_button_twitter">Twitter</a>	
+        </div>
+		</div>',
+        '#prefix' => '<div class="share-coupon-btn">',
+        '#suffix' => '</div></div>',
+  ),
+  'footernote' => array(
+        '#type' => 'markup',
+        '#markup' => t('NOTE:Retailers require printed coupons.'),
+        '#prefix' => '<div class="coupon-footer-note">',
+        '#suffix' => '</div>',
+  ),
+  'iframe-content' => array(
+        '#type' => 'markup',
+        '#markup' => '<iframe src="' . $prenatal_coupon_generation_path . '"
+          name="iframecouponimage"
+          id="' . $prenatal_iframe_id . '"
+          frameborder="0"
+          scrolling="no"
+          width="1"
+          height="1"
+          class="coupon-image-code"></iframe>',
+        '#prefix' => '<div class="iframe-content">',
+        '#suffix' => '</div></div></div>',
+  ),
+  );
+
+  return $block;
+}
+
+/**
+ * Implements hook_form_alter()
+ */
+function new_coupons_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id ==  'webform_client_form_311' || $form_id ==  'webform_client_form_353') {
+  $form['#suffix'] = t('<div class = "coupon-privacy">Privacy Notice: Your e-mail address will not be stored or distributed. For more information 
+  please review our <a href = "http://www.pfizer.ca/en/privacy/" target= "_blank">privacy policy</a>.</div>');
+  } 
+  
+  if ($form_id ==  'webform_client_form_316') {
+  $form['#suffix'] = t('<div class = "coupon-privacy">Énoncé de confidentialité : Votre adresse de courriel ne sera pas stockée ni distribuée. 
+  Pour en savoir plus à ce sujet, veuillez lire notre politique sur la protection des <a href = "http://www.pfizer.ca/fr/privacy/" target= "_blank">renseignements personnels</a>.</div>');
+  }
+}

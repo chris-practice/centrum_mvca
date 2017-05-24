@@ -1,0 +1,1490 @@
+@import 'variables';
+/************************************************************
+					Global Tabs for desktop
+*************************************************************/	
+.tabs-global {  
+		display: inline-block; 
+		padding-left:13px;
+		li {
+			display:table;
+			background:@border-color;
+			.pull-left;
+			width:140px;
+			line-height:132px;
+			margin-right:18px;
+			border-bottom:3px solid @primary-color;
+			
+			&:last-child {
+				a {
+					
+				}
+			}
+			a {
+				display:table-cell; 
+				vertical-align: middle;
+				font-size:27px;
+				white-space: normal;
+				.font-bold;
+				color:@text-color;
+				line-height:34px;
+				.font-open-sans;
+			
+				&:hover, &:focus {
+					text-decoration:none;
+				}
+			}
+			&:before {
+				content: '';
+				display: inline-block;
+				vertical-align: middle;
+				height: 100%;
+			}
+			i {
+				display:none;
+			}
+		}
+		li.active {
+		background: @primary-color;
+			a {
+				color:@white;
+				
+			}		 
+		}	 
+	}
+	.global-tabs-border {
+		.views-row-1 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row1-color;
+			}
+		}
+		.views-row-2 {
+			.views-field-title span.field-content a {
+			  border-bottom:2px solid @row2-color;
+      }
+		}										
+		.views-row-3 {
+			.views-field-title span.field-content a {
+			  border-bottom:2px solid @row3-color;
+			}
+		}
+		.views-row-4 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row4-color;
+			}
+		}
+		.views-row-5 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row4-color;
+			}
+		}
+		.views-row-6 {
+		    .views-field-title span.field-content a {
+				border-bottom:2px solid @row6-color;
+			}
+		}
+		.views-row-7 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row7-color;
+			}	
+		}
+		.views-row-8 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row8-color;
+			}
+		}
+		.views-row-9 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row9-color;
+			}
+		}
+		.views-row-10 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row10-color;
+			}
+		}
+		.views-row-11 {
+			.views-field-title span.field-content a{
+				border-bottom:2px solid @row11-color;
+			}
+		}
+		.views-row-12 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row12-color;
+			}
+		}
+				
+		.views-row-13 {
+			.views-field-title span.field-content a {
+				border-bottom:2px solid @row13-color;
+			}
+		}
+		.views-row-14 {
+			.views-field-title span.field-content a{
+				border-bottom:2px solid @row14-color;
+			}
+		}	
+	
+	}
+.global-accordion-header {
+	h3 { 
+		font-size:21px;
+		font-style:normal;
+		background:none;
+		border:0;
+		background:@border-color;
+		border-radius:0;
+		.text-center;
+		padding:15px 5px 15px 5px;
+		margin-top:13px;
+		border-bottom:3px solid @primary-color;
+		span {
+			display:none;
+		}
+		a {
+			.font-bold;
+			color:@text-color;
+		}
+	}
+	h3.ui-accordion-header-active {
+		background:@primary-color;
+			a {
+				color:@white;
+			}
+	}
+}
+.front {
+	.page-header {
+		display:none;
+	}
+	.banner {
+		.header-background {
+			height:400px;
+			@media @mobile-sm {
+				height:260px;
+			}
+		}		
+	}
+}
+/************************************************************
+									French CSS
+*************************************************************/
+.i18n-fr {
+	header#navbar .navbar-collapse nav .navbar-nav li a {
+		padding: 7px 15px;
+	}
+	.stages-of-pregnancy {
+		.views-row-1 {
+			.views-field-title {
+				margin-top: 7px;
+			}
+		}
+	}
+	
+}
+/************************************************************
+									Top Menu CSS
+*************************************************************/
+section#block-locale-language-content {	
+		max-width:1280px;
+		width:100%;
+    position: absolute;
+		left:0;
+    top: 6px;
+    z-index: 9;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+		@media @mobile-sm {
+			border-left: 1px solid #e5e5e5;
+			top:20px;
+			width:33px;
+			left:auto;
+			margin:0;
+		}
+	ul.language-switcher-locale-url {
+		padding: 0 10px 0 0;
+		margin: 0;
+		text-align:right;
+		@media @mobile-sm {
+			margin-right:5px;
+			padding-right:5px;
+		}
+		li {
+			list-style: none;
+			text-transform: uppercase;
+			a {
+				color: @para-link-color;
+				font-size:11px;
+			}
+		}
+	
+		li.active {
+			display: none;
+		}
+	}
+}
+div#skip-link.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #000;
+  opacity: .5;
+}
+/************************************************************
+				Header CSS
+*************************************************************/
+header#navbar {
+	.header-border;
+	width: @full-width;
+	border:0;
+	min-height:136px;
+	margin: 0 auto;
+	@media @mobile-sm {
+    background: #fff;
+    min-height: 68px;
+    z-index: 1;
+    opacity: 1 !important;
+		.container{
+			.no-padding;
+		}
+	}
+	.navbar-header {
+		.float-none;
+		.text-center;
+		margin:15px 0 15px 0;
+			@media @mobile-sm {
+				.rainbow-border;
+				margin:8px 0 0px 0;
+				min-height:60px;
+				background-size: @full-width 6px;
+				background-position:bottom;
+				img { 
+					width:106px;
+					height:auto;
+				}
+				.navbar-toggle {
+					position:absolute;
+					left:15px;
+					border-radius:0;
+					border:0;
+					padding:0;
+					top:9px;
+					background: transparent;
+					&:focus {
+						background:transparent;
+					}
+					&:after {
+						content:"MENU";
+						color:#bbb;
+						.font-bold;
+						.font-size-12;
+					}
+					.icon-bar {
+						width:35px;
+						height:3px;
+						background-color: #bbb;
+					}					
+				}
+			}			
+	}
+/************************************************************
+				Navigation CSS
+*************************************************************/
+	.navbar-collapse {
+		.text-center;
+		@media @mobile-sm {
+			border:0;
+			position: absolute;
+			width: 89%;
+			margin: -6px 0 0 0;
+			background:#fff;
+			z-index:9999;
+		}
+		nav	{
+			display:inline-block;
+			position:relative;
+			@media @mobile-sm {
+				display:block;
+			}
+			.navbar-nav {
+				@media @mobile-sm {
+					margin-top:0;
+					margin-bottom:0;
+				}
+				li.products-link { 
+					a { 
+						
+					}
+					.dropdown-menu {
+							li {
+								&:not(:first-child) {
+									a {
+										background:url("@{base-url}/arrow.png") no-repeat left center;
+										padding-left:25px;
+										background-position:12px 13px;
+										@media @mobile-sm {
+											background-position:0px 13px;
+											padding-left:15px;
+										}
+								
+									}
+									a.active {
+									  background: #f5f5f5 url("@{base-url}/arrow.png") no-repeat left center;
+                    background-position: 12px 13px;
+									}
+								}
+							
+							}
+						}
+					
+				}
+				li.dropdown {
+					@media @mobile-sm {
+					background:url("@{base-url}/collapse.png") no-repeat right;
+					background-position:97% 10px;	
+					}	
+				}
+				li.open {
+					@media @mobile-sm {
+					background:url("@{base-url}/expand.png") no-repeat right;	
+					background-position:97% 10px;
+					a {
+						margin-left: 27px;
+						border-bottom: 1px solid @nav-border;					
+						margin-right: 30px;
+						padding-left: 0px;
+						
+					}
+					.dropdown-menu {
+							li {
+								a {
+									margin:0;
+									border:0;
+								}
+							}
+						
+						}
+					}	
+				}
+				li {
+					border:1px solid @nav-border;
+					background: #fff;
+					@media @mobile-sm {
+						text-align:left;
+					}			
+					&:first-child {
+							background:#fff url("@{base-url}/tick-xs.png") no-repeat left center;
+							background-position:18px 8px;
+							@media @mobile-sm {	
+								background:none;
+							}
+							a {
+								padding:7px 22px 7px 39px;
+								@media @mobile-sm {
+									padding-left:25px;
+								}
+								&:hover {
+								background:@border-color url("@{base-url}/tick-mark-hover.png") no-repeat left center;
+								background-position:18px 8px;
+								@media @mobile-sm {
+									background:none;
+								}
+								}
+								
+								
+							}
+							a.active {
+								background:@border-color url("@{base-url}/tick-mark-hover.png") no-repeat left center;
+								background-position:18px 8px;
+								@media @mobile-sm {
+									background:none;
+								}
+							}
+					}
+					a.active {
+						background-color:@border-color;
+						color:@primary-color;
+						@media @mobile-sm {
+							background-color:transparent;
+						}					
+					}
+					.dropdown-menu li {
+					a.active {
+						/* background-color:@border-color; */
+						background: #f5f5f5;
+						color:@primary-color;
+						@media @mobile-sm {
+							background-color:transparent;
+						}					
+					}
+					}
+					a { 
+						padding:7px 22px;
+						color:#555555;
+						.uppercase;	
+						.font-open-sans;
+						.font-bold;
+						.font-size-16;		
+						&:hover,&:focus {
+						background:@border-color;
+						color:@primary-color;
+							@media @mobile-sm {
+								background:none;
+								
+							}
+						}				
+							span.caret{
+								display:none;							
+							}
+					}
+					.dropdown-menu {
+						border-radius:0;
+						margin:6px 0 0 -2px;
+						min-width: 184px;
+						border:1px solid @nav-border;
+						@media @mobile-sm {
+						margin:0;
+						border:0;
+						}
+						li {
+								border:none;	
+								border-bottom:1px solid @border-color;
+								margin:0 10px 0 10px;
+								@media @mobile-sm {
+									margin:0 28px;
+								}
+								&:first-child {
+								background:none;
+								a:hover {
+									background:none;
+								}
+								}
+								&:last-child {
+								border-bottom:none;
+								}
+								a {
+									color:@text-color;
+									white-space: normal;
+									.Capitalize;
+									.font-size-16;
+									padding: 7px 11px;
+									@media @mobile-sm {
+										padding: 7px 0px;
+									}
+									&:hover, &:focus {
+										background:none;
+										color:@primary-color;
+									}
+							}
+						}					
+					}
+					
+				}
+			}	
+		}		
+	}
+}
+/************************************************************
+						Banner CSS
+*************************************************************/
+.banner {
+	.header-background {
+	position: relative;
+	width: @full-width;
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 0px;
+	box-sizing: border-box; 
+	height: 280px;
+	display: table;
+	overflow: hidden;
+	background-size: @full-width 89px, @full-width @full-width, cover;
+	background-position: center bottom, center center, center center;
+	background-repeat: no-repeat, no-repeat, no-repeat;
+	@media @mobile-sm {
+		height: 280px;
+	}
+		.views-field-body-et {
+			.text-center;
+			display:table-cell;
+			vertical-align:middle;	
+			width:@full-width;
+			h1 {
+				font-size: 4.2rem;
+				line-height: 1.4;
+				letter-spacing: -.1rem;
+				color:@white;
+				.text-shadow;
+			}
+		}
+		.ban-desc {
+			position: relative;
+			width: 80%;
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 0px;
+			box-sizing: border-box;
+			h3 {
+				.text-shadow;				
+			}
+		}
+	}
+	.jumbotron {
+		padding-top: 0;
+	}
+	#block-views-header-banner-block-1 {
+		.views-field-field-header-banner {
+			width: @full-width;
+			margin: 0 auto;
+			max-width: 1280px;
+			@media @mobile-sm {
+				width: @full-width;
+				height: auto;
+			}
+		}
+	}
+}
+/************************************************************
+					Promo Banner CSS
+*************************************************************/	
+.promo-banner {
+	margin-top: 80px;
+	@media @mobile-sm {
+		margin-top:45px;
+	}
+	.promo-wrapper {
+		@media @mobile-sm {
+			height:358px;
+			display:inline-block;
+			.text-center;
+			margin-top: 50px;
+		}
+		.banner-wrapper; 		
+		height: 280px;
+		background-position: center center, center center, 25% center;
+		background-size: 100% 100%, 120% 100%, cover;
+		background-repeat: no-repeat, no-repeat, no-repeat;
+		.promo-product-body {
+			display:table-cell;
+			width:37%;
+			@media @mobile-sm {
+				display:inline-block;
+				width:auto;
+			}
+			.promo_image {
+				.field-content {
+					img {
+						.pull-right;
+						margin-top:-25px;
+						width:140px;
+						@media @mobile-sm {
+							width:100px;
+							margin-top:-55px;
+						}
+					}				
+				}
+			}
+		}
+		.promo-text-body {
+			.banner-copy;
+			text-align: left;			
+			padding-left: 20px;
+			@media @mobile-sm {
+				.text-center;	
+				padding-left: 0;
+				display: inline-block;
+				margin-top:-10px;
+			}
+			.title_and_body	{
+				.field-content {
+					h1{						    
+							line-height: 1;
+							padding: 0 0 10px;							
+							.text-shadow;
+							.text-white;
+							
+							max-width:560px;
+							margin-bottom:20px;
+								@media @mobile-sm {
+									font-size:32px;
+									.text-center;
+									margin-bottom:8px;
+									max-width: 100%;
+                   line-height: 34px;
+								}							
+					}
+					a {
+						.button-big;
+						.arrow-button;
+						.clear-bg;						
+						
+						.box-shadow;
+						
+						@media @mobile-sm {
+							width:300px;
+							margin:0 auto;
+							display:inline-block;
+							padding-top:9px;
+						}
+						&:hover, &:focus{
+							text-decoration:none;
+							background-color:rgba(0,0,0,0.5); 
+						}
+					}
+				
+				} 
+			}
+		}
+	}
+}
+/************************************************************
+				 Breadcrumb
+*************************************************************/
+.breadcrumb {
+	background:none;
+	padding:8px 0px 6px;
+	margin-bottom:0;
+	width:960px;
+	margin:0 auto;
+	@media @mobile-sm {
+		padding-left:15px;
+		width:auto;
+	}
+	span.delimiter{
+		.font-open-sans;
+		font-size:20px;
+		display:inline-block;
+		margin-left:3px;
+		vertical-align:middle;	
+	}	
+	span {
+		font-size:12px;	
+		color:@text-color;
+		a {
+			text-decoration: underline;
+		}
+	}
+}
+/************************************************************
+				A to Zinc Library Desktop Tabs CSS
+*********************************************17****************/
+#block-quicktabs-atozinc-desktop {
+	.text-center;
+	h2.block-title {
+		font-size:16px;
+		margin:0 15px 18px 0;
+		.font-roboto;		
+	}
+	ul.quicktabs-tabs {
+		.tabs-global;	
+	}
+	#quicktabs-container-atozinc_desktop {
+		margin-top:30px;
+		margin-bottom:50px;
+		.block-views {				
+			h2.block-title {
+				.h2;
+				margin-top:10px;
+				margin-bottom:15px;
+			}
+		}
+			.view-a-to-zinc-library {
+				.views-row {
+	 				margin-bottom:20px;
+					padding:0 10px;
+					.views-field-title {							
+						span.field-content {
+							display: table;
+							width: @full-width;
+							line-height: 91px;
+							background:@border-color;	
+							a {
+								.font-open-sans;
+								color:@text-color;
+								font-size:20px;
+								font-weight:bold;  
+								line-height:22px;	
+								display: table-cell;
+								vertical-align: middle; 
+								padding:0 14px;
+								-webkit-box-sizing: border-box; 
+								-moz-box-sizing: border-box;
+								box-sizing: border-box; 
+								&:hover,&:focus {
+									text-decoration:none!important;
+								}
+							}
+							&:before {
+								content: '';
+								display: inline-block;
+								vertical-align: middle;
+								height: 100%;
+							}
+						}
+					}
+				}
+				.global-tabs-border;
+			}
+	}
+}
+/************************************************************
+					A to Zinc Library Mobile Accordion  CSS
+*************************************************************/	
+		#block-quicktabs-atozinc-mobile {
+			margin-bottom:25px;
+			h2.block-title {
+				.font-size-16;
+				margin: 0 15px 18px 0;
+				.text-center;
+				margin-right:0;
+			}
+			.block-views {				
+			h2.block-title {
+				.h2;
+				margin-top:10px;
+				margin-bottom:15px;
+				
+				.text-center;
+			}
+		}
+			#quickset-atozinc_mobile {
+				.global-accordion-header;
+				.ui-accordion-content {
+					padding:0;
+					border:0;
+					margin-top:20px;
+					.block-views {
+						.view-a-to-zinc-library{
+							.views-row {	
+								margin-bottom:10px;
+								padding:0 7px 0 0;
+								.views-field-title {	
+									span.field-content {	
+										display: table;
+										vertical-align: middle;
+										width: @full-width;
+										line-height:66px;
+										background:@border-color;
+										a {
+											color:@text-color;
+											font-size:18px;
+											.font-bold;
+											line-height:19px;										
+											display: table-cell;
+											vertical-align: middle;
+											.text-center;
+											.font-open-sans;
+											padding:0 10px;
+											&:hover,&:focus {
+												text-decoration:none;
+											}
+										
+										}
+										&:before {
+											content: '';
+											display: inline-block;
+											vertical-align: middle;
+											height: 100%;
+										}
+									}
+								}
+							}
+							.global-tabs-border;
+							.views-row-even{
+								padding:0 0px 0 7px;								
+							}			
+							.views-row-1 .views-field-title span.field-content a{							
+							}
+						}					
+					}
+				}
+			}
+		}
+/************************************************************
+					Articles Page  CSS
+*************************************************************/	
+.node-type-article {
+	.region-content {
+		width:81%;
+		@media @mobile-sm {
+		width:auto;
+		}
+		.field-name-field-call-out-quote {
+			clear: both;
+			margin-top: 40px;
+		}
+		.addthis_toolbox {
+			float: left;
+			margin-right: 10px;
+			position: relative;
+			a {
+				background: #0080c8 url("@{base-url}/share-it.png") no-repeat 13px center;
+				padding: 6px 20px 6px 38px;
+			}
+			.custom_images {
+				position: absolute;
+				top: 50px;
+				background: #fff;
+				border: 3px solid #0080c8;
+				width: 140px;
+				padding: 20px;
+				text-align: left;
+				left: 0;
+				z-index: 5;
+				display: none;
+				right: 0;
+				margin-left: auto;
+				margin-right: auto;
+				&:before {
+					content: url(/sites/default/themes/centrum/images/tool-tip-arrow.png);
+					width: 0;
+					height: 0;
+					position: absolute;
+					top: -24px;
+					right: 98px;
+					z-index: 1;		
+				}
+				a {
+					background: 0 0;
+					display: table-row;
+					padding: 0;
+					margin-bottom: 10px;
+					span {
+						width: 25px!important;
+						height: 25px!important;
+						margin-right: 7px;
+						vertical-align: middle;
+						margin-bottom: 7px;
+						.at-icon {
+							width: 25px !important;
+							height: 25px !important;
+						}
+					}
+				}
+			}
+		}
+		.print-article {
+			margin-top: 3px;
+			a {
+				background: #0080c8 url("@{base-url}/print-icon.png") no-repeat 13px center;
+				padding: 6px 22px 6px 38px;
+			}
+		}
+		.article-prev {
+			.pull-left;	
+			.articles-nav;
+			background: url("@{base-url}/browse-category-arrow-left.png") no-repeat top 5px left ; 
+			background-size:7px 12px;
+			text-align:left;
+			margin-bottom:15px;
+			@media @large {
+				width:300px;
+			}
+			@media @mobile-sm {
+				width:50%;
+			}
+		}
+		.article-next {
+			.pull-right;
+			.articles-nav;			
+			background: url("@{base-url}/browse-category-arrow.png") no-repeat top 5px right ; 
+			background-size:7px 12px;
+			text-align:right;
+			margin-bottom:15px;
+			@media @large {
+				width:300px;
+			}
+			@media @mobile-sm {
+				width:50%;
+			}			
+		}
+		h4 {
+			clear:both;
+			padding:30px 0;
+			font-size:20px;
+			border-top:1px solid @nav-border;
+		}	
+		.view-vitamin-related {
+			clear:both;
+			margin-bottom:40px;
+			overflow: hidden;
+			.view-content {
+				.text-center;			
+				.views-row {
+					width:140px;
+					.pull-left;
+					margin-right:20px;
+					@media @mobile-sm {
+						width:48%;
+						margin-right:4%;
+					}
+					
+					.views-field-field-thumbnail-image-et-4 {
+						background:@border-color;
+						padding:20px 0px 5px 0;
+						a {
+							display:inline-block;
+							img {
+								height:126px;
+								width:auto;
+								margin: 0 auto;
+							}	
+						}
+					}
+					
+					.views-field-title-field-et-4 {
+						.field-content {
+						margin-top:9px;
+							line-height:18px;
+							a {
+								font-weight:bold;	
+							}	
+						}
+					}
+				}
+				.views-row-2 {
+					@media @mobile-sm {
+						width: 48%;
+						margin-right:0;			
+					}
+				}
+				.views-row-3 {
+					@media @mobile-sm {
+						clear:both;
+						margin-top:15px;
+					}
+				}
+				
+			}
+		}
+	}
+	h5 {
+		font-size: 21px;
+		margin-bottom:10px;
+		line-height:25px;
+		letter-spacing: -0.04rem;		
+		clear: none;
+		margin-top: 20px;
+	}
+	#block-system-main p {
+		line-height:22px;
+	}
+	ul {	
+		padding:0;
+		li {
+			list-style: none;
+		}
+	}
+	.field-type-text-with-summary {
+		ul {
+			li {
+				background: url("@{base-url}/arrow.png") no-repeat left 7px;
+				list-style: none;
+				padding-left: 15px;
+				line-height: 1.7;
+			}
+		}
+	}
+	.page-header {
+		margin: 0 0px 15px 0px;
+		font-size: 4.4rem;
+		line-height: 4.5rem;
+		width:81%;
+		@media @mobile-sm {
+			width:auto;
+			margin-left: 0;
+			font-size: 3.4rem;
+			line-height: 3.7rem;
+		}
+	}
+	#block-system-main {	
+		.field-type-image {
+			.pull-right;
+			width: 50%;
+			margin:7px 0 0px 10px;	
+			@media @mobile-sm {
+				float:none;
+				width:auto;
+				margin:0;
+			}			
+				img {
+					margin-bottom:15px;
+					@media @mobile-sm {
+						width:100%;
+					}
+				}
+		} 		
+		.field-name-field-call-out-quote {
+			.field-items {
+				background: #dcf3fc;				
+				padding:12px 25px 2px 25px;
+				margin-bottom:20px;
+				border-bottom:1px solid @primary-color;
+				p {
+					.text-center;
+					font-style:italic; 
+					font-size:16px; 
+					color:#4E585A;
+					line-height:27px;
+				}
+			}		
+		}
+		.field-name-field-legal-ref-links {
+			margin-bottom: 50px;
+			p {
+				.small;
+				letter-spacing: 0.04rem;
+				
+				a{
+					color:@para-link-color;
+				}		
+			}
+		}
+		.field-type-text-with-summary {
+			table {
+				width: 100%;
+				margin: 0 0 10px 0;
+				td {
+					width: 150px;
+					vertical-align: top;
+					border: 1px solid #000;
+					padding: 10px;
+					p {
+						margin-bottom: 0;
+					}
+				}
+			}
+		}
+	}
+}
+/************************************************************
+					Key Prenatal Nutrients  Desktop CSS
+*************************************************************/
+.node-type-section-landing-pages {
+	#block-quicktabs-key-nutrients-quicktab, #quickset-key_nutrients_mobile {	
+		#quicktabs-key_nutrients_quicktab {
+			.text-center;	
+			ul.quicktabs-tabs {
+				margin:20px 0;
+				.tabs-global;
+				@media @large {
+					 li {
+						width:125px;
+						a {
+							font-size:24px;
+						}
+					}
+				}
+				li {
+					a {
+					 padding:0 10px;
+					}
+				}
+			}
+			#quicktabs-container-key_nutrients_quicktab {
+				text-align:left;
+				.field-name-body, .views-field-body {
+					h5 {
+					clear:both;
+					}
+					ul {
+					margin:0 0 8px 0;
+					padding:0 30px 0 0;
+					.pull-left;
+					@media @mobile-sm {
+						float:none;
+						padding:0;
+					}
+					li {
+							background:url("@{base-url}/arrow.png") no-repeat left 0px center;
+							list-style:none;
+							padding-left:15px;
+							line-height:27px;
+							
+						}
+					}
+				}
+				.field-name-field-key-prenatal-legal-section {
+					margin-top:15px;
+					p {
+						.small;
+					}
+				}
+			}
+		}
+	.view-id-pfe_key_nutrients {
+			.view-header {
+        .views-row {
+          width: 17%;
+          margin: 5px 0 15px;
+          padding-left: 0;
+          @media @mobile-sm {
+            width: 50%;
+            margin: 5px 0 15px;
+            padding: 0 10px 0 0;
+            float: left;
+			@media @mobile-sm {
+				padding-right:15px;
+			}
+          }
+        }
+				.view-content {
+					.health-benefits-image {
+						padding: 20px;
+						text-align: center;
+						height: 140px;
+						position: relative;
+						width: 140px;
+						 @media @mobile-sm {
+							width:100%;	
+						 }
+						 img {
+							@media @mobile-sm {
+								display:inline-block;
+							}	
+						 }
+					}
+					.health-benefits-title {
+						padding: 10px;
+						text-align: center;
+						font-size: 1.6rem;
+						height: 68px;
+						line-height: 1;
+						width: 140px;
+						font-weight: 700;
+						font-family: "Open Sans Condensed";
+						text-transform: uppercase;
+						display: table-cell;
+						vertical-align: middle;
+						@media @mobile-sm {
+							width:100%;	
+							display:block;
+							padding-top: 20px;
+						 }
+					}
+				}
+			}
+			.view-content {
+				clear: both;
+				h5 {
+					clear: both; 
+				}
+			}
+		}
+	}
+}
+/************************************************************
+					Key Prenatal Nutrients  Mobile CSS
+*************************************************************/	
+#block-quicktabs-key-nutrients-mobile {
+	h2.block-title {
+		display:none;
+	}	
+	#quickset-key_nutrients_mobile {
+		.global-accordion-header;
+		.ui-accordion-content {
+			padding:0;
+			border:0;
+			margin-top:20px;
+			.field-name-body {
+				h5 {
+					font-size: 1.8rem;
+					line-height: 1.5;
+					letter-spacing: -0.02rem;
+					.font-bold;
+					.font-open-sans;
+					margin-top:13px;
+				}
+				p {
+				.font-roboto;
+				font-size:1.4rem;
+				line-height:1.6;				
+				}
+					ul {	
+						float:none;
+						padding:0;
+						margin:0;
+						li {
+							background:url("@{base-url}/arrow.png") no-repeat left 0px center;
+							list-style:none;
+							padding-left:15px;
+							line-height:27px;
+							.font-roboto;
+							font-size:1.4rem;
+							
+						}
+					
+					}
+			}
+			.field-name-field-key-prenatal-legal-section {
+				margin-top:15px;
+					p {
+						.small;
+						.font-roboto;
+					}
+			}
+		}
+	}
+}
+/************************************************************
+					Prenatal Main Page CSS
+*************************************************************/
+.prenatal {	
+	.top-content {
+		max-width:1280px;
+		margin:0 auto;
+		width:100%;
+	}
+	#block-views-stages-of-pregnancy-block {
+		.view-stages-of-pregnancy {
+			.views-row {
+				position:relative;
+				
+			}
+			.prenetal-tab-container {			
+				position:relative;
+				clear:both;
+				width:100%!important;
+				margin-top:30px;
+				display:none;
+			}
+			#article_1 {
+				.views-field-body {
+					background: #f5f5f5 url("@{base-url}/sop-down-white-arrow.png") no-repeat 23% top;
+					@media @large {
+						background-position: 19% top;
+					}
+				}
+			}
+			#article_2 {
+				.views-field-body {
+					background: #f5f5f5 url("@{base-url}/sop-down-white-arrow.png") no-repeat center top;
+				}
+			}
+			#article_3 {
+				.views-field-body {
+					background: #f5f5f5 url("@{base-url}/sop-down-white-arrow.png") no-repeat 77% top;
+					@media @large {
+						background-position: 81% top;
+					}
+				}
+			}
+		}
+	}
+}
+
+/************************************************************				 
+				 Products  Page css
+*************************************************************/
+.page-products {
+	aside.col-sm-3 {
+		padding-left:0;
+		@media @mobile-sm {
+			padding-left:15px;
+				
+		}
+	}
+	.reset-link {
+		display:none;
+	}
+	h1.page-header {
+		font-size:20px;
+		margin: -29px 16px 15px 0;
+		border-bottom:1px solid @border-color;
+		line-height:1;
+		.letter-spacing-0;
+		@media @mobile-sm {
+			margin-right:0;
+			margin-top:10px;
+		}
+	}
+	.refine-search-title {
+		h4 {
+			font-size:14px;
+			margin:0;
+			line-height:0;
+			.font-roboto;
+			cursor:pointer;						
+			@media @mobile-sm {
+				display:block;
+				background:@primary-color url("@{base-url}/refine-search-plus.png") no-repeat right;
+				padding: 20px 15px;
+				color: #fff;
+				margin-top: 15px;	
+				background-position:97%;
+				line-height:0.4;
+			}
+		}
+		h4.active {
+			@media @mobile-sm {
+				background: @primary-color url("@{base-url}/refine-search-minus.png") no-repeat right;
+				background-position: 97%;
+			}			
+		}
+	}
+	.region-content, .region-sidebar-first {
+		section {
+			div.checker {
+				.pull-left;
+				margin-top:2px;
+			}
+			h2 {
+				background:url("@{base-url}/collapse.png") no-repeat right;
+				cursor:pointer;
+				letter-spacing:0;
+				.font-roboto;
+				
+			}
+			h2.active {
+				
+				background:url("@{base-url}/expand.png") no-repeat right;
+				
+			}		
+		} 
+	}
+}
+/* .sidebar-wrapper {
+	.region-sidebar-first {
+		display: block !important;
+	}
+}
+ */
+/************************************************************				 
+				Facet Filter CSS
+*************************************************************/
+.filterby ul li.inactive.active {
+    display: block;
+}
+.filterby ul li.inactive {
+    display: none;
+}
+#loadingDiv{
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+	background:@white;
+	width:100%;
+	height:100%;
+	opacity:0.3;
+	filter: alpha(opacity=30); 
+	
+}
+.ajax-loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -32px; /* -1 * image width / 2 */
+  margin-top: -32px; /* -1 * image height / 2 */
+}
+.filterby  {
+	margin-right:15px;
+	@media @mobile-sm {
+	margin-right:0;
+	}
+	ul {
+		margin:0 0 10px 0;
+		padding:0;
+		width:80%;
+		.pull-left;
+		@media @mobile-sm {
+			width:auto;
+			float:none;
+		}
+		li {
+			padding:0;
+			.pull-left;
+			margin-right:10px;
+			border:1px solid #ccc;
+			padding: 2px 25px 0px 10px;
+			position:relative;
+			margin-bottom:10px;
+			color:#111;
+			span {
+				background: url("@{base-url}/close-button.png") no-repeat right;
+				background-size: 10px 10px;
+				cursor: pointer;
+				/* float: right; */
+				position: absolute;
+				right: 5px;
+				width: 12px;
+				height: 12px;
+				top: 6px;
+			}
+		}
+	}
+	.active-reset {
+		.pull-right;
+		text-align:right;
+		width:125px;
+		background:#eee;
+		padding: 5px 15px 4px 8px;
+		color:#111;
+		font-weight:bold;
+		text-align:left;
+		background: url("@{base-url}/close-button.png") no-repeat right;
+		background-position: 94%;
+		background-color: #eee;
+		background-size: 10px 10px;
+		display:block;
+		cursor: pointer;
+		@media @mobile-sm {
+			.pull-left;
+		}
+	}
+}
+.inactive-reset {
+	display:none;
+}
+.prod-count {
+	clear: both;
+	font-weight: 700;
+	margin-bottom: 10px;
+  span {
+		color: @primary-color;
+  }
+}
+/************************************************************				 
+				Legal copy CSS
+*************************************************************/
+#health_interest_legal {
+	.form-item {
+		.control-label {
+			clear:both;
+			.bodycopy-small;
+			text-align:left;
+			padding-left:0;
+			.legal_numbers {
+				.pull-left;
+				font-size: 0.9rem;
+				line-height: 1.33;
+				margin-right:3px;
+			}
+			.legal_docs {
+				.pull-left;
+				
+			}
+		}
+	} 
+}
+.navbar-nav .open1 .dropdown-menu {
+	@media @mobile-sm {
+		position: static;
+		float: none;
+		width: auto;
+		margin-top: 0;
+		background-color: transparent;
+		border: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+}
+/* .view-promo-tile .views-row {
+	&:not(:first-child) {
+   display:none;
+  }
+} */

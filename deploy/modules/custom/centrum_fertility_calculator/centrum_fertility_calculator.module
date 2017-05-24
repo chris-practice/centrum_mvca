@@ -1,0 +1,698 @@
+<?php
+/**
+ * Implements hook_menu().
+ */
+function centrum_fertility_calculator_menu() {
+  $items['admin/config/fertility_calculator'] = array(
+    'title' => t('Fertility Configurations'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array(
+      'date_range_configuration'
+    ),
+    'access arguments' => array(
+      'access calculator configurations'
+    )
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function centrum_fertility_calculator_permission() {
+  return array(
+    'access calculator configurations' => array(
+      'title' => t('Access Calculator Configurations'),
+      'description' => t('Restrict other users to access this configuratino form.')
+    )
+  );
+}
+
+/**
+ * Admin configuration form.
+ */
+function date_range_configuration() {
+  $form                         = array();
+  $form['date_range']           = array(
+    '#title' => t('Enter year range:'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('date_range', '-1:+4'),
+    '#required' => TRUE
+  );
+  $form['days_difference']      = array(
+    '#title' => t('Enter number of days to be subtracted:'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('days_difference', 16),
+    '#required' => TRUE
+  );
+  $form['detection_difference'] = array(
+    '#title' => t('Enter detection period:'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('days_difference', 13),
+    '#required' => TRUE
+  );
+  $form['ovulation_days']       = array(
+    '#title' => t('Enter detection period:'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('ovulation_days', 5),
+    '#required' => TRUE
+  );
+  return system_settings_form($form);
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function centrum_fertility_calculator_block_info() {
+  $blocks['fertility_calculator'] = array(
+    'info' => t('Fertility Calculator')
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function centrum_fertility_calculator_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'fertility_calculator':
+      $block['content'] = drupal_get_form('centrum_fertility_calculator_form');
+      break;
+  }
+  return $block;
+}
+/**
+ * Form for caculating
+ */
+function centrum_fertility_calculator_form() {
+  $form                          = array();
+  $form['blue_background']       = array(
+    '#markup' => '',
+    '#prefix' => '<div class="blue-background">'
+  );
+  // Date Select
+  $form['date_select']           = array(
+    '#title' => t('What was the first day of your last period?'),
+    '#type' => 'date_select',
+    '#date_format' => 'm-d-Y',
+    '#default_value' => '',
+    '#date_label_position' => 'within',
+    '#date_year_range' => variable_get('date_range', '-1:+4')
+  );
+  // Date Popup
+  $form['date_popup']            = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'm-d-Y',
+    '#date_year_range' => variable_get('date_range', '-1:+4'),
+    '#suffix' => '<div class="date-select-error-message" style="visibility: hidden;">&nbsp;</div>'
+  );
+  // Avg cycle length
+  $form['period_duration']       = array(
+    '#title' => t('What is your average cycle length?'),
+    '#type' => 'select',
+    '#options' => array(
+      'days' => t('Days'),
+      21 => '21',
+      22 => '22',
+      23 => '23',
+      24 => '24',
+      25 => '25',
+      26 => '26',
+      27 => '27',
+      28 => '28',
+      29 => '29',
+      30 => '30',
+      31 => '31',
+      32 => '32',
+      33 => '33',
+      34 => '34',
+      35 => '35',
+      36 => '36',
+      37 => '37',
+      38 => '38',
+      39 => '39',
+      40 => '40',
+      41 => '41',
+      42 => '42',
+      43 => '43',
+      44 => '44',
+      45 => '45'
+    ),
+    '#default_value' => t('days'),
+    '#attributes' => array(
+      'class' => array(
+        'period-duration'
+      )
+    ),
+    '#suffix' => '<div class="period-duration-error-message" style="visibility: hidden;">&nbsp;</div>'
+  );
+  // Tip text
+  $form['tip']                   = array(
+    '#markup' => '
+	  <p class="tip">' . t('TIP: To calculate your menstrual cycle length, count the number of days from the first day of your cycle (Day 1 of your menstrual period) to the day before your next period starts. The average menstrual cycle is 28 days, although for many women the length varies.') . '</p>'
+  );
+  // Submit button
+  $form['submit']                = array(
+    '#type' => 'submit',
+    '#value' => t('CALCULATE') . '<span class="right-arrow"></span>',
+    '#attributes' => array(
+      'class' => array(
+        'big',
+        'blue',
+        'box-shadow'
+      )
+    ),
+    '#ajax' => array(
+      'callback' => 'centrum_fertility_calculator_submit',
+      'effect' => 'fade'
+    )
+  );
+  // Result Top Section
+  $form['result_top_section']    = array(
+    '#markup' => '
+	  <div class="result-top-section-container" style="display: none;">
+	    <span class="calendar-icon"></span>
+	    <p class="top-section">' . t('You\'re most likely to get pregnant from:') . '</p>
+	    <h2 class="result-top-section-period"></h2>
+	    <p class="result-top-section-pregnancy-detected">' . t('Earliest date a pregnancy could be detected:') . '</p>
+	    <p class="result-top-section-pregnancy-detected-result"></p>
+	  </div>',
+    '#prefix' => '</div>'
+  );
+  // Tip text
+  $form['legal']                 = array(
+    '#markup' => '
+	  <p class="legal">' . t('This Fertility Calculator is for educational purposes only. For questions and more specific advice, contact your health care provider.') . '</p>'
+  );
+  $module_path                   = drupal_get_path('module', 'centrum_fertility_calculator');
+  // Result Bottom Section
+  $form['result_bottom_section'] = array(
+    '#markup' => '
+	  <div class="result-bottom-section-container section-container-hide" style="visibility: hidden;">
+	    <div class="left-section">
+		    <div class="result-calendar">
+		      <div class="legend-highlight">
+            <div class="most-fertile-time">
+              <img src="/' . $module_path . '/images/most-fertile-time.png" alt="' . t('Image not found.') . '"/>
+              <span>' . t('Most fertile time') . '</span>
+            </div>
+            <div class="earliest-time">
+              <img src="/' . $module_path . '/images/earliest-date-a-pregnancy-could-be-detected.png" alt="' . t('Image not found.') . '"/>
+              <span>' . t('Earliest date a pregnancy could be detected') . '</span>
+            </div>
+			    </div>
+			    <div class="calendar-highlight">
+			    </div>
+		    </div>
+	    </div>
+		  <div class="right-section">
+		    <div class="results">
+		      <span> ' . t('Your next three fertile time periods:') . '</span>
+			    <div class="row-1">
+			      <p class="row-1-result-period result-period"></p>
+			      <p class="row-1-result-description result-description">' . t('Earliest date a pregnancy could be detected:') . '</p>
+			      <p class="row-1-result-test-date result-test-date"></p>
+			    </div>
+			    <div class="row-2">
+			      <p class="row-2-result-period result-period"></p>
+			      <p class="row-2-result-description result-description">' . t('Earliest date a pregnancy could be detected:') . '</p>
+			      <p class="row-2-result-test-date result-test-date"></p>
+			    </div>
+			    <div class="row-3">
+			      <p class="row-3-result-period result-period"></p>
+			      <p class="row-3-result-description result-description">' . t('Earliest date a pregnancy could be detected:') . '</p>
+			      <p class="row-3-result-test-date result-test-date"></p>
+			    </div>
+		    </div>
+	    </div>
+	  </div>
+    '
+  );
+  // Send Email popup button
+  $form['email_results']         = array(
+    '#type' => 'submit',
+    '#value' => t('EMAIL RESULTS'),
+    '#attributes' => array(
+      'class' => array(
+        'email-results'
+      )
+    ),
+    '#ajax' => array(
+      'callback' => 'centrum_fertility_email_results',
+      'effect' => 'fade'
+    ),
+    '#prefix' => '<div class="export" style="display: none;">'
+  );
+  // Non ajax submit handler to downloading ics file
+  $form['add_to_calendar']       = array(
+    '#type' => 'submit',
+    '#value' => t('ADD TO CALENDAR'),
+    '#attributes' => array(
+      'class' => array(
+        'add-to-calendar'
+      )
+    ),
+    '#submit' => array(
+      'centrum_fertility_add_to_calendar'
+    ),
+    '#suffix' => '</div>'
+  );
+  
+  // Send email form
+  // Email Popup Title
+  $form['email_popup_title']          = array(
+    // '#markup' => '<p class="email-popup-title">' . t('Can’t print right now?') . '</p>',
+    '#prefix' => '<div class="email-popup" style="display: none;"><div class="email-popup-inner">'
+  );
+  // Email Popup Description
+  $form['email_popup_description']    = array(
+    '#markup' => '
+	  <p class="email-popup-description">' . t('Enter your email address to send yourself the results from the Fertility Calculator.') . '</p>'
+  );
+  // Email Popup input field to accept user email address
+  $form['email']                      = array(
+    '#type' => 'textfield',
+    '#attributes' => array(
+      'placeholder' => t('Type email here'),
+      'class' => array(
+        'email'
+      )
+    ),
+    '#suffix' => '<div class="email-popup-error-messages">&nbsp;</div>'
+  );
+  // Email Popup Submit button
+  $form['email_popup_submit']         = array(
+    '#type' => 'submit',
+    '#value' => t('SEND') . '<span class="right-arrow"></span>',
+    '#attributes' => array(
+      'class' => array(
+        'email',
+        'big',
+        'blue',
+        'box-shadow'
+      )
+    ),
+    '#ajax' => array(
+      'callback' => 'email_popup_form_submit',
+      'effect' => 'fade'
+    )
+  );
+  $form['email_popup_privacy_notice'] = array(
+    '#markup' => '<p class="email-popup-privacy-notice">' . t('Privacy Notice: Your e-mail address will not be stored or distributed. For more information please review our privacy policy.') . '</p>',
+    '#suffix' => '</div></div>'
+  );
+  $form['seperation']                 = array(
+    '#markup' => '<div class="hr" style="display:none;"></div>'
+  );
+  $form['recalculate']                = array(
+    '#type' => 'submit',
+    '#value' => '<span class="left-arrow"></span>' . t('RECALCULATE'),
+    '#attributes' => array(
+      'class' => array(
+        'email'
+      )
+    ),
+    '#submit' => array(
+      'recalculate'
+    ),
+    '#prefix' => '<div class="recalculate scrolltoblocktop" style="display: none;">',
+    '#suffix' => '</div>'
+  );
+  // Adding required js
+  $form['#attached']['js']            = array(
+    drupal_get_path('module', 'centrum_fertility_calculator') . '/js/date_mapping.js',
+    drupal_get_path('module', 'centrum_fertility_calculator') . '/js/moment.min.js',
+    drupal_get_path('module', 'centrum_fertility_calculator') . '/js/fullcalendar.min.js',
+    drupal_get_path('module', 'centrum_fertility_calculator') . '/js/lang-all.js'
+  );
+  // Adding required css
+  $form['#attached']['css']           = array(
+    drupal_get_path('module', 'centrum_fertility_calculator') . '/css/fullcalendar.css',
+    drupal_get_path('module', 'centrum_fertility_calculator') . '/css/calc.css'
+  );
+  return $form;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function centrum_fertility_calculator_cron() {
+  // Removing all calendar temporary file from tmp directory
+  // Searching for the all the temporary files having "ics" as a prefix
+  $temporary_ics_files = glob(file_directory_temp() . '/ics*.tmp', GLOB_BRACE);
+  // Iterating through an array
+  foreach ($temporary_ics_files as $key => $val) {
+    // Actually deleting file
+    unlink($val);
+  }
+}
+
+/**
+ * Submit handler for recalculate button
+ * (Make sure that you will generate unique string for UID parameter)
+ */
+function centrum_fertility_add_to_calendar($form, &$form_state) {
+  // fetching fertile days
+  $fertile_days = calculate_fertile_days($form_state['values']['date_select'], $form_state['values']['period_duration']);
+  // Call to an API for fetching calendar file with provided events.
+  // Make sure that you will generate unique string for UID parameter
+  if (!empty($fertile_days)) {
+    $file_content = "BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//bobbin v0.1//NONSGML iCal Writer//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+";
+    // Iterating through an array to build required ics file content
+    foreach ($fertile_days as $key => $val) {
+      if (!empty($val)) {
+        $file_content .= "BEGIN:VEVENT
+DTSTART;TZID='(GMT-06.00) Central Time (US & Canada)':" . date('Ymd', strtotime($val['start_date'])) . "T000000Z
+DTEND;TZID='(GMT-06.00) Central Time (US & Canada)':" . date('Ymd', strtotime($val['end_date'])) . "T235959Z
+DTSTAMP:" . date('Ymd', strtotime($val['start_date'])) . "T000000Z
+UID:". generateRandomString(32) ."@yoursever.com
+CREATED:" . date('Ymd', strtotime($val['start_date'])) . "T000000Z
+DESCRIPTION:" . t('Fertile Days') . "
+LAST-MODIFIED:" . date('Ymd', strtotime($val['start_date'])) . "T000000Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:" . t('Fertile Days') . "
+TRANSP:OPAQUE
+END:VEVENT";
+        $file_content .= "
+BEGIN:VEVENT
+DTSTART;TZID='(GMT-06.00) Central Time (US & Canada)':" . date('Ymd', strtotime($val['erliest_pregnancy_detection_date'])) . "T000000Z
+DTEND;TZID='(GMT-06.00) Central Time (US & Canada)':" . date('Ymd', strtotime($val['erliest_pregnancy_detection_date'])) . "T235959Z
+DTSTAMP:" . date('Ymd', strtotime($val['erliest_pregnancy_detection_date'])) . "T000000Z
+UID:". generateRandomString(32) ."@yoursever.com
+CREATED:" . date('Ymd', strtotime($val['erliest_pregnancy_detection_date'])) . "T000000Z
+DESCRIPTION:" . t('Erliest Pregnancy Detection Date') . "
+LAST-MODIFIED:" . date('Ymd', strtotime($val['erliest_pregnancy_detection_date'])) . "T000000Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:" . t('Erliest Pregnancy Detection Date') . "
+TRANSP:OPAQUE
+END:VEVENT
+";
+      }
+    }
+    $file_content .= "END:VCALENDAR";
+    watchdog("file_content", '<pre>' . print_r($file_content, true) . '</pre>');
+    $temp_name = drupal_tempnam('temporary://', 'ics');
+    if (file_put_contents($temp_name, $file_content) !== FALSE) {
+      
+      file_transfer($temp_name, array(
+        'Content-Type' => 'application/octet-stream',
+        'Content-Disposition' => 'attachment; filename="' . 'events.ics' . '"',
+        'Content-Length' => filesize($path)
+      ));
+    }
+  }
+}
+
+/**
+ * Submit handler for recalculate button
+ */
+function recalculate($form, &$form_state) {
+  // Do nothing. This function just reloads a page
+}
+
+/**
+ * Submit handler for email popup button
+ */
+function email_popup_form_submit(&$form, &$form_state) {
+  // Submittion email value missing error
+  if ($form_state['values']['email'] == '' || !valid_email_address($form_state['values']['email'])) {
+    return array(
+      '#type' => 'ajax',
+      '#commands' => array(
+        ajax_command_replace('.email-popup-error-messages', '<div class="email-popup-error-messages">' . t('Please enter valid email address') . '</div>'),
+        // adding a error class to field
+        ajax_command_invoke('.email', 'removeClass', array(
+          'error'
+        ))
+      )
+    );
+  } else {
+    // send an email to user
+    global $language;
+    $params                = array();
+    $items                 = array();
+    $from                  = 'noreply@example.com';
+    $to                    = $form_state['values']['email'];
+    // fetching fertile days
+    $items['fertile_days'] = calculate_fertile_days($form_state['values']['date_select'], $form_state['values']['period_duration']);
+    $params['subject']     = t("Your Fertility Calculator Results from Centrum.ca");
+    $params['body']        = theme('email_template', array(
+      'items' => $items
+    ));
+    drupal_mail('centrum_fertility_calculator', 'fertility_calculator_mail', $to, $language->language, $params, $from, TRUE);
+    return array(
+      '#type' => 'ajax',
+      '#commands' => array(
+        // ajax_command_replace('.email-popup-error-messages', '<div class="email-popup-error-messages">' . t('Email send successfully.') . '</div>'), 
+        // adding a error class to field
+        ajax_command_invoke('.email-popup', 'removeClass', array(
+          'display'
+        )),
+        ajax_command_invoke('.email-popup', 'hide'),
+        ajax_command_invoke(NULL, 'emailomnitracking')
+      )
+    );
+  }
+}
+
+/**
+ * Submit handler for calculate button
+ */
+function centrum_fertility_calculator_submit($form, &$form_state) {
+  // Submittion values missing errors
+  $commands     = array();
+  $period_error = $date_error = FALSE;
+  if ($form_state['values']['period_duration'] == 'days') {
+    $period_error = TRUE;
+    $commands[]   = ajax_command_replace('.period-duration-error-message', '<div class="period-duration-error-message">' . t('Please enter your average cycle length.') . '</div>');
+    // adding a error class to field
+    $commands[]   = ajax_command_invoke('.period-duration', 'addClass', array(
+      'error'
+    ));
+  } else {
+    $period_error = FALSE;
+    $commands[]   = ajax_command_replace('.period-duration-error-message', '<div class="period-duration-error-message">&nbsp;</div>');
+    // adding a error class to field
+    $commands[]   = ajax_command_invoke('.period-duration', 'removeClass', array(
+      'error'
+    ));
+  }
+  if (empty($form_state['values']['date_select'])) {
+    $date_error = TRUE;
+    $commands[] = ajax_command_replace('.date-select-error-message', '<div class="date-select-error-message">' . t('Please enter the first day of your last period.') . '</div>');
+    // adding a error class to fields
+    $commands[] = ajax_command_invoke('#edit-date-select-month', 'addClass', array(
+      'error'
+    ));
+    $commands[] = ajax_command_invoke('#edit-date-select-day', 'addClass', array(
+      'error'
+    ));
+    $commands[] = ajax_command_invoke('#edit-date-select-year', 'addClass', array(
+      'error'
+    ));
+  } else {
+    $date_error = FALSE;
+    $commands[] = ajax_command_replace('.date-select-error-message', '<div class="date-select-error-message">&nbsp;</div>');
+    // adding a error class to fields
+    $commands[] = ajax_command_invoke('#edit-date-select-month', 'removeClass', array(
+      'error'
+    ));
+    $commands[] = ajax_command_invoke('#edit-date-select-day', 'removeClass', array(
+      'error'
+    ));
+    $commands[] = ajax_command_invoke('#edit-date-select-year', 'removeClass', array(
+      'error'
+    ));
+  }
+  if (!empty($commands) && ($period_error == TRUE || $date_error == TRUE)) {
+    return array(
+      '#type' => 'ajax',
+      '#commands' => $commands
+    );
+  } else {
+    $fertile_days = array();
+    // fetching fertile days
+    $fertile_days = calculate_fertile_days($form_state['values']['date_select'], $form_state['values']['period_duration']);
+    // If errored occured while fetching records
+    if (empty($fertile_days)) {
+      $form_field = array(
+        '#markup' => '<div class="inline-messages"><ul><li>' . t('We are unable to calculate your results. Please try again.') . '</li></ul></div>'
+      );
+      // Displaying an error message as we are not able to fetch fertile days for the user input
+      return array(
+        '#type' => 'ajax',
+        '#commands' => array(
+          ajax_command_replace('.error-messages', render($form_field))
+        )
+      );
+    } else {
+      global $language;
+      return array(
+        '#type' => 'ajax',
+        '#commands' => array(
+          ajax_command_invoke(NULL, 'myfertiledays', array(
+            $fertile_days
+          )), // Calling myfertiledays function from date_mapping.js file to populate dates
+          ajax_command_replace('.period-duration-error-message', '<div class="period-duration-error-message">&nbsp;</div>'), // Remvoing all the error messages
+          ajax_command_replace('.date-select-error-message', '<div class="date-select-error-message">&nbsp;</div>'), // Remvoing all the error messages
+          ajax_command_replace('.inline-messages', '<div class="error-messages"></div>'), // Remvoing all the error messages
+          ajax_command_invoke('.error-messages', 'hide'), // Hiding error message div
+          ajax_command_invoke('.blue-background', 'hide'), // Hiding error message div
+          ajax_command_invoke('.inline-messages', 'hide'), // Hiding error message div
+          ajax_command_invoke('.container-inline-date', 'hide'), // Hiding form field
+          ajax_command_invoke('.form-item-period-duration', 'hide'), // Hiding form field
+          ajax_command_invoke('.tip', 'hide'), // Hiding form field
+          ajax_command_invoke('form #edit-submit', 'hide'), // Hiding form field
+          ajax_command_invoke('#edit-date-select-month', 'removeClass', array(
+            'error'
+          )), // Remvoing field error class
+          ajax_command_invoke('#edit-date-select-day', 'removeClass', array(
+            'error'
+          )), // Remvoing field error class
+          ajax_command_invoke('#edit-date-select-year', 'removeClass', array(
+            'error'
+          )), // Remvoing field error class
+          ajax_command_invoke('.period-duration', 'removeClass', array(
+            'error'
+          )), // Remvoing field error class
+          ajax_command_invoke('.result-top-section-container', 'show'), // Showing top result section div
+          ajax_command_replace('.result-top-section-period', '<h2 class="result-top-section-period">' . $fertile_days[0]['duration'] . '</h2>'), // Adding result values
+          ajax_command_replace('.result-top-section-pregnancy-detected-result', '<p class="result-top-section-pregnancy-detected-result">' . $fertile_days[0]['detection'] . '</p>'), // Adding result values
+          ajax_command_invoke(NULL, 'visibilityvisible', array(
+            '.result-bottom-section-container'
+          )), // Showing bottom result section div
+          ajax_command_replace('.row-1-result-period', '<p class="row-1-result-period result-period">' . $fertile_days[1]['duration'] . '</p>'), // Adding result values
+          ajax_command_replace('.row-2-result-period', '<p class="row-2-result-period result-period">' . $fertile_days[2]['duration'] . '</p>'), // Adding result values
+          ajax_command_replace('.row-3-result-period', '<p class="row-3-result-period result-period">' . $fertile_days[3]['duration'] . '</p>'), // Adding result values
+          ajax_command_replace('.row-1-result-test-date', '<p class="row-1-result-test-date result-test-date">' . $fertile_days[1]['detection'] . '</p>'), // Adding result values
+          ajax_command_replace('.row-2-result-test-date', '<p class="row-2-result-test-date result-test-date">' . $fertile_days[2]['detection'] . '</p>'), // Adding result values
+          ajax_command_replace('.row-3-result-test-date', '<p class="row-3-result-test-date result-test-date">' . $fertile_days[3]['detection'] . '</p>'), // Adding result values
+          ajax_command_invoke('.export', 'show'), // Showing both buttons for export records
+          ajax_command_invoke('.recalculate', 'show'),
+          ajax_command_invoke(NULL, 'showresultfooterblock', array(
+            '.fertility-calc-block'
+          )),
+	  ajax_command_invoke(NULL, 'calcomnitracking'),
+          ajax_command_invoke('.hr', 'show')
+        )
+      ); // Showing both buttons for export records
+    }
+  }
+}
+
+/**
+ * Submit handler for email button
+ */
+function centrum_fertility_email_results($form, &$form_state) {
+  return array(
+    '#type' => 'ajax',
+    '#commands' => array(
+      ajax_command_invoke('.email-popup', 'show'),
+      ajax_command_invoke('.email-popup', 'addClass', array(
+        'display'
+      )),
+      ajax_command_invoke(NULL, 'emailpopupomnitracking')
+    )
+  );
+}
+
+/**
+ * Helper function for caculating fertile days
+ */
+function calculate_fertile_days($start_date, $avg_days_of_cycle) {
+  $fertile_days          = array();
+  $month_cycle_last_date = array();
+  $cycle_difference      = $avg_days_of_cycle - variable_get('days_difference', 16);
+  for ($i = 0; $i < 4; $i++) {
+    $first_fertile_day = NULL;
+    if ($i == 0) {
+      // Fertile start date
+      $fertile_days[$i]['start_date']                       = date('Y-m-d', strtotime($start_date . ' +' . $cycle_difference . ' day'));
+      // Fertile end date
+      $fertile_days[$i]['end_date']                         = date('Y-m-d', strtotime($fertile_days[$i]['start_date'] . ' +5 day'));
+      // Fertile duration for calendar days
+      $fertile_days[$i]['duration']                         = get_translated_day_full_name(strtotime($start_date . ' +' . $cycle_difference . ' day')) . ', ' . get_translated_month_full_name(strtotime($start_date . ' +' . $cycle_difference . ' day')) . ' ' . date('d, Y', strtotime($start_date . ' +' . $cycle_difference . ' day')) . ' - ' . get_translated_day_full_name(strtotime($fertile_days[$i]['start_date'] . ' +5 day')) . ', ' . get_translated_month_full_name(strtotime($fertile_days[$i]['start_date'] . ' +5 day')) . ' ' . date('d, Y', strtotime($fertile_days[$i]['start_date'] . ' +5 day'));
+      // Pregnancy Detection Date
+      $fertile_days[$i]['erliest_pregnancy_detection_date'] = date('Y-m-d', strtotime($fertile_days[$i]['end_date'] . ' +' . variable_get('detection_difference', 13) . ' day'));
+      // Pregnancy Detection Date for calendar
+      $fertile_days[$i]['detection']                        = get_translated_day_full_name(strtotime($fertile_days[$i]['end_date'] . ' +' . variable_get('detection_difference', 13) . ' day')) . ', ' . get_translated_month_full_name(strtotime($fertile_days[$i]['end_date'] . ' +' . variable_get('detection_difference', 13) . ' day')) . ' ' . date('d, Y', strtotime($fertile_days[$i]['end_date'] . ' +' . variable_get('detection_difference', 13) . ' day'));
+      // Cycle last day
+      $month_cycle_last_date[$i]                            = date('Y-m-d', strtotime($start_date . ' +' . $avg_days_of_cycle . ' day'));
+    } else {
+      // Fertile start date
+      $fertile_days[$i]['start_date']                       = date('Y-m-d', strtotime($month_cycle_last_date[$i - 1] . ' +' . $cycle_difference . ' day'));
+      // Fertile end date
+      $fertile_days[$i]['end_date']                         = date('Y-m-d', strtotime($fertile_days[$i]['start_date'] . ' +5 day'));
+      // Fertile duration for calendar days
+      $fertile_days[$i]['duration']                         = get_translated_day_full_name(strtotime($month_cycle_last_date[$i - 1] . ' +' . $cycle_difference . ' day')) . ', ' . get_translated_month_full_name(strtotime($month_cycle_last_date[$i - 1] . ' +' . $cycle_difference . ' day')) . ' ' . date('d, Y', strtotime($fertile_days[$i]['start_date'])) . ' - ' . get_translated_day_full_name(strtotime($fertile_days[$i]['start_date'] . ' +5 day')) . ', ' . get_translated_month_full_name(strtotime($fertile_days[$i]['start_date'] . ' +5 day')) . ' ' . date('d, Y', strtotime($fertile_days[$i]['start_date'] . ' +5 day'));
+      // Pregnancy Detection Date
+      $fertile_days[$i]['erliest_pregnancy_detection_date'] = date('Y-m-d', strtotime($fertile_days[$i]['end_date'] . ' +' . variable_get('detection_difference', 13) . ' day'));
+      // Pregnancy Detection Date for calendar
+      $fertile_days[$i]['detection']                        = get_translated_day_full_name(strtotime($fertile_days[$i]['end_date'] . ' +' . variable_get('detection_difference', 13) . ' day')) . ', ' . get_translated_month_full_name(strtotime($fertile_days[$i]['end_date'] . ' +' . variable_get('detection_difference', 13) . ' day')) . ' ' . date('d, Y', strtotime($fertile_days[$i]['end_date'] . ' +' . variable_get('detection_difference', 13) . ' day'));
+      // Cycle last day
+      $month_cycle_last_date[$i]                            = date('Y-m-d', strtotime($month_cycle_last_date[$i - 1] . ' +' . $avg_days_of_cycle . ' day'));
+    }
+  }
+  return $fertile_days;
+}
+
+/**
+ * Helper function for fetching translated month name
+ */
+function get_translated_month_full_name($timestamp) {
+  return t(date('F', $timestamp));
+}
+
+/**
+ * Helper function for fetching translated day name
+ */
+function get_translated_day_full_name($timestamp) {
+  return t(date('l', $timestamp));
+}
+
+/**
+ * Implements hook_theme().
+ */
+function centrum_fertility_calculator_theme() {
+  return array(
+    'email_template' => array(
+      'variables' => array(
+        'items' => NULL
+      ),
+      'template' => 'templates/email-template'
+    )
+  );
+}
+
+/**
+ * Implements hook_mail().
+ */
+function centrum_fertility_calculator_mail($key, &$message, $params = array()) {
+  switch ($key) {
+    case 'fertility_calculator_mail':
+      $message['subject'] = $params['subject'];
+      $message['body'][]  = $params['body'];
+      break;
+  }
+}
+
+/**
+ * Helper function to generate random string.
+ */
+function generateRandomString($length = 10) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $randomString = '';
+  for ($i = 0; $i < $length; $i++) {
+    $randomString .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $randomString;
+}

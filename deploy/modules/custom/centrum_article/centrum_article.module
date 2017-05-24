@@ -1,0 +1,106 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function centrum_article_block_info() { 
+  $blocks['article'] = array(
+    'info' => t('Sets previous and next article pages'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+   return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function centrum_article_block_view($delta = '') {
+  $blocks = array();
+  global $base_url;	
+  $block = array();
+  $nid = arg(1);
+  $current_node_val = node_load($nid);
+  $current_node_type = $current_node_val->type;
+
+  switch ($delta) {
+    case 'article':
+    
+	if($current_node_type != 'article'){
+		unset($blocks['article']);
+	} 
+	else{
+      $nid = arg(1);
+      $current_node_val = node_load($nid);
+      $current_node_language = $current_node_val->language;
+     // $current_article_weight = $current_node_val->field_product_related_article[$current_node_language][0]['entity']->field_article_weight[$current_node_language][0]['value'];
+      
+      $current_article_weight = $current_node_val->field_article_weight[LANGUAGE_NONE][0]['value'];
+
+      $previous_article_weight = $current_article_weight - 1;
+      $next_article_weight = $current_article_weight + 1;
+
+      $prev_node = db_select('field_data_field_article_weight', 'weight');
+  	  $prev_node->fields('weight', array('entity_id'));
+  	  $prev_node->condition('bundle','article');
+  	  $prev_node->condition('field_article_weight_value',$previous_article_weight);  	  
+  	  $prev_node_query_val = $prev_node->execute()->fetchAll(PDO::FETCH_ASSOC);
+
+  	  $prev_node_path_alias = drupal_get_path_alias('node/' . $prev_node_query_val[0]['entity_id']);
+  	  $prev_node_url = url($prev_node_path_alias);
+      $prev_node_title = node_load($prev_node_query_val[0]['entity_id'])->title;
+      
+  	  $next_node = db_select('field_data_field_article_weight', 'weight');
+      $next_node->fields('weight', array('entity_id'));
+      $next_node->condition('bundle','article');
+      $next_node->condition('field_article_weight_value',$next_article_weight);  	  
+  	  $next_node_query_val = $next_node->execute()->fetchAll(PDO::FETCH_ASSOC);
+
+  	  $next_node_path_alias = drupal_get_path_alias('node/' . $next_node_query_val[0]['entity_id']);
+  	  $next_node_url = url($next_node_path_alias);
+      $next_node_title = node_load($next_node_query_val[0]['entity_id'])->title;       
+      
+      //$block['title'] = "dummy weight";
+      $block['content'] =  '<a class = "article-prev"  href = ' . $prev_node_url . '>' . $prev_node_title . '</a>'.
+                           '<a class = "article-next" href = ' . $next_node_url . '>' . $next_node_title . '</a>';
+  	}
+	  break;
+	}
+    watchdog('block_val' , '<pre>' . print_r($current_node_val->field_article_weight, true) . '</pre>');  	
+    watchdog('lang' , '<pre>' . print_r($current_node_language, true) . '</pre>');  	
+  return $block;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function centrum_article_form_alter(&$form, &$form_state, $form_id) {
+ 
+  if ($form_id == 'views_exposed_form') {
+    $form['field_article_category_value_i18n']['#options']['All'] = t('Category: All Articles');
+  }  
+
+
+  if($form_id == 'article_node_form'){ 
+
+    $form['#validate'][] = 'article_weight';
+          
+  }
+  return $form;
+}
+
+function article_weight($form, &$form_state){
+  $language =  $GLOBALS['language']->language;
+
+  $article_weight_value = $form_state['values']['field_article_weight'][$language][0]['value'];
+
+  $database_article_weights = db_select('field_data_field_article_weight', 'weight');
+      $database_article_weights->fields('weight', array('entity_id'));
+      $database_article_weights->condition('bundle','article');
+      $database_article_weights->condition('field_article_weight_value',$article_weight_value);     
+      $fetched_article_weights = $database_article_weights->execute()->fetchAll(PDO::FETCH_ASSOC);
+
+      if(count($fetched_article_weights) > 0)
+      { 
+        form_set_error('duplicate value', t('Article weight already exists.')); 
+      }
+}

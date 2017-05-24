@@ -1,0 +1,4299 @@
+@import 'variables';
+
+/************************************************************
+					Block - vitamins and minerals tout CSS
+*************************************************************/
+.vitamin-minrals { 
+	text-align: center;
+	padding: 40px 0 40px 0;
+	border-top: 1px solid #c1c1c1;
+	border-bottom: 1px solid #c1c1c1;
+	float: left;
+	width: @full-width;
+	@media @mobile-sm {
+		float: none;
+	}
+	h4 {
+		text-align: center;
+		margin: 10px 0 8px 0;
+		a {
+			background: url("@{base-url}/arrow-right.png") no-repeat;
+			display: inline-block;
+			font-size: @font-27rem;
+			text-decoration: underline;
+			text-align: left;
+			padding-right: 18px;
+			background-position: right 7px;
+			&:hover {
+				background: #dcf3fc url("@{base-url}/arrow-right.png") no-repeat;
+				background-position: right 7px;
+				color: #006daa;
+			}
+		}
+	}
+	p {
+		.bodycopy-big;
+	}
+	.a-to-zn {
+		@media @mobile-sm {
+			margin-bottom: 35px;
+		}
+		p {
+			width: 300px;
+			margin: 0 auto;
+			@media @large {
+				width: 100%;
+			}
+		}
+	}
+	.get-coupans {
+	  margin-top: 4px;
+		@media @mobile-sm {
+			margin-bottom: 35px;
+			margin-top: 0;
+		}
+		p {
+			width: 215px;
+			margin: 0 auto;
+			@media @large {
+				width: 100%;
+			}
+		}
+	}
+	.prenetal-nutrition {
+    margin-top: -11px;
+		@media @mobile-sm {
+			margin-top: 0;
+		}
+		p {
+			width: 260px;
+			margin: 0 auto;
+			@media @large {
+				width: 100%;
+			}
+		}
+	}
+}
+.i18n-fr {
+	.vitamin-minrals {
+		.get-coupans {
+			p {
+				width: 265px;
+				@media @large {
+					width: 100%;
+				}	
+			}
+		}
+		@media @large {
+			h4 {
+				a {
+					font-size: 2.3rem; 
+				}
+			}
+		}
+	}
+}
+/*******************************************
+								For Ipad Menu
+********************************************/
+header#navbar .navbar-collapse nav .navbar-nav li.touchOpen .dropdown-menu {
+  display: block;
+}	
+/************************************************************
+					Home - Age Tout CSS
+*************************************************************/
+form#home-page-age-tout-new {
+	background: url("@{base-url}/rainbow-home.png") no-repeat center 170px;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 0 0 35px;
+	position: relative;
+	text-align: center;
+	max-width: 1280px;
+  margin: 0 auto;
+	#age_tout {
+		label {
+			.h2;
+			width: 100%;
+			padding: 75px 0 0 0;
+			text-align: center;
+			background: #fff url("@{base-url}/age_tout_arrow.png") no-repeat center center;	
+			background-position: center 35px;
+			.form-required {
+				display:none;
+			}
+		}
+		div.selector.fixedWidth {
+			span {
+				padding: 5px 35px 5px 10px;
+				width: 160px;
+				font-weight: bold;
+			}
+		}
+		#uniform-edit-age-tout-new {
+			margin-left: -110px;
+			margin-top: 16px;
+			@media @mobile-sm {
+				margin: 15px auto 0;
+			}
+		}
+	}
+	#submit_value_age_tout {
+		position: absolute;
+    top: 133px;
+    left: 53%;
+		@media @mobile-sm {
+			position: relative;
+			top: 0;
+			left: 0;
+			right: 0;
+		}
+		.big {
+			padding: 6px 36px 6px 30px;
+			/* background-position:75%; */
+		}
+	}
+}
+.i18n-fr {
+	form#home-page-age-tout {
+		#age_tout label {
+			@media @mobile-sm {
+				background-position: center 30px;
+			}
+		}
+	}
+}
+/************************************************************
+					Home - Browse Products by Category CSS
+*************************************************************/
+.browse-products-by-category {
+	margin: 50px 0;
+	h2.block-title {
+		background: url("@{base-url}/SectionIcon_Products_GREY.png") no-repeat center top;
+		background-size: 55px auto;		
+		padding: 35px 0 20px 0;
+		text-align: center;		
+	}
+	.views-row {
+		
+		display: table;
+		margin-bottom: 20px;
+		height: 100px;
+		padding-left: 0;
+		padding-right:20px;
+		@media @mobile-sm {
+			padding: 0;
+		} 
+		@media @mobile-sm {
+			width: 290px;
+			margin: 0 auto 20px;
+		}
+		.views-field {
+			background: @border-color;
+			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+			&:hover {
+				background: #e6e6e6;
+				box-shadow: 0 3px 3px rgba(0, 0, 0, 0.35);
+			}
+		}
+		span {
+			display: table-cell;
+			vertical-align: middle;
+			width: 45%;
+		}
+		span.arrow-indi {
+			width: 10%;
+		}
+		span.category-name {
+			width: 35%;
+		}
+		.views-field-field-product-category-image-et {
+			float: left;
+		}
+		.views-field-name-field-et {
+			a {
+				font-size: @font-27rem;
+				color: #111;
+				line-height: 1.05;
+				font-family: 'Open Sans Condensed', sans-serif;
+				font-weight: 700;
+				display: block;
+				background: url("@{base-url}/browse-category-arrow.png") no-repeat 94% center;
+				&:hover, &:focus {
+					text-decoration: none;
+				}
+			}
+		}
+	}
+	.views-row.views-row-1 {
+		
+		.views-field {
+			border-bottom: 3px solid @red-border;	
+		}
+		img {
+			/* margin-top: -10px;
+			margin-left: 20px;
+			height: 110px;
+			width: 75%; */
+			margin-top: -8px;
+			margin-left: 20px;
+		}
+	}
+	.views-row.views-row-2 {
+		padding-left: 5px;
+    
+		@media @mobile-sm {
+			padding: 0;
+		}
+		.views-field {
+			border-bottom: 3px solid @orange-border;	
+		}
+		img {
+			/* margin-top: -10px;
+			margin-left: 20px;
+			height: 110px;
+			width: 75%; */
+			margin-top: -8px;
+			margin-left: 20px;
+		}
+	}
+	.views-row.views-row-3 {
+		margin-right: 0;
+    
+		padding-left: 5px;
+		@media @mobile-sm {
+			margin: 0 auto 20px;
+			padding: 0;
+		}
+		.views-field {
+			border-bottom: 3px solid @yellow-border;	
+		}
+		img {
+			/* margin-top: 7px;
+			margin-left: 20px;
+			height: 93px;
+			width: 75%; */
+			margin-top: 7px;
+			margin-left: 20px;
+		}
+	}
+	.views-row.views-row-4 {
+		padding-left: 0;
+		margin-left: 16.66666667%;
+		@media @mobile-sm {
+			padding: 0;
+			margin: 0 auto 20px;
+		}
+		.views-field {
+			border-bottom: 3px solid @green-border;
+		}
+		img {
+			/* margin-top: -10px;
+			margin-left: 20px;
+			height: 110px;
+			width: 75%; */
+			margin-top: -8px;
+			margin-left: 20px;
+		}
+	}
+	.views-row.views-row-5 {
+		padding-left: 5px;
+    
+		@media @mobile-sm {
+			padding: 0;
+		}
+		.views-field {
+			border-bottom: 3px solid @blue-border;
+		}
+		img {
+			/* margin-top: -10px;
+			margin-left: 20px;
+			height: 110px;
+			width: 75%; */
+			margin-top: -8px;
+			margin-left: 20px; 
+		}
+	}
+	/* .views-row.views-row-3 {
+		@media @mobile-sm {
+			margin: 0 auto 20px;
+		}
+	} */ 
+}
+.i18n-fr { 
+	.browse-products-by-category {
+		.views-row {
+			.views-field-name-field-et {
+				a {
+					font-size: 2.26rem;
+				}
+			}
+		}
+	}
+}
+/************************************************************/
+.page-products .page-header{
+  visibility: hidden;
+}
+/**********************************************************
+								Related Article Video CSS
+**********************************************************/
+.related-article {  
+  .field-name-field-embedded-video {
+    .field-label {
+      display: none;
+    }
+    iframe {
+      margin-top: 32px;
+      margin-left: 20px;
+			@media @mobile-sm {
+				margin-left: 0;
+				width: 100%;
+				height: 168px;
+			}
+			@media @mobile-sm-lscape {
+				height: 308px;
+			}
+    }
+  }
+}
+.i18n-fr.page-node-261 {
+  .related-article .field-name-field-embedded-video iframe {
+    display: none;
+  }
+}  
+/************************************************************
+				Products - Browse Products by Category CSS
+*************************************************************/
+.browse-products {
+	max-width: 780px;
+	margin: 0 auto;
+	width:100%;
+	.col-lg-2 {
+    width: 17.9%;
+    padding: 0;
+    margin-right: 20px;
+	.pull-left;
+	@media @medium {
+		width:17%;
+	}
+	}
+	.views-row.views-row-1 {
+		.views-field {
+			border-bottom: 3px solid #e30613;
+		}
+	}
+	.views-row.views-row-2 {
+		.views-field {
+			border-bottom: 3px solid #f7a600;
+		}
+	}
+	.views-row.views-row-3 {
+		.views-field {
+			border-bottom: 3px solid #ffed00;
+		}
+	}
+	.views-row.views-row-4 {
+		.views-field {
+			border-bottom: 3px solid #50af31;
+		}
+	}
+	.views-row.views-row-5 {
+		margin-right: 0;
+		.views-field {
+			border-bottom: 3px solid #0080c8;
+		}
+	}
+	.browse-category {
+		a {
+			background: #f5f5f5;
+			display: block;
+			text-align: center;
+			font-size: 20px;
+			color: #111;
+			font-weight: bold;
+			height: 140px;
+			padding: 10px 25px;
+			line-height: 20px;
+			.font-open-sans;
+			&:hover, &.active, &:focus {
+				text-decoration: none;
+				background: #cce6f3;
+			}
+			.category-image {
+				img {
+					display: inline-block;
+				}
+			}
+		}
+	}
+}
+.i18n-fr .browse-products .browse-category a {
+	font-size: 14px;
+  line-height: 14px;
+}
+/************************************************************
+								Home - Featured Articles CSS
+*************************************************************/
+.page-learn-articles {
+	h1.page-header {
+		margin:0 12px 17px 0;
+		text-align: center;
+		font-size:4.3rem;
+		line-height:33px;
+	}
+	#block-system-main {
+		/* margin-left:10px; */
+		.views-exposed-widgets {
+			margin-bottom: 18px;
+		}
+	}
+}
+
+.featured-article-home, .articles-landing {
+  margin-top: 60px;
+	text-align: center;
+	h2.block-title {		
+		background-image: url("@{base-url}/SectionIcon_Articles_GREY.png");
+    background-size: 28px auto;
+		background-repeat: no-repeat;
+		background-position: center top;		
+		padding: 40px 0 20px 0;
+	  text-align: center;
+	}
+	.featured-article, .article {
+		a {
+			display: block;
+			margin: 7px 0 3px;
+			text-decoration: underline;
+			.font-size-16;
+			font-weight: bold;
+			.font-roboto;
+			letter-spacing:0.01rem;
+		}
+	}
+	.views-row {
+		margin-bottom:5px;
+		min-height:320px;
+		@media @mobile-sm {
+			min-height:auto;
+			margin-bottom:15px;
+		}
+	}
+	.views-row.views-row-odd.featured-article, .views-row.views-row-odd.article {
+    padding-left: 0;
+    padding-right: 10px;
+		text-align: left;
+		@media @mobile-sm {
+			padding: 0;
+		}
+	}
+	.views-row.views-row-even.featured-article, .views-row.views-row-even.article {
+    padding-right: 0;
+    padding-left: 10px;
+		text-align: left;
+		@media @mobile-sm {
+			padding: 0;
+		}
+	}
+	.view-content {
+		clear: both;
+    float: left;
+	margin-bottom:17px;
+		@media @mobile-sm {
+			float: none;
+		}
+	}
+	.view-footer {
+    clear: both;
+		.big:hover {
+			color: #fff;
+		}
+	}
+}
+.featured-article-home {
+	.views-row {
+		min-height:auto;
+	}
+}
+.featured-article-home {
+  /* margin-bottom: 60px; */
+	.views-row.featured-article {
+		img {
+			width: 100%
+		}
+	}
+}
+.articles-landing {
+	margin-top: 0;
+	.views-row {
+		.views-field {
+			p {
+				min-height: 80px;
+				margin: 0;
+			}
+		}
+	}
+	.view-filters {
+		.pull-left;
+	}
+	.views-exposed-form .views-exposed-widget {
+		padding-top:0;
+	}
+	.text-center {
+		float: left;
+		.pagination {
+			margin:0px 0 20px 0;
+		
+		}
+	}
+	div.selector.fixedWidth span {
+		text-align: left;
+    width: 300px;
+	}
+	.pagination {
+		li, li:first-child {
+			a, span {
+				border-radius: 0;
+				margin-left: 0;
+				margin-right: 10px;
+				padding: 8px 7px;
+				text-transform: uppercase;
+				border: none;
+				font-size: 14px;
+				.font-bold;
+			}
+		}
+		li.next {
+			a {
+				background: #f5f5f5 url("@{base-url}/next-arrow.png") no-repeat 90% center;
+				padding-right: 20px;
+				&:hover, &:focus {
+					background: @primary-color url("@{base-url}/white-arrow.png") no-repeat 90% center;
+				}	
+			}
+		}
+		li.prev {
+			a {
+				background: #f5f5f5 url("@{base-url}/previous-arrow.png") no-repeat 7% center;
+				padding-left: 20px;
+				&:hover, &:focus {
+					background: @primary-color url("@{base-url}/previous-white-arrow.png") no-repeat 7% center;
+				}
+			}
+		}
+		li.pager-last, li.pager-first {
+			.dis-none;
+		}
+	}
+	.article {
+		.views-field-body {
+			.field-content {
+				min-height:100px;
+			}
+		}
+		
+		a {
+			img {
+				width: 100%;
+			}
+		}
+	}
+} 
+/************************************************************
+								Product - main page CSS
+*************************************************************/
+.get-add-where {
+	position: relative;
+	height: 40px;
+	@media @mobile-sm {
+		height: 90px;
+	}
+	.get-coupons {
+    width: 161px;
+    float: left;
+    margin-top: 3px;
+		a {
+			background: url("@{base-url}/button-arrow-white.png"), url("@{base-url}/get-coupans-dollar.png");
+			background-repeat: no-repeat;
+			background-position: 94% center, 13px center;
+			background-color: #0080c8;
+			padding: 6px 30px 6px 40px;
+			&:hover {
+				background-position: 97% center, 13px center;
+			}
+		}
+	}
+	.addthis_toolbox {
+    width: 116px;
+    float: left;
+    margin-left: 9px;
+		position: relative;
+		a {
+			background: #0080c8 url("@{base-url}/share-it.png") no-repeat 13px center;
+			padding: 6px 22px 6px 38px;
+		}
+		.custom_images {
+			position: absolute;
+			top: 50px;
+			background: #fff;
+			border: 3px solid #0080c8;
+			width: 140px;
+			padding: 20px;
+			text-align: left;
+			left: -15px;
+			.dis-none;
+			&:before {
+				content: url("@{base-url}/tool-tip-arrow.png");
+				width: 0;
+				height: 0;
+				position: absolute;
+				top: -24px;
+				right: 98px;
+				z-index: 1;
+			}
+			a {
+				background: none;
+				display: table-row;
+				padding: 0;
+				margin-bottom: 10px;
+				span.at-icon-wrapper {
+					width: 25px !important;
+					height: 25px !important;
+					margin-right: 7px;
+					vertical-align: middle;
+					margin-bottom: 7px;
+					.at-icon {
+						width: 25px !important;
+						height: 25px !important;
+					}
+				}
+			}
+		}
+	}
+	.where-to-buy {
+    float: left;
+    margin-top: 3px;
+		@media @mobile-sm {
+		  clear: both;
+			margin-top: 25px;
+		}
+	}
+}
+.i18n-fr {
+	.get-add-where {
+		.get-coupons {
+			width: auto;
+		}
+		.addthis_toolbox {
+			width: auto;
+      @media @mobile-sm {
+        margin: 20px 0 0 0;
+      }
+		}
+		.where-to-buy {
+			margin-top: 25px;
+			margin-bottom: 15px;
+		}
+	}
+}
+/***********************************************************
+								Sitemap CSS
+***********************************************************/
+.centrum-sitemap {
+	clear: both;
+	margin-top: 20px;
+	a {
+		display: block;
+		text-decoration: underline;
+		line-height: 27px;
+	}
+	a.font-roboto-condensed {
+		font-size: 18px;
+		line-height: 1.6;
+	}
+	.about-centrum {
+		margin: 0;
+		float:none;
+	}
+	.home, .find-ur-centrum, .learn, .about-centrum-sitemap, .faq {
+    margin-bottom: 26px;
+	}
+	.articles, .prenetal-nutrition {
+    margin-top: 26px;
+	}
+	.contact-us {
+    margin: 26px 0 25px;
+	}
+	@media @mobile-sm {
+		.learn, .coupans {
+			margin-top: 26px;
+		}
+	}
+	.products {
+    margin-bottom: 50px;
+		@media @mobile-sm {
+			margin-bottom: 0;
+		}
+	}
+}
+.node-type-page {
+	h1.page-header {
+		font-size: 42px;
+		text-align: center;
+		margin: 23px 0 0;
+		padding-bottom: 0;
+		@media @mobile-sm {
+			font-size: 32px;
+			text-align: left;
+		}
+	}
+}
+/***********************************************************
+								About Centrum CSS
+***********************************************************/
+.about-centrum {
+	margin: 45px 0 33px 0;
+	float: left;
+	.about-centrum-desc {
+    padding-left: 0;
+		@media @mobile-sm {
+			padding-left: 15px;
+		}
+		p {
+			line-height: 20px;
+			margin-bottom: 20px;
+		}
+	}
+	.about-centrum-callout {
+		text-align: center;
+		@media @mobile-sm {
+			clear: both;
+		}
+		h2 {
+			font-size: 26px;
+			font-family: 'Open Sans Condensed', sans-serif;
+			font-weight: 700;
+			margin-bottom: 9px;
+			margin-left: -19px;
+			margin-top: -5px;
+		}
+		img {
+			@media @mobile-sm{
+				width: 280px;
+			}
+			@media @large{
+				width: 100%;
+			}
+		}
+	}
+	p.legal-desc {
+		width: 530px; 
+		@media @mobile-sm {
+			width: auto;
+		}
+	}
+}
+/***********************************************************
+								Learn Page CSS
+***********************************************************/
+.learning-centre-article, .learning-centre-library {
+	text-align: center;
+	min-height: 310px;
+  padding: 15px 0;
+	margin: 50px 0;
+	@media @mobile-sm {
+		min-height: 290px;
+	}
+	.learn-article-library {
+		margin-bottom: 4px;
+		a {
+			background: url("@{base-url}/arrow-right.png") no-repeat;
+			display: inline-block;
+			font-size: @font-27rem;
+			font-family: "Open Sans Condensed";
+			font-weight: 700;
+			text-decoration: underline;
+			text-align: left;
+			background-position: center right;
+			padding-right: 18px;
+			line-height: 1.6;
+			&:hover {
+				background: #dcf3fc url("@{base-url}/arrow-right.png") no-repeat center right;
+				color: #006daa;
+			}
+		}
+	}
+	p {
+		font-size: 16px;
+    width: 390px;
+    margin: 0 auto 29px;
+		line-height: 22px;
+		@media @mobile-sm { 
+			width: 100%;
+		}
+		@media @large{
+			width: 90%;
+		}
+	}
+}
+.learning-centre-article {
+	border-right: 1px solid #c1c1c1;
+	@media @mobile-sm {
+		border-bottom: 1px solid #c1c1c1;
+		border-right: none;
+		margin-bottom: 0;
+	}
+	.learn-article-library {
+		background: url("@{base-url}/SectionIcon_Articles_GREY_blue.png") no-repeat center top;
+		padding-top: 40px;
+		background-size: 28px auto;
+	}
+}
+.learning-centre-library {
+	@media @mobile-sm {
+	  margin-top: 40px;
+	}
+	.learn-article-library {
+		background: url("@{base-url}/a-to-zn.png") no-repeat center top;
+		padding-top: 40px;
+		@media @mobile-sm {
+			margin: 0 auto;
+		}
+		@media @large {
+			margin: 0 auto;
+		}
+	}
+	p:nth-child(2) {
+		margin-bottom: 0;
+	}
+}
+.i18n-fr {
+	.learning-centre-library {
+		.learn-article-library {
+			a {
+				letter-spacing: -1px;
+			}
+		}
+	}
+}
+/************************************************************
+									Vitamin CSS
+*************************************************************/
+.vitamin-dropdown {
+	h2.block-title {
+		.dis-none;
+	}
+}
+/************************************************************
+									Prenatal Home  CSS
+************************************************************/
+.node-type-section-landing-pages {
+	.page-header {
+		.dis-none;
+	}
+}
+.stages-of-pregnancy {
+	margin-bottom: 40px;
+	.text-center;
+	.view-header {
+		margin: 57px 0 22px;
+		h1 {
+			font-size: 36px;
+			font-weight: normal;
+			background: url("@{base-url}/pregnant-icon-gray.png") no-repeat center top;
+			padding-top: 42px;
+		}
+	}
+	.view-content {
+		width:960px;
+		margin:0 auto;
+		@media @mobile-sm {
+			width:auto;
+		}
+	}
+	.views-row-3 {
+		margin-bottom:30px;
+	}
+	.views-row {
+		@media @mobile-sm {
+			margin-top: 40px;
+		}
+		.img-responsive {
+			margin: 0 auto;
+		}
+	}
+	.views-field-title {
+    margin-top: 7px;
+	min-height:53px;
+		span.field-content {
+			font-size: 27px;
+			line-height: 20px;
+			font-family: "Open Sans Condensed";
+			font-weight: 700;
+		}
+	}
+	.views-field-body { 
+	
+	
+    background: #f5f5f5;
+		padding: 50px 0;
+		margin-top: 50px;
+			@media @mobile-sm {
+				margin-top: 20px;
+			}
+		.field-content {
+			width: 960px;
+			margin: 0 auto;
+			text-align:left;
+			@media @mobile-sm {
+				width:auto;
+				padding:0 15px;
+			}
+			a.big {
+				display: block;
+			}
+		}
+		.close {
+			background: url("@{base-url}/close-button.png") no-repeat;
+			width: 18px;
+			height: 18px;
+			position: relative;
+			top: -30px;
+		}
+	}
+	.views-row-1 {
+		.views-field-body-et {
+			p {
+				
+				margin: 5px auto 19px;			
+				@media @mobile-sm {
+					width: 100%;
+				}
+			}
+		}
+		.views-field-title {
+			margin-top: 13px;
+		}
+	}
+	.views-field-body-et {
+		p {
+			font-size: 16px;
+			margin: 5px 0 19px;
+			min-height: 90px;
+		}
+	}
+	.stages-body {
+		width: 650px;
+    margin-right: 20px;
+    display: inline-block;
+    @media @mobile-sm {
+      width: 100%;
+    } 
+		p {
+			padding-bottom: 10px;
+			strong {
+				font-size: 20px;
+				font-family: "Open Sans Condensed";
+			}
+		}
+		.pregnancy.border-bottom, .breastfeeding {
+			padding: 10px 0;
+		}
+	}
+	.stages-coupons {
+    display: inline-block;
+    vertical-align: top;
+		a {
+			background: url("@{base-url}/button-arrow-white.png"),url("@{base-url}/get-coupans-dollar.png");
+			background-repeat: no-repeat;
+			background-position: 95% center,13px center;
+			background-color: #0080c8;
+      padding: 9px 30px 6px 41px;
+			display: inline-block;
+			&:hover {
+				background-position: 97% center, 13px center;
+			}
+		}
+		p:nth-child(1) {
+			margin: 0;
+		}
+		p:nth-child(2) a {
+			background: none;
+			padding: 0;
+		}
+	}
+}
+.i18n-fr {
+	.stages-of-pregnancy {
+		.views-field-body-et { 
+			.field-content {
+				p {
+					min-height: 154px;
+					width: auto;
+					@media @mobile-sm {
+						min-height: auto;
+					}
+				}
+				#prenatal-learn {
+					display: block;
+					@media @mobile-sm {
+						width: 250px;
+						margin: 0 auto;
+					}
+				}
+			}
+		}
+		.views-row-1 {
+		
+			.views-field-body-et {
+				p {
+					
+					@media @mobile-sm {
+						margin: 5px auto 21px;
+					}
+				}
+			}
+		}
+		.stages-coupons {
+			p:nth-child(3) a {
+				width: 240px;
+				line-height: normal;
+				padding: 9px 30px 6px 51px;
+			}
+		}
+	}
+}
+/************************************************************
+									Prenatal Menu CSS
+************************************************************/
+.prenatal-menu {
+	padding: 40px 0;
+	border-top: 1px solid #c1c1c1;
+	border-bottom: 1px solid #c1c1c1;
+	text-align: center;
+	clear: both;
+	@media @mobile-sm { 
+		padding-bottom: 0;
+	}
+	ul.menu {
+		margin: 0 auto;
+    width: 800px;
+		@media @mobile-sm {
+			width: auto;
+		}
+		@media @large {
+			width: auto;
+		}
+		.col-lg-2 {
+			width: 20%;
+			@media @mobile-sm {
+				width: auto;
+			}
+		}
+		li {
+			padding: 40px 15px 0;
+			@media @mobile-sm { 
+				margin-bottom: 35px;
+				padding: 40px 0 0;
+			}
+			a {
+				position: relative;
+				display: inline-block;
+				padding: 0;
+				font-size: 20px;
+				text-decoration: underline;
+				line-height: normal;
+				font-family: "Open Sans Condensed";
+				font-weight: 700;
+				background: url("@{base-url}/arrow-right.png") no-repeat right 95%;
+				&:hover {
+					background: #dcf3fc url("@{base-url}/arrow-right.png") no-repeat scroll right 95%;
+				}
+
+				@media @mobile-sm {
+					padding-right: 17px;
+				}
+			}
+		}
+		li:first-child {
+			background: url("@{base-url}/SectionIcon_Articles_GREY_blue.png") no-repeat scroll center top;
+			@media @mobile-sm { 
+				margin-left: 0;
+			}
+		}
+		li:nth-child(2) {
+			background: url("@{base-url}/fertility-calculator.png") no-repeat scroll center top;
+		}
+		li:nth-child(3) {
+			background: url("@{base-url}/a-to-zn.png") no-repeat scroll center top;
+		}
+		li:nth-child(4) {
+			background: url("@{base-url}/get-coupans.png") no-repeat scroll center top;
+		}
+		li:nth-child(5) {
+			background: url("@{base-url}/prenetal-multivitamins.png") no-repeat scroll center top;
+		}
+		li:nth-child(6) {
+			background: url("@{base-url}/prenetal-nutrition.png") no-repeat scroll center top;
+		}
+		li.active {
+			.dis-none;
+		}
+	}
+}
+/************************************************************
+								FAQ CSS
+************************************************************/
+.faq_header {
+  margin: 0 auto;
+  text-align: center;
+  width: 590px;
+	@media @mobile-sm {
+		width: auto;
+	}
+	h1 {
+    font-size: 42px;
+    font-weight: bold;
+	}
+	p {
+    font-size: 14px;
+	}
+}
+.faq_footer {
+	ul {
+	  text-align: center;
+		@media @mobile-sm {
+			text-align: left;
+			padding: 0;
+		}
+		li {
+				display: inline-block;
+				padding-left: 12px;
+				margin-right: 30px;
+				background: url("@{base-url}/arrow.png") no-repeat left center;
+				font-weight: bold;
+		}
+	}
+}
+.frequently-asked-questions.faq-top {
+	h2.block-title {
+		margin-top: 22px;
+	}
+}
+.faq-contact {
+  margin: 40px 0 50px;
+	div {
+		p {
+			margin-bottom: 20px;
+		}
+		.big:hover {
+			color: #fff;
+		}
+	}
+}
+.frequently-asked-questions {
+	h2.block-title {
+		border-bottom: 1px solid #c3c3c3;
+		font-size: 20px;
+		font-family: 'Open Sans Condensed', sans-serif;
+		font-weight: 700;
+		margin-top: 40px;
+    padding: 0 10px 10px;
+	}
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+		border: none;
+		background: url("@{base-url}/collapse.png") no-repeat 97% center;
+		padding: 0.8em 2.2em 0.8em 2.4em;
+		margin: 0;
+		a {
+			color: #111;
+			font-size: 14px;
+			font-weight: 700;
+		}
+	}
+	.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+		border: none;
+		background: url("@{base-url}/collapse.png") no-repeat 97% center;
+		a {
+			color: #111;
+			font-size: 14px;
+			font-weight: 700;
+		}
+	}
+	.ui-accordion-header-active.ui-state-active {
+		background: url("@{base-url}/expand.png") no-repeat 97% center;	
+	}
+	.ui-widget-content:before {
+		color: @primary-color;
+		content: "A. ";
+		font-family: Roboto,Helvetica,Arial,sans-serif;
+		font-size: 14px;
+		font-weight: 700;
+		left: 11px;
+		position: absolute;
+		top: 2px;
+	}
+	.ui-widget-content {
+		border:none;
+		padding: 0 2.4em;
+		position: relative;
+		p {
+			font-size: 14px;
+			line-height: 20px;
+			a {
+				color: #0080c8;
+				text-decoration: underline;
+			}	
+		}	
+	}
+	.views-row {
+	  font-family: Roboto,Helvetica,Arial,sans-serif;
+	}
+	.views-row-odd {
+    background: #f5f5f5;
+		.ui-widget-content { 
+			background: #f5f5f5;
+		}
+	}
+	.ui-accordion {
+		.views-row-even {
+			.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+				padding-top: 16px;
+				padding-bottom: 16px;
+			}
+			.ui-accordion-header {
+				span {
+					margin-top: 14px;
+				}
+			}
+		}
+	}
+	.ui-accordion {
+		.ui-accordion-header {
+			.ui-accordion-header-icon {
+				position: absolute;
+				left: .8em;
+				top: 0;
+				margin-top: 11px;
+				background: none;
+				text-indent: inherit;
+				overflow: visible;
+				font-size: 14px;
+				color: @para-link-color;
+				&:before {
+					content: "Q. ";
+					font-family: Roboto,Helvetica,Arial,sans-serif;
+					font-weight: 700;
+				}
+			}
+		}
+	}
+}
+/************************************************************
+									Find your centrum CSS
+*************************************************************/
+.page-find-your-centrum {
+	.page-header {
+		.dis-none;
+	}
+}
+.i18n-fr{
+		#edit-step1-age label {
+			line-height: 1;
+			height: 143px;
+			padding: 28px 30px;		
+		}
+		#wizard-form-wrapper {
+			#edit-step1-age, #edit-step1-age--2, #edit-step2-gender, #edit-step2-gender--2, #edit-step3-other-considerations-new, #edit-step3-other-considerations-new--2, 
+			#edit-step3-other-considerations-inactive {
+					label {
+					padding:0;
+					display:table-cell;
+					vertical-align:middle;
+					
+					}
+			}
+		}
+	}
+	
+#wizard-form-wrapper {
+	text-align: center;
+	position: relative;
+	#age, #gender, #other_considerations_new, #health_interest_new, #other_considerations_inactive, #inline-messages {
+		/* border-top: 1px solid #d7d7d7; */
+		border-bottom: 1px solid #d7d7d7;
+		padding: 35px 0 30px;
+		margin-top: 66px;
+	}
+	label.control-label {
+		color: @para-link-color;
+		display: block;
+		font-size: 36px;
+		font-family: "Open Sans Condensed";
+		font-weight: normal;
+	}
+	div.radio, div.radio span, div.radio input, div.checker, div.checker span, div.checker input {
+		width: auto;
+		height: auto;
+	}
+	.continue_1,.continue_2{
+		display:none;
+	}
+	
+	
+	
+	#edit-step1-age, #edit-step1-age--2, #edit-step2-gender, #edit-step2-gender--2 { 
+	  @media @mobile-sm {
+			width: 290px;
+			margin: 0 auto;
+		}
+	  .form-item {
+			margin: 0 20px 0 0;
+			@media @mobile-sm {
+				margin: 0 20px 20px 0;
+			}  
+		}
+		@media @mobile-sm {
+			.form-item:nth-child(2), .form-item:nth-child(4) {
+				margin-right: 0;
+			}
+		}
+		label {
+			font-size: 27px;
+			background: #f5f5f5;
+			color: #111;
+			padding: 47px 30px;
+			width: 140px;
+			border-bottom: 3px solid @primary-color;
+			font-weight: 700;
+			@media @mobile-sm {
+				width: 135px;
+			}
+			&:hover {
+				color: @primary-color;
+			}
+			&.active {
+				color: @primary-color;
+			}
+		}	
+	}
+	#age {
+		background: url("@{base-url}/progress-bar-first-hr.png") no-repeat center top;
+		@media @mobile-sm {
+			background-size: 200% auto;
+		}
+	}
+	#gender {
+		background: url("@{base-url}/progress-bar-second-hr.png") no-repeat center top;
+		@media @mobile-sm {
+			background-size: 200% auto;
+		}
+		#edit-step2-gender, #edit-step2-gender--2 {
+			label {
+				padding: 94px 10px 0;
+				width: 140px;
+				text-transform: uppercase;
+				@media @mobile-sm {
+					width: 135px;
+				}
+			}
+			div:nth-child(1) label {
+				background: #f5f5f5 url("@{base-url}/male.png") no-repeat center 10px;
+				&:hover {
+					background: #f5f5f5 url("@{base-url}/male-blue.png") no-repeat center 10px;
+				}
+				&.active {
+					background: #f5f5f5 url("@{base-url}/male-blue.png") no-repeat center 10px;
+				}
+			}
+			div:nth-child(2) label {
+				background: #f5f5f5 url("@{base-url}/female.png") no-repeat center 10px;
+				&:hover {
+					background: #f5f5f5 url("@{base-url}/female-blue.png") no-repeat center 10px;
+				}
+				&.active {
+					background: #f5f5f5 url("@{base-url}/female-blue.png") no-repeat center 10px;
+				}
+			}
+		}
+	}
+	#other_considerations_new, #other_considerations_inactive {
+		background: url("@{base-url}/progress-bar-third-hr.png") no-repeat center top;
+		@media @mobile-sm {
+			background-size: 200% auto;
+		}
+		.form-checkboxes {
+			display: inline-block;
+			.form-item {
+				float: left;
+				position: relative; 
+				@media @mobile-sm {
+					margin: 0 20px 60px 0;
+				}
+			}
+			@media @mobile-sm {
+				.form-item:nth-child(2), .form-item:nth-child(4) {
+					margin-right: 0;
+				}
+			}
+			label {
+				font-size: 16px;
+				color: #000;
+				padding: 25px 14px 13px 14px;
+				height: 140px;
+			}
+			div.checker {
+				position: absolute;
+				bottom: -40px;
+				width: 20px;
+				height: 20px;
+				border: 2px solid #c2c2c2;
+				left: 60px;
+			}
+			div.checker {
+				span.checked {
+					background: url("@{base-url}/find-close-button.png") no-repeat center center;
+					display: block;
+					width: 16px;
+					height: 16px;
+				}
+			}
+			.inactive {
+				opacity: .6;
+				cursor: none;
+				label {
+					&:hover {
+						color: #111;
+					}
+				}
+			}
+		}
+		.form-checkboxes { 
+			@media @mobile-sm {
+				width: 290px;
+				margin: 0 auto;
+			} 
+			.form-item {
+				margin: 0 20px 0 0;
+				@media @mobile-sm {
+					margin: 0 20px 60px 0;
+				}  
+			}
+			@media @mobile-sm {
+				.form-item:nth-child(2), .form-item:nth-child(4) {
+					margin-right: 0;
+				}
+			}
+			label {
+				background: #f5f5f5;
+				color: #111;
+				width: 140px;
+				border-bottom: 3px solid @primary-color;
+				font-weight: 700;
+				@media @mobile-sm {
+					width: 135px;
+				}
+				&:hover {
+					color: @primary-color;
+				}
+				&.active {
+					color: @primary-color;
+				}
+			}	
+		}
+	}
+	#other_considerations_inactive {
+		background: none;
+		border: none;
+		padding: 0;
+		margin: 0;
+	}
+	#wizard-form-wrapper #age, #wizard-form-wrapper #gender, #wizard-form-wrapper #other_considerations_new{
+    padding: 35px 0 120px;
+	}
+	#health_interest_new {
+		background: url("@{base-url}/progress-bar-fourth-hr.png") no-repeat center top;
+		@media @mobile-sm {
+			background-size: 200% auto;
+		}
+		/* #edit-health-interest .field-label {
+			.dis-none;
+		} */
+		div.checker {
+			position: absolute;
+			bottom: -40px;
+			width: 20px;
+			height: 20px;
+			border: 2px solid #c2c2c2;
+			left: 80px;
+			@media @mobile-sm {
+				left: 64px;
+			}
+		}
+		div.checker {
+			span.checked {
+				background: url("@{base-url}/find-close-button.png") no-repeat center center;
+				display: block;
+				width: 16px;
+				height: 16px;
+			}
+		}
+		.inactive {
+			opacity: 0.5;
+			cursor: none;
+		}
+	}
+	#health_interest_inactive {
+		display: none;
+	}
+	#inline-messages {
+		background: url("@{base-url}/progress-bar-result-hr.png") no-repeat center top;
+		float: left;
+    width: 100%;
+		@media @mobile-sm {
+			background-size: 200% auto;
+		}
+		.recommended_results {
+			width: 220px;
+			display:inline-block;
+			text-align: center;
+			margin-right: 20px;
+			margin-bottom: 20px;
+			.recommended_results_img {
+				background: @border-color;
+				padding-top: 20px;
+			}
+			span {
+				font-size: 16px;
+				text-decoration: underline;
+				font-weight: 700;
+				line-height: 22px;
+				color: #0080c8;
+        display: table-cell;
+			}
+		}
+	}
+	#prev {
+		.ajax-processed {
+			background: #f5f5f5 url("@{base-url}/previous-arrow.png") no-repeat 12px center;
+			color: #000;
+			padding-left: 30px;
+			font-size: 16px;
+			border: none;
+			text-transform: uppercase;
+			float: left;
+			margin: 20px 0;
+			&:hover, &:focus {
+				background: #f5f5f5 url("@{base-url}/previous-arrow.png") no-repeat 8px center;
+			}
+		}
+	}
+}
+/************************************************************
+					Facet products finder css
+*************************************************************/
+.page-products {
+	.region-content {
+		position: relative;
+	}
+}
+.facet-products {
+	
+	.facet-product-list {
+    padding-left: 0;
+    text-align: center;
+    min-height: 305px;
+	@media @mobile-sm {
+		min-height: 231px;
+	}
+		.views-field-field-thumbnail-image {
+			/* background: #f5f5f5;
+			padding: 17px 40px 0; */
+			background: #f5f5f5;
+			height: 250px;
+			width: 225px;
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			@media @mobile-sm {
+				width: 364px;
+				height: 170px;
+			}
+			span {
+				@media @mobile-sm {
+					display: inline-block;
+				}
+				a {
+					width: 225px;
+					height: 250px;
+					display: table-cell;
+					vertical-align: middle;
+					padding-top:15px;
+					@media @mobile-sm {
+						height:auto;
+					}
+				}
+			}
+			.img-responsive {
+				display: inline-block;
+				/* width: 107px;
+				height: 231px; */
+				text-align: center;
+				@media @mobile-sm {
+					width:64px;
+				}
+			}
+		}
+		.views-field-title {
+			line-height: 18px;
+			a {
+				font-size: 16px;
+				text-decoration: underline;
+				font-weight:bold;
+				line-height:22px;
+				@media @mobile-sm {
+					font-size:14px;
+					line-height: 12px;
+				}
+			}
+		}
+	}
+	@media @mobile-sm {
+		.facet-product-list.views-row-even {
+			padding-right: 0;
+			padding-left: 5px;
+		}
+	}
+}
+.facet-gender, .facet-age, .facet-health-interest, .facet-other-consideration {
+	border: 1px solid #eee;
+	padding: 10px;
+	width: 100%;
+	margin-bottom: 10px;
+	@media @mobile-sm {
+		width: 100%;
+	}
+	h2.block-title {
+    font-size: 14px;
+    color: #0080c8;
+	font-weight:bold;
+	}
+	ul {
+		padding: 0;
+    margin: 0;
+		li {
+			list-style: none;
+			label {
+				padding-left: 0;
+				font-size: 12px;
+				vertical-align:middle;
+			}
+			.radio, .checkbox {
+				margin: 6px 0 0 0;
+			}
+			div.checker span {
+				border: 1px solid #c2c2c2;
+				width: 10px;
+				height: 10px;
+			}
+			div.checker span.checked {
+				background: url("@{base-url}/close-button.png");
+				background-size: 100% auto;
+			}
+		}
+	}
+} 
+/************************************************************
+							Coupons landing page css
+*************************************************************/
+.centrum-coupons-landing-page {
+	margin: 70px 0;
+	text-align: center;
+	@media @mobile-sm {
+		margin: 30px 0 0;
+	}
+	.view-header {
+		h4 {
+			text-align: center;
+			font-family: Roboto,Helvetica,Arial,sans-serif;
+			font-size: 14px;
+			font-weight: normal;
+			margin-bottom: 38px;
+			clear: both;
+		}
+	}
+	.views-row {
+		padding-right: 0;
+		@media @mobile-sm {
+			padding-left: 0;
+			margin-bottom: 50px;
+		}
+		.views-field {
+			background: #f5f5f5;
+			.img-responsive {
+				display: inline-block;
+				margin-top: -35px;
+				width: 46%;
+			}
+			h2.field-content {
+				font-size: 25px;
+				font-weight: bold;
+				padding-top: 2px;
+				font-family: "Open Sans Condensed";
+			}
+		}
+		.views-field-tid {
+			padding-bottom: 26px;
+			padding-top: 19px;
+		}
+	}
+	.views-row-1 {
+		.views-field-tid {
+			border-bottom: 3px solid #e30613;
+		}
+	}
+	.views-row-2 { 
+		.views-field-tid {
+			border-bottom: 3px solid #f7a600;
+		}
+	}
+	.views-row-3 { 
+		.views-field-tid {
+			border-bottom: 3px solid #50af31;
+		}
+	}
+}
+.i18n-fr {
+	.centrum-coupons-landing-page {
+		.views-row {
+			.views-field h2.field-content {
+				font-size: 18px;
+			}
+			.views-field-tid {
+				a{
+					display: block;
+					width: 200px;
+					margin: 0 auto;
+				}
+			}
+		}
+	}
+}
+/************************************************************
+							Products Coupons css
+*************************************************************/
+.related-coupon {
+	float: left;
+	@media @mobile-sm {
+		clear: both;
+		margin: 0;
+		position: relative;
+	}
+	.views-row.views-row-1 {
+    margin-top: 0;
+		@media @mobile-sm {
+			margin-top: 20px;
+		}
+	}
+	.views-row.views-row-2 {
+    .dis-none;
+	}
+	.views-row {
+		background: #f5f5f5;
+		text-align: center;
+		padding: 20px;
+		width: 625px;
+		margin: 20px 0px;
+		@media @mobile-sm {
+			width: 100%;
+			clear: both;
+		}
+		.views-field {
+			clear: both;
+		}
+		.coupon-container {
+			margin: 25px 0 0;
+		}
+		.views-field-field-subtitle-text-et {
+			clear: both;
+			padding: 10px 0;
+		}
+		.img-responsive {
+			width: 80%;
+			border-bottom: 3px solid #0080c8;
+			display: inline-block;
+			@media @mobile-sm {
+				width: 100%;
+			}
+		}
+		.coupon-buttons {
+			width: 525px;
+			margin: -30px auto 0;
+			position: relative;
+			@media @mobile-sm { 
+				width: 175px;
+				margin: 0 auto;
+			}
+			.email-coupon {
+				float: left;
+				margin-bottom: 10px;
+				margin-top: 10px;
+				margin-right: 10px;
+				@media @mobile-sm {
+					float: none;
+					margin-right: 0;
+				}
+				a {
+					background: #0080c8 url("@{base-url}/email-icon.png") no-repeat 16px center;
+					box-shadow: 0 2px 2px rgba(0,0,0,.15);
+					padding: 6px 18px 6px 39px;
+					&:hover {
+						box-shadow: 0 3px 3px rgba(0,0,0,.35);
+					}
+				}
+			}   
+			.print-coupon-btn {
+				float: left;
+				margin-top: 10px;
+				margin-right: 10px;
+				@media @mobile-sm {
+					float: none;
+					margin-top: 20px;
+					margin-right: 0;
+				}
+				a {
+					background: #0080c8 url("@{base-url}/print-icon.png") no-repeat 17px center;
+					box-shadow: 0 2px 2px rgba(0,0,0,.15);
+					padding: 6px 23px 6px 39px;
+					&:hover {
+						box-shadow: 0 3px 3px rgba(0,0,0,.35);
+					}
+				}
+			}
+			.share-coupon-btn {
+				float: left;
+				margin-top: 7px;
+				margin-bottom: 12px;
+				position: relative;
+				.addthis_toolbox {
+					@media @mobile-sm { 
+						position: relative;
+					}
+				}
+				a {
+					background: #0080c8 url("@{base-url}/share-it.png") no-repeat 13px center;
+					padding: 6px 23px 6px 39px;
+				}
+				@media @mobile-sm {
+					float: none;
+					margin-top: 20px;
+					margin-bottom: 10px;
+				}
+				.custom_images {
+					position: absolute;
+					top: 50px;
+					background: #fff;
+					border: 3px solid #0080c8;
+					width: 140px;
+					padding: 20px;
+					text-align: left;
+					left: 0;
+					z-index: 5;
+					right: 0;
+					margin-left: auto;
+					margin-right: auto;
+					.dis-none;
+					@media @mobile-sm {
+						top: 50px;
+						left: 20px;
+					}
+					&:before {
+						content: url("@{base-url}/tool-tip-arrow.png");
+						width: 0;
+						height: 0;
+						position: absolute;
+						top: -24px;
+						right: 98px;
+						z-index: 1;
+					}
+					a {
+						background: none;
+						display: table-row;
+						padding: 0;
+						margin-bottom: 10px;
+						span.at-icon-wrapper {
+							width: 25px !important;
+							height: 25px !important;
+							margin-right: 7px;
+							vertical-align: middle;
+							margin-bottom: 7px;
+							.at-icon {
+								width: 25px !important;
+								height: 25px !important;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.i18n-fr {
+	.related-coupon {
+		.views-row {
+			.coupon-container {
+				margin: 25px 0 0;
+			}
+			.coupon-buttons {
+				width: 100%;
+				.email-coupon a {
+					@media @mobile-sm {
+						display: inline-block;
+					}
+				}
+				.share-coupon-btn {
+					clear: both;
+					margin-top: 10px;
+          @media @mobile-sm {
+            margin-top: 15px;
+          }
+					a {
+						@media @mobile-sm {
+							display: inline-block;
+						}
+					}
+				}
+			}
+		}
+		.views-row.views-row-1 {
+			margin-top: 0;
+		}
+	}
+	.block-new-coupons .coupon-container .email-coupon a, 
+	.block-new-coupons .coupon-container .print-coupon-btn a, 
+	{
+		display:inline-block;
+		font-size: 14px;
+		padding: 12px 12px 9px 45px;
+	}
+	.block-new-coupons .coupon-container .share-coupon-btn a {
+		display:inline-block;
+		font-size: 14px;
+		padding: 6px 12px 9px 45px;
+	}
+	.block-new-coupons .coupon-container .grey-coupons .coupon-buttons {
+		 width: 90%;
+		margin: 0 auto;
+		
+		display: inline-block;	
+	}
+	.block-new-coupons .coupon-container .print-coupon-btn a,.block-new-coupons .coupon-container .email-coupon a {
+			background-position:15px 15px;
+	}
+	.block-new-coupons .coupon-container .grey-coupons .coupon-buttons .share-coupon-btn a {
+		background-position:15px 10px;
+		padding-top:10px;
+	}
+	.block-new-coupons .coupon-container .grey-coupons .coupon-buttons .share-coupon-btn {
+		margin-top:10px;
+		position: relative;
+	}
+	.block-new-coupons .coupon-container .grey-coupons .coupon-buttons .share-coupon-btn .custom_images {
+    position: absolute;
+    top: 58px;
+    background: #fff;
+    border: 3px solid #0080c8;
+    width: 140px;
+    padding: 20px;
+    text-align: left;
+    left: 0;
+    z-index: 9;
+    display: none;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+	}
+}
+/************************************************************
+							Coupons Detail page css
+*************************************************************/ 
+.block-new-coupons {
+	width: 640px;
+	float: left;
+	margin: 40px 0 0;
+		@media @mobile-sm {
+			width:100%;
+		}
+	.coupon-container {
+		text-align: center;
+		margin: -20px 0 50px 0;
+		.img-responsive {
+			display: inline-block;
+			border-bottom: 3px solid #0080c8;
+			width: 75%;
+			@media @mobile-sm {
+				width: 90%;
+			}
+		}
+		.grey-coupons {
+			background: #f5f5f5;
+			.coupon-buttons {
+				width: 510px;
+				margin: 5px auto;
+				position: relative;
+				@media @mobile-sm { 
+					width: 175px;
+					margin: 0 auto;
+				}
+				.email-coupon {
+					float: left;
+					margin-bottom: 10px;
+					margin-top: 10px;
+					@media @mobile-sm {
+						float: none;
+					}
+				}   
+				.print-coupon-btn {
+					float: left;
+					margin-top: 10px;
+					@media @mobile-sm {
+						float: none;
+						margin-top: 20px;
+						margin-bottom: 23px;
+					}
+				}
+				.share-coupon-btn {
+					float: left;
+					margin-top: 7px;
+					margin-bottom: 10px;
+					.addthis_toolbox {
+						@media @mobile-sm { 
+							position: relative;
+						}
+					}
+					a {
+						background: #0080c8 url("@{base-url}/share-it.png") no-repeat 13px center;
+					}
+					@media @mobile-sm {
+						float: none;
+						margin-top: 20px;
+						margin-bottom: 10px;
+					}
+					.custom_images {
+						position: absolute;
+						top: 62px;
+						background: #fff;
+						border: 3px solid #0080c8;
+						width: 140px;
+						padding: 20px;
+						text-align: left;
+						left: 350px;
+						z-index: 9;
+						.dis-none;
+						@media @mobile-sm {
+							top: 50px;
+							left: 15px;
+						}
+						&:before {
+							content: url("@{base-url}/tool-tip-arrow.png");
+							width: 0;
+							height: 0;
+							position: absolute;
+							top: -24px;
+							right: 98px;
+							z-index: 1;
+						}
+						a {
+							background: none;
+							display: table-row;
+							padding: 0;
+							margin-bottom: 10px;
+							color: @para-link-color;
+							font-weight: normal;
+							font-family: Roboto,Helvetica,Arial,sans-serif;
+							font-size: 13px;
+							span.at-icon-wrapper {
+								width: 25px !important;
+								height: 25px !important;
+								margin-right: 7px;
+								vertical-align: middle;
+								margin-bottom: 7px;
+								.at-icon {
+									width: 25px !important;
+									height: 25px !important;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		.coupon-footer-note {
+			clear: both;
+			margin-top: 55px;
+			@media @mobile-sm {
+				margin-top: 20px;
+			}
+		}
+		.coupon-sample-image {
+			padding-top: 20px;
+			.field-label {      
+				.dis-none;
+			}
+		}
+		.coupon-sub-title {
+			padding: 10px 0 0;
+			font-size: 19px;
+			font-family: "Open Sans Condensed";
+			font-weight: bold;
+		}
+		.more-coupons {
+			a {
+				font-size: 16px;
+				font-weight: bold;
+				text-decoration: underline;
+			}
+		}
+		.email-coupon, .print-coupon-btn, .share-coupon-btn {
+			a {
+				color: #fff;
+				padding: 6px 12px 6px 45px;
+				border: none;
+				border-radius: 0;
+				margin-right: 5px;
+				font-size: 18px;
+				font-family: "Open Sans Condensed";
+				font-weight: 700;
+			}
+		}
+		.email-coupon {
+			a {
+					background: #0080c8 url("@{base-url}/email-icon.png") no-repeat 16px center;
+					box-shadow: 0 2px 2px rgba(0,0,0,.15);
+					&:hover {
+						box-shadow: 0 3px 3px rgba(0,0,0,.35);
+						text-decoration: none;
+					}
+			}
+		} 
+		.print-coupon-btn {
+			a {
+				background: #0080c8 url("@{base-url}/print-icon.png") no-repeat 17px center;
+				box-shadow: 0 2px 2px rgba(0,0,0,.15);
+				&:hover {
+					box-shadow: 0 3px 3px rgba(0,0,0,.35);
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
+
+
+.page-get-coupons {
+	h1.page-header {
+    display: none;
+	}
+	.main-container {
+		width: 100%;
+		max-width: 1280px;
+	}
+	section.col-sm-12.nopadding {
+		@media @mobile-sm {
+			padding: 0;
+		}
+	}
+	.coupon-container {
+		text-align: center;
+		margin-top: 36px;
+		.img-responsive {
+			display: inline-block;
+			border-bottom: 3px solid #0080c8;
+			width: 36%;
+			@media @mobile-sm {
+				width: 90%;
+			}
+		}
+		.coupon-print-note {
+			margin-bottom: 15px;
+		}
+		.grey-coupons {
+			background: #f5f5f5;
+			.coupon-buttons {
+				display:inline-block;
+				margin: 0 auto;
+				position: relative;
+				@media @mobile-sm { 
+					width: 175px;
+					margin: 0 auto;
+				}
+				.email-coupon {
+					float: left;
+					margin-bottom: 10px;
+					margin-top: 10px;
+					@media @mobile-sm {
+						float: none;
+					}
+				}   
+				.print-coupon-btn {
+					float: left;
+					margin-top: 10px;
+					@media @mobile-sm {
+						float: none;
+						margin-top: 20px;
+						margin-bottom: 18px;
+					}
+				}
+				.share-coupon-btn {
+					float: left;
+					margin-top: 12px;
+					margin-bottom: 20px;
+          position: relative;
+					.addthis_toolbox {
+						@media @mobile-sm { 
+							position: relative;
+						}
+					}
+					a {
+						background: #0080c8 url("@{base-url}/share-it.png") no-repeat 13px center;
+					}
+					@media @mobile-sm {
+						float: none;
+						margin-top: 20px;
+						margin-bottom: 10px;
+					}
+          .custom_images {
+            position: absolute;
+            top: 50px;
+            background: #fff;
+            border: 3px solid #0080c8;
+            width: 140px;
+            padding: 20px;
+            text-align: left;
+            left: 0;
+            z-index: 9;
+            .dis-none;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+						@media @mobile-sm {
+							top: 50px;
+							left: 15px;
+						}
+						&:before {
+							content: url("@{base-url}/tool-tip-arrow.png");
+							width: 0;
+							height: 0;
+							position: absolute;
+							top: -24px;
+							right: 98px;
+							z-index: 1;
+						}
+						a {
+							background: none;
+							display: table-row;
+							padding: 0;
+							margin-bottom: 10px;
+							color: @para-link-color;
+							font-weight: normal;
+							font-family: Roboto,Helvetica,Arial,sans-serif;
+							font-size: 13px;
+							span.at-icon-wrapper {
+								width: 25px !important;
+								height: 25px !important;
+								margin-right: 7px;
+								vertical-align: middle;
+								margin-bottom: 7px;
+								.at-icon {
+									width: 25px !important;
+									height: 25px !important;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		.coupon-footer-note {
+			clear: both;
+			padding-bottom: 10px;
+		}
+		.coupon-sample-image {
+			padding-top: 20px;
+			.field-label {      
+				.dis-none;
+			}
+		}
+		.coupon-sub-title {
+			padding: 10px 0 0;
+			font-size: 19px;
+			font-family: "Open Sans Condensed";
+			font-weight: bold;
+		}
+		.more-coupons {
+			a {
+				font-size: 16px;
+				font-weight: bold;
+				text-decoration: underline;
+			}
+		}
+		.email-coupon, .print-coupon-btn, .share-coupon-btn {
+			a {
+				color: #fff;
+				padding: 6px 12px 6px 45px;
+				border: none;
+				border-radius: 0;
+				margin-right: 5px;
+				font-size: 18px;
+				font-family: "Open Sans Condensed";
+				font-weight: 700;
+			}
+		}
+		.email-coupon {
+			a {
+					background: #0080c8 url("@{base-url}/email-icon.png") no-repeat 16px center;
+					box-shadow: 0 2px 2px rgba(0,0,0,.15);
+			}
+		}
+		.print-coupon-btn {
+			a {
+				background: #0080c8 url("@{base-url}/print-icon.png") no-repeat 17px center;
+				box-shadow: 0 2px 2px rgba(0,0,0,.15);
+			}
+		}
+	}
+	.browse-products-by-category {
+    width: 960px;
+    margin: 20px auto;
+		padding: 50px 0;
+		border-top: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+		@media @mobile-sm {
+			width: 100%;
+		}
+	}
+	.where-to-buy {
+		position: relative;
+		@media @mobile-sm {
+			width: 164px;
+			margin: 0 auto;
+		}
+		div {
+			position: absolute;
+			top: -100px;
+			left: 44%;
+			@media @mobile-sm {
+				top: -90px;
+				left: 0;
+				right: 0;
+			}
+		}
+	}
+	.featured-article-home {
+		width: 960px;
+		margin: 0 auto;
+		@media @mobile-sm {
+			width: 90%;
+			margin: 0 5%;	
+		}
+	}
+}
+.i18n-fr.page-get-coupons {
+ .coupon-container .grey-coupons .coupon-buttons {
+    width: 63%;
+		@media @mobile-sm { 
+			width: 100%;
+		}
+	}
+}
+#modalContent {
+	@media @mobile-sm {
+		width: 280px;
+	}
+	div.modal-forms-modal-content {
+		@media @mobile-sm {
+			width: 100%;
+		}
+		.popups-container {
+			border-radius: 0;
+			padding: 15px;
+		  background: #fff;
+			border: 5px solid #0080c8;
+			border-radius: 0;
+			#modal-content {
+				padding: 0;
+				border: none;
+				box-shadow: none;
+			}
+		}
+		button {
+			background: #0080c8 url("@{base-url}/button-arrow-white.png") no-repeat 90% center;
+			border: 0;
+			box-sizing: border-box; 
+			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+			color: #ffffff;
+			font-family: "Open Sans Condensed";
+			font-size: 1.8rem;
+			font-weight: 700;
+			line-height: 1;
+			min-height: 38px;
+			padding: 6px 37px 6px 23px;
+			text-transform: uppercase;
+			margin-top: 10px;
+			border-radius: 0;
+			&:hover, &:focus {
+				background: #006daa url("@{base-url}/button-arrow-white.png") no-repeat 92% center;
+				box-shadow: 0 3px 3px rgba(0, 0, 0, 0.35);
+				text-decoration: none;
+				color: #fff;
+			}
+		}
+		.modal-header {
+			padding: 0;
+			border: none;
+			span#modal-title {
+				.dis-none;
+			}
+			.popups-close {
+				background: url("@{base-url}/CloseX_Small.png") no-repeat;
+				background-size: 100% auto;
+				height: 20px;
+				width: 20px;
+				&:hover {
+					background-position: 0 0;
+				}
+			}
+		}
+		.modal-scroll {
+			margin-top: -20px;
+		}
+	}
+	.email {
+		background: #f5f5f5;
+		border-radius: 0;
+	}
+	.form-group {
+    margin-bottom: 15px;
+    margin-top: 15px;
+	}
+	.webform-component p {
+    font-size: 16px;
+		color: #000;
+	}
+	label {
+		font-family: "Open Sans Condensed";
+		font-size: 16px;
+	}
+}
+/************************************************************
+								Search Result css
+*************************************************************/
+.page-search {
+	.text-center {
+		text-align:left;
+	}
+	#search-form {
+		@media @mobile-sm {
+			margin-bottom: 10px;
+		}
+		#edit-basic {
+			.input-group {
+				display: block;
+				height: 38px;
+				width: 300px;
+			}
+			#edit-keys {
+				background: #f5f5f5;
+				width: 260px;
+				border-radius: 0;
+				padding-left: 10px;
+				height: 38px;
+				font-size: 14px;
+				margin-right: 15px;
+			}
+			button#edit-submit {
+				background: #0080c8 url("@{base-url}/button-arrow-white.png") no-repeat 90% center;
+				padding: 6px 30px 6px 15px;
+				font-size: 18px;
+				position: relative !important;
+				margin: -60px 0 0 274px;
+				z-index: 9;
+        height: 38px;
+				&:hover {
+					background: #006daa url("@{base-url}/button-arrow-white.png") no-repeat 95% center;
+				}
+				@media @mobile-sm {
+					margin: 10px 0 0 0;
+				}
+			}
+		}
+    .input-group-btn {
+      .dis-none;
+    }
+	}
+	ol.search-results.node-results {
+		padding: 0;
+		margin-bottom: 30px;
+		li {
+			list-style: none;
+			margin-top: 17px;
+			h3 {
+				font-style: normal;
+				font-size: 15px;
+				font-weight: bold;
+				font-family: Roboto,Helvetica,Arial,sans-serif;
+				text-decoration: underline;
+				a {
+					text-decoration: underline;
+				}
+			}
+			p.search-info {
+				.dis-none;
+			}
+		}
+	}
+	.pagination {
+		li, li:first-child {
+			a, span {
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+				margin-left: 0;
+				margin-right: 10px;
+				padding: 8px 7px;
+				text-transform: uppercase;
+				border: none;
+				font-size: 14px;
+				.font-bold;
+        z-index: 0;
+				@media @mobile-sm {
+					margin-bottom: 10px;
+				}
+			}
+		}
+		li.next {
+			a {
+				background: #f5f5f5 url("@{base-url}/next-arrow.png") no-repeat 90% center;
+				padding-right: 20px;
+				&:hover, &:focus {
+					background: @primary-color url("@{base-url}/white-arrow.png") no-repeat 90% center;
+				}	
+			}
+		}
+		li.prev {
+			a {
+				background: #f5f5f5 url("@{base-url}/previous-arrow.png") no-repeat 7% center;
+				padding-left: 20px;
+				&:hover, &:focus {
+					background: @primary-color url("@{base-url}/previous-white-arrow.png") no-repeat 7% center;
+				}
+			}
+		}
+		li.pager-last, li.pager-first {
+			.dis-none;
+		}
+	}
+}
+/************************************************************
+				Search Box CSS
+*************************************************************/
+.main-search {
+	max-width:1280px;
+	width:100%;
+	margin:0 auto;
+	.dis-none;
+	.text-center;
+	.search-form {
+		.text-center;
+		display: inline-block;
+		margin-top:15px;
+		line-height:0;
+		.form-group {
+			.pull-left;
+			line-height:0;
+			input {
+				border-radius: 0;
+				font-size: 14px;
+				height: 38px;
+				padding-left: 15px;
+				width: 300px;
+				@media @mobile-sm {
+					width: 200px;
+				}
+			}
+		}
+		.form-type-textfield {
+			background: url("@{base-url}/search-icon.png") no-repeat left 13px;
+			padding-left: 30px;
+			margin-bottom: 23px;
+		}
+		#edit-actions {
+		
+			button {
+				background: #0080c8 url("@{base-url}/button-arrow-white.png") no-repeat 85% center;
+				border: none;
+				box-sizing: border-box;
+				box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+				color: #fff;
+				cursor: pointer;
+				font-size: 1.6rem;
+				font-weight: bold;
+				margin-top: 4px;
+				min-height: 38px;
+				padding: 6px 25px 6px 10px;
+				margin-left: 5px;
+				&:hover {
+					background: #0080c8 url("@{base-url}/button-arrow-white.png") no-repeat 90% center;
+					box-shadow: 0 3px 3px rgba(0, 0, 0, 0.35);
+				}
+			}
+		}
+	}
+}
+.search-wrapper {
+	.pull-left;
+	padding: 1px 2px;
+	border:1px solid @nav-border;
+	background:@white;
+	position:absolute;
+	right:-48px; 
+	@media @mobile-sm {
+		.dis-none;
+	}
+	p {
+		background:url("@{base-url}/search-icon.png") no-repeat center;
+		margin-bottom:0;
+		padding:6px 20px;
+		cursor:pointer;
+		@media @mobile-sm {
+			width: 20px;
+			height: 20px;
+		}
+	}
+}
+.search-wrapper.close-search p {
+  background: url("@{base-url}/close-button.png") no-repeat center center;
+}
+.search-wrapper.search-wrapper-mobile {
+	.dis-none;
+	@media @mobile-sm {
+    display: block;
+    right: 30px;
+    border: none;
+    top: 20px;
+		z-index: 6;
+	}
+}
+.page-search {
+  .pagination{
+    margin: 10px 0;
+  }	
+  .form-group {
+    margin-bottom: 0;
+  }
+	span.result_count_text {
+		color: #0080c8;
+		font-weight: bold;
+	}
+	.breadcrumb {
+		span:nth-child(4), span.last {
+			display: none;
+		}
+	}
+}
+/************************************************************
+					fertility calculator css
+*************************************************************/
+#block-centrum-fertility-calculator-fertility-calculator {
+	position: relative;
+}
+.blue-background, .result-top-section-container {
+  background: #f3fcfd none repeat scroll 0 0;
+	border-bottom: 3px solid #0080c8;
+	margin-bottom: 10px;
+	padding: 30px 0;
+	position: relative;
+	text-align: center;
+	@media @mobile-sm {
+		padding: 30px 30px;
+	}
+	.container-inline-date {
+		position: relative;
+		margin: 0 auto;
+		width: 400px;
+		@media @mobile-sm {
+			width: 100%;
+			.form-item {
+				width: 100%;
+			}
+			.date-padding {
+				float: none;
+				width: 90%;
+				margin: 0 auto;
+			} 
+		}
+		label {
+			display: block;
+		}
+		#edit-date-select {
+			div.selector.fixedWidth {
+				height: 38px;
+				margin-right: 10px;
+				padding-left: 0;
+				width: 100px;
+				@media @mobile-sm {
+					width: 100%;
+					margin-bottom: 10px;
+				}
+				span {
+					background: #fff url("@{base-url}/dropdown-arrow.png") no-repeat scroll 94% center;
+					border: 1px solid #c3c3c3;
+					height: 35px;
+					font-size: 0;
+					padding: 3px 10px 10px;
+					text-align: left;
+					width: 100px;
+					@media @mobile-sm {
+						width: 100%;
+					}
+				}
+				select.form-control {
+					height: 32px;
+					opacity: 1;
+					padding-left: 8px;
+					padding-right: 30px;
+				}
+			}
+			#uniform-edit-date-select-year {
+				span, select.form-control {
+					@media @mobile-sm {
+						width: 80%;
+					}
+				}
+			}
+		} 
+		#edit-date-popup {
+			@media @mobile-sm {
+				position: relative;
+			}
+			label, .help-block {
+				.dis-none;
+			}
+			input {
+				background: url("@{base-url}/fertility-calculator.png") no-repeat scroll 0 0;
+				box-shadow: none;
+				border: none;
+				cursor: pointer;
+				height: 37px;
+				font-size: 0;
+				position: absolute;
+				right: 0;
+				top: -38px;
+				width: 33px;
+				@media @mobile-sm {
+					top: -47px;
+					margin-right: 0;
+				}
+			}
+			input.hover {
+				box-shadow: none;
+			}
+		}
+	}
+	.form-item-period-duration {
+		label {
+			display: block;
+		}
+		div.selector.fixedWidth {
+			height: 35px;
+			margin-right: 10px;
+			padding-left: 0;
+			width: 100px;
+			@media @mobile-sm {
+				width: 90%;
+				margin: 0 auto;
+			}
+			span {
+				background: #fff url("@{base-url}/dropdown-arrow.png") no-repeat scroll 94% center;
+				border: 1px solid #c3c3c3;
+				height: 35px;
+				padding: 3px 10px 10px;
+				text-align: left;
+				width: 100px;
+				@media @mobile-sm {
+					width: 100%;
+				}
+			}
+			select.form-control {
+				height: 31px;
+				padding-right: 30px;
+			}
+		}
+	}
+	#edit-submit {
+		border-radius: 0;
+		&:focus {
+			background: #0080c8 url(@{base-url}/button-arrow-white.png) no-repeat 92% center;
+			color: #fff;
+		}
+	}
+	.btn-default:hover{
+		border: none;
+		color: #fff;
+	}
+	p.tip {
+    width: 440px;
+    margin: 0 auto 15px;
+		@media @mobile-sm {
+			width: 90%;
+			margin: 0 auto 20px;
+			text-align: left;
+		}
+	}
+}
+div#ui-datepicker-div {
+	background: #fff;
+	border: 2px solid #0080c8;
+	border-radius: 0;
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: #fff;
+    border: none;
+    font-weight: bold;
+    color: #111;
+    font-family: "Open Sans Condensed";
+		text-align: center;
+	}
+	.ui-datepicker-header.ui-widget-header.ui-helper-clearfix.ui-corner-all {
+    background: #fff;
+    border: none;
+	}
+	.ui-datepicker-prev span {
+		background: url("@{base-url}/browse-category-arrow-left.png") no-repeat;
+    height: 17px;
+	}
+	.ui-datepicker-next span {
+		background: url("@{base-url}/browse-category-arrow.png") no-repeat;
+    height: 17px;
+	}
+}
+p.legal {
+	font-size: 12px;
+	color: @para-link-color;
+}
+.result-top-section-container { 
+	background: #f3fcfd url("@{base-url}/fertility-calculator.png") no-repeat scroll center 15px;
+	padding-top: 60px;
+	p {
+		margin: 0;
+	}
+	p.top-section {
+		font-size: 16px;
+		font-weight: bold;
+		@media @mobile-sm {
+			line-height: normal;
+		}
+	}
+	h2.result-top-section-period {
+		font-size: 27px;
+		font-weight: bold;
+		margin: 5px 0 15px;
+		@media @mobile-sm {
+			font-size: 19px;
+			margin: 15px 0 15px;
+		}
+	}
+}
+.result-bottom-section-container {
+	margin: 40px 0;
+	.left-section {
+		float: left;
+		width: 470px;
+		margin-right: 10px;
+		@media @mobile-sm {
+			width: 100%;
+			margin-bottom: 20px;
+		}
+		.legend-highlight {
+			margin-bottom: 10px;
+			span {
+				margin-right: 25px;
+				@media @mobile-sm {
+					margin-right: 0;
+				}
+			}
+			.most-fertile-time, .earliest-time {
+				display: inline-block;
+			}
+		}
+		.calendar-highlight {
+			background: #f5f5f5;
+			border-bottom: 3px solid #0080c8;
+			padding: 20px;
+			@media @mobile-sm {
+				padding: 10px;
+			}
+			.fc-left, .fc-right {
+				button {
+					margin-left: 0;
+					background: none;
+					border: none;
+					box-shadow: none;
+					&:focus {
+						border: none;
+					}
+				}
+			}
+			.fc-center {
+				h2 {
+					font-size: 20px;
+					font-family: "Open Sans Condensed";
+					font-weight: bold;
+				}
+			}
+		}
+	}
+	.right-section {
+		text-align: center;
+		float: right;
+		margin-top: 28px;
+		@media @mobile-sm {
+			float: none;
+			margin-top: 0;
+			clear: both;
+		}
+		.results {
+			.row-1, .row-2, .row-3 {
+				margin: 20px 0;
+				p {
+					margin: 0;
+				}
+				.row-1-result-period, .row-2-result-period, .row-3-result-period {
+					font-size: 16px;
+					font-weight: bold;
+				}
+				.row-1-result-test-date, .row-2-result-test-date, .row-3-result-test-date {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+}
+.result-top-section-pregnancy-detected-result {
+  font-weight: bold;
+}
+.export {
+  float: right;
+	@media @mobile-sm {
+		float: none;
+		clear: both;
+		width: 280px;
+    margin: 0 auto;
+    text-align: center;
+	}
+	button {
+		color: #fff;
+		padding-left: 40px;
+		border: none;
+		border-radius: 0;
+		margin-right: 5px;
+		font-size: 18px;
+		font-family: "Open Sans Condensed";
+		font-weight: bold;
+		&:hover {
+			color: #fff;
+		}	
+	}
+	.email-results {
+		background: #0080c8 url("@{base-url}/email-icon.png") no-repeat 13px center;
+		box-shadow: 0 2px 2px rgba(0,0,0,.15);
+		@media @mobile-sm {
+			margin-bottom: 10px;
+		}
+		&:hover {
+			background: #0080c8 url("@{base-url}/email-icon.png") no-repeat 13px center;
+			box-shadow: 0 3px 3px rgba(0,0,0,.35);
+		}
+	}
+	.add-to-calendar {
+		background: #0080c8 url("@{base-url}/calender-icon-small.png") no-repeat 13px center;
+		box-shadow: 0 2px 2px rgba(0,0,0,.15);
+		&:hover {
+			background: #0080c8 url("@{base-url}/calender-icon-small.png") no-repeat 13px center;
+			box-shadow: 0 3px 3px rgba(0,0,0,.35);
+		}
+	}
+}
+.recalculate {
+	float: left;
+	clear: both;
+	margin-top: 35px;
+	button.email {
+		font-size: 16px;
+		background: #f5f5f5 url("@{base-url}/previous-arrow.png") no-repeat 15px center;
+		border: none;
+		border-radius: 0;
+		padding-left: 30px;
+		font-weight: bold;
+		box-shadow: 0 2px 2px rgba(0,0,0,.15);
+		&:hover {
+			background-position: 10px center;
+			box-shadow: 0 3px 3px rgba(0,0,0,.35);
+		}	
+	}
+}
+.fc th, .fc td {
+	border-style: none;
+	border-width: 0;
+}
+.fc-ltr {
+	.fc-basic-view {
+		.fc-day-number {
+			text-align: center;
+			padding: 7px;
+			font-weight: bold;
+			font-size: 16px;
+		}
+		.fc-body {
+			margin-top: 15px;
+			float: left;
+			.fc-row {
+				min-height: 0;
+				height: 50px !important;
+			}
+		}
+	}
+}
+.fc-event-container {
+  .dis-none;
+}
+.fc-other-month {
+  visibility: hidden;
+}
+.fc-row .fc-content-skeleton {
+	.fertile-days {
+		background: url("@{base-url}/active-number-background.png") no-repeat center center;
+		color: #fff;
+	}
+	.detection-date {
+    background: url("@{base-url}/highlight-active-back.png") no-repeat center center;
+	}
+}
+.fc-unthemed .fc-today {
+  background: none;
+}
+.fc-scroller.fc-day-grid-container {
+  height: auto !important;
+}
+span.fc-icon.fc-icon-left-single-arrow {
+  background: url("@{base-url}/browse-category-arrow-left.png") no-repeat 0 0;
+	height: 17px;
+  width: 11px;
+}
+.fc-icon-left-single-arrow:after, .fc-icon-right-single-arrow:after {
+  top: -13px;
+}
+span.fc-icon.fc-icon-right-single-arrow {
+  background: url("@{base-url}/browse-category-arrow.png") no-repeat 0 0;
+	height: 17px;
+  width: 11px;
+}
+.date-select-error-message, .period-duration-error-message, .email-popup-error-messages {
+  color: red;
+}
+.date-select-error-message {
+  margin-top: -20px;
+}
+.period-duration-error-message {
+  margin-top: -15px;
+}
+.ajax-progress-throbber {
+	.dis-none;
+}
+.fertility-calc-block {
+	width: 780px;
+	margin: 15px 0 0;
+	@media @mobile-sm {
+		width: 100%;
+	}
+	h2.block-title {
+		background: url("@{base-url}/expand-minus.png") no-repeat 0 center;
+		cursor: pointer;
+		font-size: 20px;
+		font-weight: bold;
+		font-family: "Open Sans Condensed";
+		letter-spacing: 0;
+		padding: 10px 0 10px 43px;
+	}
+	h2.block-title.active {
+		background: url("@{base-url}/expand-plus.png") no-repeat 0 center;
+	}
+}
+.fertility-calc-get-pregnant {
+	width: 300px;
+	text-align: center;
+	padding-top: 180px;
+	background: url("@{base-url}/FertilityCalculator_TryingToGetPregnant.png") no-repeat center top;
+	float: left;
+	margin: 40px 20px 0 0;
+	@media @mobile-sm {
+		width: 100%;
+    float: none;
+    margin-right: 0;
+    margin-bottom: 20px;
+	}
+	p {
+		a {
+		  text-decoration: underline;
+		}
+	}
+	h4{
+		margin-bottom: 10px;
+	}
+}
+/*********************************Fertility Email Pop Up CSS**********************************/
+.email-popup {
+	position: relative;
+  clear: both;
+	z-index: 999;
+	@media @mobile-sm {
+		width: 300px;
+    margin: 0 auto;
+	}
+	&:before {
+    content: url("@{base-url}/tool-tip-arrow.png");
+    width: 0;
+    height: 0;
+    /* border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 25px solid #0080c8; */
+    position: absolute;
+    top: -82px;
+    right: 300px;
+    z-index: 1;
+		@media @mobile-sm {
+			top: -48px;
+			right: 180px;
+		}
+	}
+	.email-popup-inner {
+    background: #f5f5f5;
+    width: 300px;
+    clear: both;
+    border: 3px solid #0080c8;
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    top: -61px;
+    right: 125px;
+		@media @mobile-sm {
+			top: -27px;
+			right: auto;
+		}
+		p.email-popup-title {
+			font-weight: bold;
+			margin: 0;
+		}
+		p.email-popup-privacy-notice {
+			font-size: 12px;
+			text-align: left;
+			margin-top: 10px;
+			margin-bottom: 0;
+		}
+		button#edit-email-popup-submit {
+			padding: 10px 25px 10px 15px;
+			margin-top: 10px;
+			&:hover {
+				color: #fff;
+			}
+		}
+		.form-group {
+			margin: 0;
+		}
+	}
+}
+.hr {
+	border: 1px solid #c1c1c1;
+	clear: both;
+	margin: 0;
+	position: absolute;
+	width: 100%;
+	bottom: 50px;
+}
+.hr_top {
+	border-top: 1px solid #c1c1c1;
+	clear: both;
+	margin: -14px 0 0 0;
+	position: absolute;
+	width: 100%;
+}
+.hr_bottom {
+	border-bottom: 1px solid #c1c1c1;
+	clear: both;
+	margin: 0;
+	position: absolute;
+	width: 100%;
+	height: 1px;
+}
+.i18n-fr {
+	.email-popup {
+		.email-popup-inner {
+			top: -33px;
+			right: 170px;
+			@media @mobile-sm {
+				top: -27px;
+				right: auto;
+			}
+		}
+	}
+	.email-popup:before {
+    top: -54px;
+    right: 350px;
+		@media @mobile-sm {
+			top: -48px;
+			right: 180px;
+		}
+	}
+}
+/************************************************************
+										Contact Us CSS
+*************************************************************/
+.centrum-contact-us {
+	text-align: center;
+	margin: 0 auto;
+	width: 780px;
+	margin-top:25px;
+	@media @mobile-sm {
+		width: 100%;
+	}
+	p:last-child {
+		width: 620px;
+		margin: 50px auto 0;
+		text-align: left;
+		font-size: 12px;
+	}
+}
+.centrum-contact-us-footer {
+	text-align: center;
+	margin: 35px auto;
+	h1 {
+    font-weight: normal;
+	}
+	p:nth-child(2) {
+    margin-bottom: 18px;
+	}
+}
+#contact-us-form {
+	width: 620px;
+	margin: 20px auto;
+	@media @mobile-sm {
+		width: 100%;
+	}
+	input, textarea {
+		background: #f5f5f5;
+		border-radius: 0;
+		height: 37px;
+	}
+	.form-item {
+		width: 300px;
+		@media @mobile-sm {
+			width: 100%;
+		}
+		label {
+			margin-bottom: 1px;
+			font-size: 15px;
+		}
+	}
+	/* .form-control {
+		height: 38px;
+	} */
+	.form-item-firstname, .form-item-mailingaddress, .form-item-city {
+		float: left;
+		margin-right: 20px;
+	}
+	.form-item-lastname, .form-item-addressline2, .form-item-type-options {
+		float: left;
+	}
+	.form-item-product-title {
+		div.selector.fixedWidth {
+			width: 620px;
+			@media @mobile-sm {
+				width: 100%;
+			}
+			span {
+				background: #f5f5f5 url("@{base-url}/dropdown-arrow.png") no-repeat 98% center;
+			}
+		}
+	}
+	div.selector.fixedWidth {
+		width: 100%;
+		span {
+			width: auto;
+		}
+	}
+	.form-item-yourmessage {
+		width: 100%;
+		textarea#yourmessage {
+			height: 100px;
+			width: 620px;
+			@media @mobile-sm {
+				width: 100%;
+			}
+		}
+		.resizable-textarea {
+			.grippie {
+				.dis-none;
+			}
+		}
+	}
+	.captcha {
+    margin: 37px 0;
+	}
+	.error-msg {
+    color: #cb0000;
+	}
+}
+#send_btn {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+/************************************************************
+					Footer css
+*************************************************************/
+footer.pre_footer {
+  background: @border-color;
+	padding: 34px 0;
+	.region-pre-footer {
+		@media @mobile-sm {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+	}
+	section, section.contact-and-about, .footer-tools, .sitemap-and-faq {
+    border-right: 1px solid #d7d7d7;
+		height: 85px;
+		@media @mobile-sm {
+			height: auto;
+		}
+		img { 
+			width: 115px;
+			height: auto;
+		}
+	}
+	section.pre-footer-logo {
+		@media @mobile-sm {
+			.dis-none;
+		}
+	}
+	.contact-and-about {
+		padding: 0 15px 15px !important;
+		@media @mobile-sm {
+			padding: 0 !important;
+			padding-bottom: 15px !important;
+		}
+		ul {
+			li:first-child {
+				a {
+					color: @primary-color;
+					margin-top: 0;
+					font-weight:700;
+					font-size:16px;
+					
+				}
+			}
+		}
+	}
+	.footer-tools {
+		order: 3;
+	}
+	.footer-tools, .sitemap-and-faq {
+		padding: 0 15px !important;
+		@media @mobile-sm {
+			padding: 0 !important;
+		}
+		h2.block-title {
+			font-size: 16px;
+			padding-left: 0;
+			
+			.font-roboto;
+			font-weight:700;
+			margin:3px 0;
+			@media @mobile-sm {
+				padding-left: 0;
+			}
+		}
+	}
+	.sitemap-and-faq {
+		border-right: none;
+		h2.block-title {
+			visibility: hidden;
+			@media @mobile-sm {
+				.dis-none;
+			}
+		}
+		.nav {
+			@media @mobile-sm {
+				padding-left: 15px;
+			}
+			li:first-child>a {
+				@media @mobile-sm {
+					padding-top: 0;
+					margin: 0;
+				}
+			}
+		}
+	}
+	.nav>li>a {
+		color: @para-link-color;
+	
+		padding: 0;
+		margin:10px 0;
+		text-decoration: underline;
+		&:hover, &:focus {
+			color: #111111;
+    background: #dddddd;
+			
+		}
+	}
+}
+.i18n-fr {
+	footer.pre_footer {
+		.contact-and-about.col-lg-2 {
+			width: 18%;
+			@media @large {
+				width:22%;
+			}
+			@media @mobile-sm {
+				width: 50%;
+			}
+		}
+		.footer-tools.col-lg-2 {
+			width: 24%;
+			@media @large {
+				width: 31%;
+			}
+			@media @mobile-sm {
+				width: 50%;
+			}
+		}
+		.sitemap-and-faq.col-lg-2 {
+			width: 24%;
+			@media @large {
+				width:22%;
+			}
+			@media @mobile-sm {
+				width: 50%;
+			}
+		}
+		.sitemap-and-faq {
+			.nav {
+				/* padding-left: 15px; */
+			}
+		}
+	}
+}
+footer.footer {
+	.rainbow-border;
+	background-color: #d9ecf7;
+	background-size: @full-width auto;
+	#footer {
+		height:100px;
+		padding-top: 25px;
+		padding-left: 0;
+		.footer-links {
+			li {
+				display: inline;
+				a {
+					color: @para-link-color;
+					border-right: 1px solid #111111;
+					padding: 0 10px 0 5px;
+					text-decoration: underline;
+					font-size: 12px;
+					&:hover {
+						color: @primary-color;
+					}
+					@media @mobile-sm {
+						padding: 0 5px 0 3px;
+					}
+				}
+			}
+			li:first-child a {
+				padding-left: 0;
+			}
+			li:last-child a {
+				border-right: none;
+			}
+		}
+		.col-xs-2 {
+			margin-top: 5px;
+			@media @mobile-sm {
+				margin-right:10px;
+			}
+		}
+	}
+	#block-menu-menu-footer-menu {
+		ul.menu.nav {
+			li {
+				display: inline;
+				a {
+					display: inline;
+					border-right: 2px solid #e1e1e1;
+				}
+			}
+		}
+	}
+	p.footer-copyright {
+		font-size: 12px;
+	}
+}
+/***********************************************************
+									Back To Top CSS
+***********************************************************/
+#backtotop {
+	background: #fff url("@{base-url}/expand.png") no-repeat center 8px;
+	border: 1px solid #e5e5e5;
+	border-radius: 0;
+	bottom: 75px;
+	color: @primary-color;
+	cursor: pointer;
+	.dis-none;
+	height: auto;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 30px;
+	padding: 10px 7px 0px;
+	position: fixed;
+	right: 15%;
+	text-align: center;
+	z-index: 1;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0; 
+	@media @mobile-sm {
+		right: 15px;
+	}
+	&:hover {
+		background: #fff url("@{base-url}/expand.png") no-repeat center 8px;
+	}
+}
+.skip_age, .skip_gender, .skip_next_1, .skip_next_2 {
+	.dis-none;
+} 
+.show_age, .show_gender, .show_next_1, .show_next_2 {
+	display: block;
+}
+
+#start_over {
+  display:inline-block;
+  margin: 20px 0;
+  text-align:center;
+  width:100%;
+	button#edit-start-over {
+		background: #0080c8 url("@{base-url}/previous-white-arrow.png") no-repeat 15% center;
+		border: 0;
+		box-sizing: border-box; 
+		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+		color: #ffffff;		
+		font-family: "Open Sans Condensed";
+		font-size: 1.8rem;
+		font-weight: 700;		
+		padding: 6px 15px 6px 37px;
+		text-transform: uppercase;
+	
+		margin-bottom: 50px;
+		&:hover, &:focus {
+			background: #006daa url("@{base-url}/previous-white-arrow.png") no-repeat 10% center;
+			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.35);
+			text-decoration: none;
+			color: #fff;
+		}
+		
+	}
+	p {
+			text-align:left;
+	}
+}
+#product_result {
+	button {
+		background: #0080c8 url("@{base-url}/button-arrow-white.png") no-repeat 87% center;
+		border: 0;
+		box-sizing: border-box; 
+		box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+		color: #ffffff;
+		cursor: pointer;
+		font-family: "Open Sans Condensed";
+		font-size: 1.8rem;
+		font-weight: 700;
+		line-height: 1;
+		min-height: 38px;
+		padding: 6px 37px 6px 23px;
+		text-transform: uppercase;
+		position:relative;
+		top:-60px;
+		&:hover, &:focus {
+			background: #006daa url("@{base-url}/button-arrow-white.png") no-repeat 92% center;
+			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.35);
+			text-decoration: none;
+			color: #fff;
+		}
+	}
+}
+#wizard-form-wrapper { 
+	#age {
+		margin-bottom: 50px;
+	}
+	#other_considerations_new {
+		padding: 35px 0 120px;
+		@media @mobile-sm {
+			padding: 35px 0 60px;
+		}
+	}
+	#other_considerations_new .form-checkboxes {
+		.inactive label {
+			opacity: .5;
+			color: #555555;
+			border-bottom: 3px solid #555555;
+		}
+		.active label {
+			background: #0080c8;
+			color: #fff;
+		}
+	}
+	#health_interest_new {
+		padding: 35px 0 80px;
+	}
+	#continue {
+		button {
+			position: relative;
+			top: -90px;
+		
+			background: #0080c8 url("@{base-url}/button-arrow-white.png") no-repeat 87% center;
+			border: 0;
+			box-sizing: border-box; 
+			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+			color: #ffffff;
+			cursor: pointer;
+			font-family: "Open Sans Condensed";
+			font-size: 1.8rem;
+			font-weight: 700;
+			line-height: 1;
+			min-height: 38px;
+			padding: 6px 37px 6px 23px;
+			text-transform: uppercase;
+			&:hover, &:focus {
+				background: #006daa url("@{base-url}/button-arrow-white.png") no-repeat 92% center;
+				box-shadow: 0 3px 3px rgba(0, 0, 0, 0.35);
+				text-decoration: none;
+				color: #fff;
+			}
+		}
+	}
+}
+.addthis_toolbox a {
+	line-height:1.3;
+}
+.region-top-content ul.dropdown-menu {
+    display: block;
+    position: relative;
+    border: none;
+    box-shadow: none;
+    background-clip: content-box;
+    padding: 0;
+}
+.region-top-content ul.dropdown-menu li {
+    display: inline-block;
+    background: #f5f5f5;
+    border-bottom: 3px solid;
+    margin-right: 20px;
+    width: 140px;
+    text-align: center;
+    word-break: normal;
+}
+.region-top-content ul.dropdown-menu li a {
+		background: #f5f5f5;
+    padding: 86px 23px 0;
+    font-size: 20px;
+    text-align: center;
+    width: 140px;
+    height: 140px;
+    white-space: inherit;
+		color: #111;
+    font-weight: 700;
+    height: 140px;
+    line-height: 20px;
+    font-family: 'Open Sans Condensed',sans-serif;
+    font-style: normal;
+		&:hover, &.active {
+			text-decoration: none;
+			background: #cce6f3;
+		}
+}
+.page-node-226 .views-row-1 .health-benefits-image, .page-node-236 .views-row-1 .health-benefits-image {
+  background: #51b848 !important;
+}
+.page-node-226 .views-row-1 .health-benefits-title, .page-node-236 .views-row-1 .health-benefits-title {
+  background: #dbeab8 !important;
+}
+iframe {
+  border: none !important;
+	outline: 0 !important;
+}
+/* @media print {
+	img {
+		padding: 120px;
+	}
+} */ 
+/****************************************************************
+								Exit Link Pop Up CSS
+****************************************************************/
+.responsive-pop-up.active {
+	.text-block {
+		max-width: 45%;
+    max-height: 290px;
+		background: #fff url("/sites/default/themes/centrum/logo.png") no-repeat 20px 20px;
+    border: 5px solid #0080c8;
+    border-radius: 0;
+		@media @mobile-sm {
+			max-width: 93%;
+			max-height: 270px;
+		}
+		.pop-up-text {
+			border: 1px solid #0080c8;
+			margin: 90px 0 0 0;
+			border-top: 30px solid #0080c8;
+			padding-bottom: 20px;
+			padding-top: 15px;
+		} 
+		a.popclose {
+			background: url("@{base-url}/CloseX_Small.png") no-repeat 0 0;
+			cursor: pointer;
+			width: 20px;
+			height: 20px;
+			display: block;
+			background-size: 100% auto;
+			position: absolute;
+			right: 10px;
+			font-size: 0;
+			top: 10px;
+		}
+		p {
+			font-size: 16px;
+			color: #000;
+			margin-bottom: 20px;
+		}
+	}
+}
+
+.view-promo-tile .views-row {
+  display:none;
+}
+.view-promo-tile .active  {
+  display:block;
+}
+/* .page-node-24 #block-views-promo-tile-block .views-row-2, .page-node-25 #block-views-promo-tile-block .views-row-2 {
+  display: none !important;
+}
+.page-node-24 #block-views-promo-tile-block .views-row-1, .page-node-25 #block-views-promo-tile-block .views-row-1 {
+  display: block !important;
+} */
+/***************************************************************	
+							Thank you msg page css
+****************************************************************/
+.page-node-416 {
+	.field-type-text-with-summary {
+    text-align: center;
+    margin: 60px 0 0;
+		h2 {
+			font-weight: 600;
+			font-size: 2.7rem;
+			margin-bottom: 25px;
+		}
+		p {
+			margin-bottom: 20px;
+			a {
+				font-weight: 600;
+				text-decoration: underline;
+			}
+		}
+	}
+}
+/***************************************************************	
+							Health Benefits Ordering css
+****************************************************************/
+ .page-node-441 .prod-health-benefits .view-content  /* (dev node id) */, .page-node-421 .prod-health-benefits .view-content  /* (stage node id) */ {
+	display: flex; 
+	@media @mobile-sm {
+	flex-wrap: wrap;
+	}	
+	.views-row-3 {
+	  order: 4;
+		@media @media-fix {
+		  margin-right: 0 ;
+		}
+	}	
+	.views-row-4 {
+		@media @media-fix {	
+			margin-right: 20px !important;
+		}	
+	}
+} 
+.page-node-296 .prod-health-benefits .view-content {
+	display: flex;  
+	@media @mobile-sm {
+	flex-wrap: wrap;
+	}
+	.views-row-2 {
+	  order: 4;
+	}
+	.views-row-3 {
+	  order: 2;
+	}
+	.views-row-4{
+	  order: 5;
+	}
+	.views-row-5{
+	  order: 3;
+	}
+}
+.page-node-286 .prod-health-benefits .view-content {
+	display: flex; 
+	@media @mobile-sm {	
+		flex-wrap: wrap;
+	}	
+	.views-row-2 {
+	  order: 3;
+	}
+	.views-row-3 {
+	  order: 2;
+	}
+	.views-row-4{
+	  order: 4;
+	}
+
+}
+
+
+.page-node-211 .prod-health-benefits .view-content {
+	display: flex;
+	@media @mobile-sm {
+	flex-wrap: wrap;
+	}
+	.views-row-2 {
+	 order: 4;
+	}
+	.views-row-3 {
+	 order: 2;
+	}
+	.views-row-4{
+	  order: 5;
+	}
+	.views-row-5{
+	  order: 3;
+	}
+}
+.page-node-291, .page-node-246 {
+	.prod-health-benefits {
+		.view-content {
+			display: flex;
+			@media @mobile-sm {
+			flex-wrap: wrap;
+			}
+			.views-row-2 {
+				order: 3;
+			}
+			.views-row-3 {
+				order: 2;
+			}
+			.views-row-4{
+				order: 4;
+			}
+		}
+	}
+}
+.page-node-216 .prod-health-benefits .view-content {
+	display: flex;
+	@media @mobile-sm {
+	flex-wrap: wrap;
+	}
+	.views-row-1 {
+    order: 2;
+	}
+	.views-row-2 {
+    order: 4;
+	}
+	.views-row-3 {
+    order: 5;
+	}
+	.views-row-4{
+		order: 1;
+	}
+	.views-row-5{
+		order: 3;
+	}
+}
+.page-node-276 .prod-health-benefits .view-content {
+	display: flex;
+	@media @mobile-sm {
+	flex-wrap: wrap;
+	}
+	.views-row-1 {
+    order: 2;
+	}
+	.views-row-2 {
+		order: 3;
+	}
+	.views-row-3 {
+    order: 1;
+	}
+	.views-row-4{
+		order: 4;
+	}
+	.views-row-5{
+		order: 5;
+	}
+}
+.page-node-271 .prod-health-benefits .view-content {
+	display: flex;
+	@media @mobile-sm {
+		flex-wrap: wrap;
+	}
+	.views-row-2 {
+    order: 3;
+	}
+	.views-row-3 {
+		order: 2;
+	}
+	.views-row-4{
+		order: 4;
+	}
+	.views-row-5{
+		order: 5;
+	}
+}
+.page-node-236 .prod-health-benefits .view-content {
+	display: flex;
+	@media @mobile-sm {
+		flex-wrap: wrap;
+	}
+	.views-row-1 {
+    order: 4;
+	}
+	.views-row-2 {
+		order: 2;
+	}
+	.views-row-3 {
+    order: 3;
+	}
+	.views-row-4{
+		order: 5;
+	}
+	.views-row-5{
+		order: 1;
+	}
+}
+.page-node-226 .prod-health-benefits .view-content {
+	display: flex;
+	@media @mobile-sm {
+		flex-wrap: wrap;
+	}
+	.views-row-1 {
+    order: 4;
+	}
+	.views-row-2 {
+		order: 2;
+	}
+	.views-row-3 {
+    order: 6;
+	}
+	.views-row-4{
+		order: 3;
+	}
+	.views-row-5{
+		order: 5;
+	}
+	.views-row-6{
+		order: 1;
+	}
+}
+.page-node-221 .prod-health-benefits .view-content {
+	display: flex;
+	@media @mobile-sm {
+	flex-wrap: wrap;
+	}
+	.views-row-2 {
+		order: 4;
+	}
+	.views-row-3 {
+    order: 3;
+	}
+	.views-row-4{
+		order: 2;
+	}
+}
+.page-node-401 .prod-health-benefits .view-content {
+	display: flex;
+	@media @mobile-sm {
+		flex-wrap: wrap;
+	}
+	.views-row-2 {
+    order: 3;
+	}
+}
+.page-node-201, .page-node-261, .page-node-296 {
+  .prod-health-benefits .view-content .views-row-4 {
+    .health-benefits-image {
+      background: #8d5ca6 !important;
+    }
+    .health-benefits-title {
+      background: #d3bfdd !important;
+    }
+  }
+}
+.page-node-231 {
+  .prod-health-benefits .view-content .views-row-1 {
+    .health-benefits-image {
+      background: #51b848 !important;
+    }
+    .health-benefits-title {
+      background: #dbeab8 !important;
+    }
+  }
+  .prod-health-benefits .view-content .views-row-2 {
+    .health-benefits-image {
+      background: #0089cf !important;
+    }
+    .health-benefits-title {
+      background: #c2d8f0 !important;
+    }
+  } 
+}
+
+#pfe-entity-form {
+	text-align: center;
+  display: inline-block;
+  margin-top: 15px;
+  line-height: 0;
+	#custom-entity-form {
+		max-width: 1280px;
+		width: 100%;
+		margin: 0 auto;
+		display: block;
+		text-align: center;
+		.form-group {
+			float: left;
+			line-height: 0; 
+		}
+		label {
+			display: none;
+		}
+		.form-item {
+			background: url(/sites/default/themes/centrum/images/search-icon.png) no-repeat left 10px;
+			padding-left: 30px;
+			margin-bottom: 23px;
+		}
+		.form-item input {
+			border-radius: 0;
+			font-size: 14px;
+			height: 38px;
+			padding-left: 15px;
+			width: 300px;
+			@media @mobile-sm {
+				width: 200px;
+			}
+		}
+		button#edit-submit {
+			background: #0080c8 url(/sites/default/themes/centrum/images/button-arrow-white.png) no-repeat 80% center;
+			border: none;
+			box-sizing: border-box;
+			box-shadow: 0 2px 2px rgba(0,0,0,.15);
+			color: #fff;
+			cursor: pointer;
+			font-size: 1.6rem;
+			font-weight: 700;
+			margin-top: 4px;
+			min-height: 38px;
+			padding: 6px 25px 6px 10px;
+			margin: 0 0 0 5px;
+			&:hover {
+				background-position: 88% center;
+			}
+		}
+	}
+}
+.page-view-search {
+	.views-exposed-form {
+		#edit-combine-wrapper {
+			padding: .5em 0 0 0;
+			label {
+				display: none;
+			}
+			#edit-combine {
+				background: #f5f5f5;
+				width: 260px;
+				border-radius: 0;
+				padding-left: 10px;
+				height: 38px;
+				font-size: 14px;
+				margin-right: 15px;
+			}
+		}
+		.views-submit-button {
+			button {
+				background: #0080c8 url(/sites/default/themes/centrum/images/button-arrow-white.png) no-repeat 88% center;
+				padding: 6px 30px 6px 15px;
+				font-size: 18px;
+				position: relative!important;
+				margin: 0;
+				z-index: 9;
+				height: 38px;
+				color: #fff;
+				&:hover, &:focus {
+					background-position: 93% center;
+				}
+			}
+		}
+	}
+	.view-id-view_search {
+	  position: relative;
+		@media @mobile-sm {
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			-webkit-flex-direction: column;
+			-moz-flex-direction: column;
+			-ms-flex-direction: column;
+			-o-flex-direction: column;
+			flex-direction: column;
+		}
+		.view-header {
+			order: 2; 
+			margin: 10px 0 0 0;
+			position: absolute;
+			@media @mobile-sm {
+				position: relative;
+				top: 0;
+			} 
+			top: 45px;
+			span {
+			  color: #0080c8;
+				font-weight: bold;
+			}	
+		}
+		.view-footer {
+			border-top: 1px solid #c1c1c1;
+			padding-top: 10px;
+			margin-top: 15px;
+			@media @mobile-sm {
+				order: 5;
+			}
+			span {
+			  color: #0080c8;
+				font-weight: bold;
+			}	
+		}
+		.view-filters {
+			order:1;
+			padding-bottom: 90px;
+			@media @mobile-sm {
+				padding-bottom: 0;
+				border-bottom: none;
+			}
+		}
+		.view-empty {
+			border-top: 1px solid #c1c1c1;
+			padding: 15px 0;
+			position: absolute;
+			top: 70px;
+			width: 100%;
+			@media @mobile-sm {
+				position: relative;
+				top: 0;
+				order: 2;
+				margin-top: 15px;
+			}
+		}
+		.pagination {
+			order: 3;
+			margin: 10px 0 0 0;
+			padding-bottom: 20px;
+			border-radius: 0;
+      border-bottom: 1px solid #c1c1c1;
+			position: absolute;
+			top: 80px;
+      width: 100%;
+			@media @mobile-sm {
+				position: relative;
+				top: 0;
+				border-bottom: 1px solid #c1c1c1;
+			}
+			li {
+				@media @mobile-sm {
+					display: inline-block;
+				}
+				a, span {
+					border-radius: 0;
+					margin-left: 0;
+					margin-right: 10px;
+					padding: 8px 7px;
+					text-transform: uppercase;
+					border: none;
+					font-size: 14px;
+					font-weight: 700;
+					z-index: 0;
+				}
+			}
+			li.pager-first, li.pager-last {
+				display: none;
+			}
+			li.next a {
+				background: #f5f5f5 url("/sites/default/themes/centrum/images/next-arrow.png") no-repeat 90% center;
+				padding-right: 20px;
+				&:hover, &:focus {
+					background: #0080c8 url("/sites/default/themes/centrum/images/white-arrow.png") no-repeat 90% center;
+				}
+			}
+			li.prev a {
+				background: #f5f5f5 url("/sites/default/themes/centrum/images/previous-arrow.png") no-repeat 7% center;
+				padding-left: 20px;
+				&:hover, &:focus {
+					background: #0080c8 url("/sites/default/themes/centrum/images/previous-white-arrow.png") no-repeat 7% center;
+				}
+			}
+		}
+		.text-center {
+			text-align: left;
+			@media @mobile-sm {
+				order: 6;					
+			}
+			.pagination {
+				/* border-top: 1px solid #c1c1c1; */
+				border-bottom: none;
+				padding-top: 15px;
+				margin: 0;
+				position: static;
+			}
+		}
+		.view-content {
+			order: 4;
+			.views-row {
+				margin-top: 17px;
+				.views-field-title-field-et {
+					a {
+						font-style: normal;
+						font-size: 15px;
+						font-weight: 700;
+						font-family: Roboto,Helvetica,Arial,sans-serif;
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+		.view-footer:last-child {
+			display: none;
+		}
+	}
+}
+/* .page-products .sidebar-wrapper .region-sidebar-first {
+  display: none;
+} */

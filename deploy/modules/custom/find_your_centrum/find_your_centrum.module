@@ -1,0 +1,970 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+
+function find_your_centrum_block_info() {
+  $blocks  = array();
+  $blocks['find_your_centrum_new']  = array(
+    'info' => t('Find your centrum block new')
+  );
+  $blocks['find_your_centrum_age_tout_new'] = array(
+    'info' => t('Find your centrum age tout block new')
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+
+function find_your_centrum_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'find_your_centrum_new':
+      $block['content'] = drupal_get_form('find_your_centrum_wizard');
+      break;
+    
+    case 'find_your_centrum_age_tout_new':
+      $block['content'] = drupal_get_form('home_page_age_tout_new');
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Implements hook_menu().
+ */
+
+function find_your_centrum_menu() {
+  $items  = array();
+  $items['find_your_centrum'] = array(
+    // 'title' => 'Wizard (with graceful degradation)',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array(
+      'find_your_centrum_wizard'
+    ),
+    'access callback' => TRUE
+    // 'file' => 'form_example_graceful_degradation.inc',
+    // 'weight' => 7,
+  );
+  
+  return $items;
+}
+
+/**
+ * Creating form
+ */
+
+function find_your_centrum_wizard($form, &$form_state, $no_js_use = FALSE) {
+  $age_terms  = term_values_age_new();
+  $gender_terms  = term_values_gender_new();
+  $health_interest_terms  = health_interest_values_new($form_state);
+  $health_interest_legal  = health_interest_legal($form_state);
+  $other_considerations_terms = other_considerations_values_new($form_state);
+  // Provide a wrapper around the entire form, since we'll replace the whole
+  // thing with each submit.
+  $form['#prefix']  = '<div id="wizard-form-wrapper">';
+  $form['#suffix']  = '</div>';
+  // We want to deal with hierarchical form values.
+  $form['#tree']  = TRUE;
+  
+  // $form_state['storage'] has no specific drupal meaning, but it is
+  // traditional to keep variables for multistep forms there.
+  $step  = empty($form_state['storage']['step']) ? 1 : $form_state['storage']['step'];
+  $step  = (isset($_SESSION['age_tout_new']) && empty($form_state['storage']['step'])) ? 2 : $step;
+  $form_state['storage']['step'] = $step;
+  
+  switch ($step) {
+    case 1:
+
+      $form['step1']['age'] = array(
+        '#type' => 'radios',
+        '#title' => t('How old are you or your family member?'),
+        '#options' => $age_terms,
+        '#prefix' => '<div id = "age" class = "' . $age_class . '">',
+        '#suffix' => "</div>"
+      );
+      
+      break;
+    
+    case 2:
+
+      $form['step2']['gender'] = array(
+        '#type' => 'radios',
+        '#title' => t('Who is this product for?'),
+        '#options' => $gender_terms,
+        '#prefix' => '<div id = "gender" class = "' . $gender_class . '">',
+        '#suffix' => "</div>"
+      );
+      break;
+    
+    case 3:
+      
+	$form["considerations_wrapper"] = array(
+      "#markup" => "<div id='other-considerations-messages' style='display:none'></div>"
+    );
+	  
+      $form['step3']['other_considerations_new'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Do you have any other considerations?').'<p><strong>'.t('Select all that apply ').'</strong></p>',
+        '#options' => $other_considerations_terms,
+        '#prefix' => '<div id = "other_considerations_new" class = "' . $gender_class . '">',
+        '#suffix' => "</div>",
+		'#ajax' => array(
+        'callback' => 'other_considerations_toggle',
+        'wrapper' => 'other-considerations-messages',
+        'effect' => 'fade',
+      ),
+	  '#attributes' =>  array('class' => array('edit-step3-other-considerations-new'))
+      );
+      
+      $other_considerations_inactive  = other_considerations_inactive($form_state);
+      $form['step3']['other_considerations_inactive'] = array(
+        '#type' => 'checkboxes',
+        //'#title' => t('Do you have any other considerations?'),
+        '#options' => $other_considerations_inactive,
+        '#prefix' => '<div id = "other_considerations_inactive" class = "' . $gender_class . '">',
+        '#suffix' => "</div>"
+      );
+      
+      break;
+    
+    case 4:
+  
+      $form['step4']['health_interest_new'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Do you have any specific health interests?').'<p><strong>'.t('Select all that apply ').'</strong></p>',
+        '#options' => $health_interest_terms,
+        '#prefix' => '<div id = "health_interest_new" class = "' . $gender_class . '">',
+        '#suffix' => "</div>",
+		'#ajax' => array(
+        'callback' => 'health_interest_toggle',
+        'wrapper' => 'health-interest-messages',
+        'effect' => 'fade',
+		// 'method' => 'replace'
+      ),
+	  '#attributes' =>  array('class' => array('edit-step4-health-interest-new'))
+      );
+	  $health_interest_inactive = health_interest_inactive($form_state);
+	   $form['step4']['health_interest_inactive'] = array(
+        '#type' => 'checkboxes',
+        //'#title' => t('Do you have any specific health interests?').'<p><strong>'.t('Select all that apply ').'</strong></p>',
+        '#options' => $health_interest_inactive,
+        '#prefix' => '<div id = "health_interest_inactive" class = "health_interest_inactive">',
+        '#suffix' => "</div>",
+
+      );
+	  
+	   $form['step4']['health_interest_legal'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('To be sure this product is right for you, always read and follow the label.'),
+        '#options' => $health_interest_legal,
+        '#prefix' => '<div id = "health_interest_legal" class = "' . $gender_class . '">',
+        '#suffix' => "</div>"
+      );
+      break;
+      
+  }
+  
+  if ($step == 4) {
+    $form["wrapper"] = array(
+      "#markup" => "<div id='inline-messages' style='display:none'></div>"
+    );
+    
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t("Submit"),
+      '#ajax' => array(
+        'callback' => 'success',
+        'wrapper' => 'inline-messages',
+        'effect' => 'fade'
+      ),
+      '#prefix' => "<div id = 'product_result'>",
+      '#suffix' => "</div>",
+	  '#attributes' =>  array('class' => array('product-result'))
+    );
+    $form['start_over'] = array(
+      '#type' => 'submit',
+      '#value' => t('Start over'),
+      '#limit_validation_errors' => array(),
+      '#submit' => array(
+        'start_over'
+      ),
+      '#prefix' => "<div id = 'start_over' style = 'display:none'>",
+      '#suffix' => '<p class="small">'.t('To be sure this product is right for you, always read and follow the label.').'</p></div>' 
+    );
+  }
+  if ($form_state['storage']['step'] == 1) {
+    $continue_class = 'continue_1';
+  }
+  if ($form_state['storage']['step'] == 2) {
+    $continue_class = 'continue_2';
+  }
+  if ($form_state['storage']['step'] == 3) {
+    $continue_class = 'continue_3';
+  }
+  if ($form_state['storage']['step'] == 4) {
+    $continue_class = 'continue_4';
+  }
+  
+  if ($step < 4) {
+    $form['next'] = array(
+      '#type' => 'submit',
+      '#value' => t('Continue'),
+      '#prefix' => '<div id = "continue" class = "' . $continue_class . '">',
+      '#suffix' => '</div>',
+      '#ajax' => array(
+        'wrapper' => 'wizard-form-wrapper',
+        'callback' => 'find_your_centrum_wizard_callback'
+      )
+    );
+  }
+  
+  if (($step == 2 && isset($_SESSION['age_tout_new'])) || $step == 1) {
+    $form['prev'] = array();
+  }
+  
+  else {
+    $form['prev'] = array(
+      '#type' => 'submit',
+      '#value' => t("Back"),
+      '#prefix' => '<div id = "prev">',
+      '#suffix' => '</div>',
+      // Since all info will be discarded, don't validate on 'prev'.
+      '#limit_validation_errors' => array(),
+      // #submit is required to use #limit_validation_errors
+      '#submit' => array(
+        'find_your_centrum_wizard_submit'
+      ),
+      '#ajax' => array(
+        'wrapper' => 'wizard-form-wrapper',
+        'callback' => 'find_your_centrum_wizard_callback'
+      )
+    );
+  }
+  
+  // This simply allows us to demonstrate no-javascript use without
+  // actually turning off javascript in the browser. Removing the #ajax
+  // element turns off AJAX behaviors on that element and as a result
+  // ajax.js doesn't get loaded.
+  // For demonstration only! You don't need this.
+  if ($no_js_use) {
+    // Remove the #ajax from the above, so ajax.js won't be loaded.
+    // For demonstration only.
+    unset($form['next']['#ajax']);
+    unset($form['prev']['#ajax']);
+  }
+  $_SESSION['expire'] = $_SESSION['start'] + (2 * 40);
+  $now  = time();
+  if ($now > $_SESSION['expire']) {
+    //session_destroy();
+    unset($_SESSION['age_tout_new']);
+  }
+  return $form;
+}
+
+/**
+ * Wizard callback function.
+ *
+ * @param array $form
+ *   Form API form.
+ * @param array $form_state
+ *   Form API form.
+ *
+ * @return array
+ *   Form array.
+ */
+
+function find_your_centrum_wizard_callback($form, $form_state) {
+  return $form;
+}
+
+
+function start_over() { 
+  unset($_SESSION['age_tout_new']);
+  drupal_goto('find_your_centrum');
+}
+/**
+ * Submit function for form_example_wizard.
+ *
+ * In AJAX this is only submitted when the final submit button is clicked,
+ * but in the non-javascript situation, it is submitted with every
+ * button click.
+ */
+function find_your_centrum_wizard_submit($form, &$form_state) {
+  
+  // Save away the current information.
+  $current_step = 'step' . $form_state['storage']['step'];
+  if (!empty($form_state['values'][$current_step])) {
+    $form_state['storage']['values'][$current_step] = $form_state['values'][$current_step];
+  }
+  
+  // Increment or decrement the step as needed. Recover values if they exist.
+  if ($form_state['triggering_element']['#value'] == t('Continue')) {
+    $form_state['storage']['step']++;
+    // If values have already been entered for this step, recover them from
+    // $form_state['storage'] to pre-populate them.
+    $step_name = 'step' . $form_state['storage']['step'];
+    if (!empty($form_state['storage']['values'][$step_name])) {
+      $form_state['values'][$step_name] = $form_state['storage']['values'][$step_name];
+    }
+  }
+  
+  if ($form_state['triggering_element']['#value'] == t('Back')) {
+    $form_state['storage']['step']--;
+    // Recover our values from $form_state['storage'] to pre-populate them.
+    $step_name                        = 'step' . $form_state['storage']['step'];
+    $form_state['values'][$step_name] = $form_state['storage']['values'][$step_name];
+  }
+  
+  // If they're done, submit.
+  
+  if ($form_state['triggering_element']['#value'] == t('Submit')) {
+    
+    $age  = isset($_SESSION['age_tout_new']) ? $_SESSION['age_tout_new'] : $form_state['storage']['values']['step1']['age'];
+    $gender  = $form_state['storage']['values']['step2']['gender'];
+    $other_considerations  = array_filter($form_state['storage']['values']['step3']['other_considerations_new']);
+	watchdog('other_considerations' , '<pre>' . print_r($other_considerations , true) . '</pre>' );
+    $health_interest  = array_filter($form_state['storage']['values']['step4']['health_interest_new']);
+    // $other_considerations_list = "'" . implode("', '", $other_considerations) . "'";
+    $other_considerations_list = "'" . implode("' field_data_field_other_considerations.field_other_considerations_target_id = '", $other_considerations) . "' AND ";
+    $health_interest_list  = "'" . implode("', '", $health_interest) . "'";
+	$other_consideration_checked_count;
+	$total_consideration_keys;
+	$health_checked_count;
+	$total_health_keys;
+  foreach ($other_considerations as $key => $val) {
+    if ($val == 0) {
+      $other_consideration_checked_count++;
+    }
+    $total_consideration_keys++;
+  }
+  
+    foreach ($health_interest as $key => $val) {
+    if ($val == 0) {
+      $health_checked_count++;
+    }
+    $total_health_keys++;
+  }
+    
+    if ($other_consideration_checked_count == $total_consideration_keys && $health_checked_count == $total_health_keys){
+		
+	$query =  db_query("
+		     SELECT DISTINCT node.title AS node_title, node.nid AS nid, node.language AS node_language, node.created AS node_created
+		     FROM 
+		     {node} node
+		     LEFT JOIN {field_data_field_gender} field_data_field_gender ON node.nid = field_data_field_gender.entity_id AND field_data_field_gender.entity_type = 'node'
+		     WHERE 
+		     field_data_field_gender.field_gender_target_id = '$gender'
+             AND node.nid IN        
+			 (
+		      SELECT DISTINCT node.nid
+		      FROM 
+		      {node} node
+		      LEFT JOIN {field_data_field_age} field_data_field_age ON node.nid = field_data_field_age.entity_id AND field_data_field_age.entity_type = 'node'
+		      WHERE 
+		      field_data_field_age.field_age_target_id = '$age'    
+		    ) 		
+		");	
+	}
+	 else if($health_checked_count == $total_health_keys) {
+	 $in_values;
+	 $array_size;
+     foreach($other_considerations as $key => $value){	
+     
+	 $in_values .= "(" . "SELECT DISTINCT node.nid FROM {node} node LEFT JOIN {field_data_field_other_considerations} field_data_field_other_considerations ON node.nid = field_data_field_other_considerations.entity_id AND field_data_field_other_considerations.entity_type = 'node' WHERE field_data_field_other_considerations.field_other_considerations_target_id =  '" . $value . "') AND node.nid IN " ;
+	 
+	 }
+	 $array_size++;
+	 $query  =  db_query("
+		  SELECT DISTINCT node.title AS node_title, node.nid AS nid, node.language AS node_language, node.created AS node_created
+		  FROM 
+		  {node} node
+		  LEFT JOIN {field_data_field_other_considerations} field_data_field_other_considerations ON node.nid = field_data_field_other_considerations.entity_id AND field_data_field_other_considerations.entity_type = 'node'
+		  WHERE node.nid IN
+		  $in_values
+		   (
+		    SELECT DISTINCT node.nid
+		    FROM 
+		    {node} node
+		    LEFT JOIN {field_data_field_gender} field_data_field_gender ON node.nid = field_data_field_gender.entity_id AND field_data_field_gender.entity_type = 'node'
+		    WHERE 
+		    field_data_field_gender.field_gender_target_id = '$gender'
+            AND node.nid IN        
+			 (
+		      SELECT DISTINCT node.nid
+		      FROM 
+		      {node} node
+		      LEFT JOIN {field_data_field_age} field_data_field_age ON node.nid = field_data_field_age.entity_id AND field_data_field_age.entity_type = 'node'
+		      WHERE 
+		      field_data_field_age.field_age_target_id = '$age'    
+		    )
+          )					
+		");
+	}
+	
+    else if($other_consideration_checked_count == $total_consideration_keys){
+	$in_values;
+	$array_size;	     
+	foreach($health_interest as $key => $value){	    
+	 $in_values .= "(" . "SELECT DISTINCT node.nid FROM {node} node LEFT JOIN {field_data_field_health_interest} field_data_field_health_interest ON node.nid = field_data_field_health_interest.entity_id AND field_data_field_health_interest.entity_type = 'node' WHERE field_data_field_health_interest.field_health_interest_target_id =  '" . $value . "') AND node.nid IN " ;
+	 
+	 }
+	 $array_size++;
+		  $query  =  db_query("
+		SELECT DISTINCT node.title AS node_title, node.nid AS nid, node.language AS node_language, node.created AS node_created
+		FROM 
+		{node} node
+		LEFT JOIN {field_data_field_health_interest} field_data_field_health_interest ON node.nid = field_data_field_health_interest.entity_id AND field_data_field_health_interest.entity_type = 'node'
+		WHERE 
+		node.nid IN
+		$in_values
+         (
+		    SELECT DISTINCT node.nid
+		    FROM 
+		    {node} node
+		    LEFT JOIN {field_data_field_gender} field_data_field_gender ON node.nid = field_data_field_gender.entity_id AND field_data_field_gender.entity_type = 'node'
+		    WHERE 
+		    field_data_field_gender.field_gender_target_id = '$gender'
+            AND node.nid IN        
+			 (
+		      SELECT DISTINCT node.nid
+		      FROM 
+		      {node} node
+		      LEFT JOIN {field_data_field_age} field_data_field_age ON node.nid = field_data_field_age.entity_id AND field_data_field_age.entity_type = 'node'
+		      WHERE 
+		      field_data_field_age.field_age_target_id = '$age'    
+		    )
+          )			
+		 		
+		");
+
+		
+	} 
+		
+    else { 	
+	$health_interest_in_values;
+	$health_interest_array_size;	     
+	foreach($health_interest as $key => $value){	    
+	 $health_interest_in_values .= "(" . "SELECT DISTINCT node.nid FROM {node} node LEFT JOIN {field_data_field_health_interest} field_data_field_health_interest ON node.nid = field_data_field_health_interest.entity_id AND field_data_field_health_interest.entity_type = 'node' WHERE field_data_field_health_interest.field_health_interest_target_id =  '" . $value . "') AND node.nid IN " ;
+	 
+	 }
+	$health_interest_array_size++;	
+	
+	
+	$other_consideration_in_values;
+	$other_consideration_array_size;
+    foreach($other_considerations as $key => $value){	
+     $other_consideration_in_values .= "(" . "SELECT DISTINCT node.nid FROM {node} node LEFT JOIN {field_data_field_other_considerations} field_data_field_other_considerations ON node.nid = field_data_field_other_considerations.entity_id AND field_data_field_other_considerations.entity_type = 'node' WHERE field_data_field_other_considerations.field_other_considerations_target_id =  '" . $value . "') AND node.nid IN " ;
+	 }
+	 $other_consideration_array_size++;
+	 
+		$query  =  db_query("
+		SELECT DISTINCT node.title AS node_title, node.nid AS nid, node.language AS node_language, node.created AS node_created
+		FROM 
+		{node} node
+		LEFT JOIN {field_data_field_health_interest} field_data_field_health_interest ON node.nid = field_data_field_health_interest.entity_id AND field_data_field_health_interest.entity_type = 'node'
+		WHERE 
+		node.nid IN
+		$health_interest_in_values
+         (
+		  SELECT DISTINCT node.nid
+		  FROM 
+		  {node} node
+		  LEFT JOIN {field_data_field_other_considerations} field_data_field_other_considerations ON node.nid = field_data_field_other_considerations.entity_id AND field_data_field_other_considerations.entity_type = 'node'
+		  WHERE 
+		  node.nid IN
+		  $other_consideration_in_values
+		   (
+		    SELECT DISTINCT node.nid
+		    FROM 
+		    {node} node
+		    LEFT JOIN {field_data_field_gender} field_data_field_gender ON node.nid = field_data_field_gender.entity_id AND field_data_field_gender.entity_type = 'node'
+		    WHERE 
+		    field_data_field_gender.field_gender_target_id = '$gender'
+            AND node.nid IN        
+			 (
+		      SELECT DISTINCT node.nid
+		      FROM 
+		      {node} node
+		      LEFT JOIN {field_data_field_age} field_data_field_age ON node.nid = field_data_field_age.entity_id AND field_data_field_age.entity_type = 'node'
+		      WHERE 
+		      field_data_field_age.field_age_target_id = '$age'    
+		    )
+          )			
+		) 		
+		");
+
+	}
+	
+	/* $abc =  $query->__toString();
+	watchdog('query amol' , '<pre>' . print_r($abc , true) . '</pre>' ); */
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+    
+    foreach ($result as $key => $values) {
+      $node_values[$values['nid']] = node_load($values['nid']);
+    }
+    $form_state['rebuild'] = FALSE;
+    return $node_values;
+  }
+  // Otherwise, we still have work to do.
+  $form_state['rebuild'] = TRUE;
+}
+
+function other_considerations_inactive(&$form_state) {
+  $language  =  $GLOBALS['language']->language;
+  $other_considerations = $form_state['storage']['values']['step3']['other_considerations_new'];
+  $vocabulary_id  = taxonomy_vocabulary_machine_name_load('other_considerations')->vid;
+  $values  = taxonomy_get_tree($vocabulary_id);
+  $other_considerations_term_values;
+  foreach ($values as $key => $val) {
+	$other_considerations_term_values[$val->tid] = taxonomy_term_load($val->tid)->name_field[$language][0]['value'];
+    //$other_considerations_term_values[$val->tid] = $val->name;
+  }
+  $other_consideration_active_values = other_considerations_values_new($form_state);
+  $other_considerations_terms = array_diff($other_considerations_term_values, $other_consideration_active_values);
+ 
+  return $other_considerations_terms;
+}
+
+function term_values_age_new() {
+  global $base_url;
+  $language  =  $GLOBALS['language']->language;
+  $vocabulary_id  = taxonomy_vocabulary_machine_name_load('age')->vid;
+  //$cnd = 0;
+  //$class = 'age';
+  $values  = taxonomy_get_tree($vocabulary_id);
+  $age_term_values;
+  foreach ($values as $key => $val) {
+	$age_term_values[$val->tid] = taxonomy_term_load($val->tid)->name_field[$language][0]['value'];
+    // $cnd++;
+  }
+  return $age_term_values;
+}
+
+/** Fetching term values of gender **/
+
+function term_values_gender_new() {
+  $language  =  $GLOBALS['language']->language;
+  $vocabulary_id = taxonomy_vocabulary_machine_name_load('gender')->vid;
+  $values  = taxonomy_get_tree($vocabulary_id);
+  $gender_term_values;
+  foreach ($values as $key => $val) {
+    $gender_term_values[$val->tid]  =  taxonomy_term_load($val->tid)->name_field[$language][0]['value'];
+  }
+  return $gender_term_values;
+}
+
+function other_considerations_values_new(&$form_state) {
+  $age_target_id  =  isset($_SESSION['age_tout_new']) ? $_SESSION['age_tout_new'] : $form_state['storage']['values']['step1']['age'];
+  $gender_target_id  =  $form_state['storage']['values']['step2']['gender'];
+  $other_considerations = $form_state['input']['step3'] ['other_considerations_new'];
+  $other_considerations = array_filter($other_considerations);
+  $language  =  $GLOBALS['language']->language;
+  $query  =  new EntityFieldQuery();
+   $query->entityCondition('entity_type', 'node')->entityCondition('bundle', 'products')->propertyCondition('status', 1)->fieldCondition('field_age', 'target_id', $age_target_id, '=')->fieldCondition('field_gender', 'target_id', $gender_target_id, '='); 
+   foreach($other_considerations as $key=>$value) {
+	$query->fieldCondition('field_other_considerations', 'target_id', $value, '=');
+   }
+  $result = $query->execute();
+  $node_val = array();
+  foreach ($result as $key => $values) {
+    foreach ($values as $key1 => $values1) {
+      $node_val[] = node_load($key1);
+    }
+  }
+  
+  foreach ($node_val as $key => $value) {
+    foreach ($value->field_other_considerations['en'] as $key => $value) {
+      foreach ($value as $key1 => $values1) {
+        $term_id[$values1] = taxonomy_term_load($values1)->name_field[$language][0]['value'];
+      }
+    }
+  }
+  return $term_id;
+}
+
+function other_considerations_default_values() {
+  $vocabulary_id = taxonomy_vocabulary_machine_name_load('other_considerations')->vid;
+  
+  $values = taxonomy_get_tree($vocabulary_id);
+  $other_considerations_term_values;
+  foreach ($values as $key => $val) {
+    $other_considerations_term_values[$val->tid] = $val->tid;
+  }
+  return $other_considerations_term_values;
+}
+
+function health_interest_inactive(&$form_state) {
+
+$health_interest = array_filter($form_state['input']['step4'] ['health_interest_new']);
+$age_target_id  = isset($_SESSION['age_tout_new']) ? $_SESSION['age_tout_new'] : $form_state['storage']['values']['step1']['age'];
+$gender_target_id  = $form_state['storage']['values']['step2']['gender'];
+$other_considerations_target_id  = $form_state['storage']['values']['step3']['other_considerations_new'];
+$other_considerations_target_id  = array_filter($other_considerations_target_id);
+
+    $language = $GLOBALS['language']->language;
+    $query  = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+	      ->entityCondition('bundle', 'products')
+		  ->propertyCondition('status', 1)
+		  ->fieldCondition('field_age', 'target_id', $age_target_id, '=')
+		  ->fieldCondition('field_gender', 'target_id', $gender_target_id, '=');
+		  if(!empty($other_considerations_target_id)){
+		  foreach($other_considerations_target_id as $key=>$value) {
+		  $query->fieldCondition('field_other_considerations', 'target_id', $value, '=');
+		  }
+		  }
+		  foreach($health_interest as $key=>$value) {
+			$query->fieldCondition('field_health_interest', 'target_id', $value, '=');
+		  }
+	$result = $query->execute();
+	$node_val = array();
+	  foreach ($result as $key => $values) {
+        foreach ($values as $key1 => $values1) {
+          $node_val[] = node_load($key1);
+        }
+	  }
+    foreach ($node_val as $key => $value) {
+    foreach ($value->field_health_interest['en'] as $key => $value) {
+      foreach ($value as $key1 => $values1) {
+		$term  = taxonomy_term_load($values1);
+        $colordark  = $term->field_dark_color[LANGUAGE_NONE][0]['value'];
+        $colorlight  = $term->field_light_color[LANGUAGE_NONE][0]['value'];
+        $health_description[$key1]['description']  = $term->description;
+        $health_title[$key1]['name']  = $term->name;
+		$legal_numbers = $term->field_dynamic_legal_numbers[LANGUAGE_NONE][0]['value'];
+		$legal_docs = $term->field_dynamic_legal[$language][0]['value'];
+		$image_style  = file_create_url($term->field_health_benefits_image['en'][0]['uri']);
+		$result  = '<img src="' . $image_style . '"/>';
+        $active[$values1]    = '<div class = "health-wrap"><div class = "health-title">' . $health_title[$key1]['name'] . '</div>' . '<div class ="health-desc">' . $health_description[$key1]['description'] . '</div>' . '<div class ="health-dark">' . $colordark . '</div>' . '<div class ="health-light">' . $colorlight . '</div>' . '<div class ="health-tid">' . $values1->tid . '</div>' . 
+          '<div class ="health-result">' . $result . '</div><div class = "legal_numbers">' . $legal_numbers . '</div></div>';
+      }
+    }
+  }
+  
+    $query  = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+	      ->entityCondition('bundle', 'products')
+		  ->propertyCondition('status', 1)
+		  ->fieldCondition('field_age', 'target_id', $age_target_id, '=')
+		  ->fieldCondition('field_gender', 'target_id', $gender_target_id, '=');
+		  if(!empty($other_considerations_target_id)){
+	        foreach ($other_considerations_target_id as $key => $value) {
+			$query->fieldCondition('field_other_considerations', 'target_id', $value, '=');
+			}
+		  }
+	$result = $query->execute();
+    $node_val = array();
+  foreach ($result as $key => $values) {
+    foreach ($values as $key1 => $values1) {
+      $node_val[] = node_load($key1);
+    }
+  }
+    foreach ($node_val as $key => $value) {
+    foreach ($value->field_health_interest['en'] as $key => $value) {
+      foreach ($value as $key1 => $values1) {        
+        $term  = taxonomy_term_load($values1);
+        $colordark  = $term->field_dark_color[LANGUAGE_NONE][0]['value'];
+        $colorlight  = $term->field_light_color[LANGUAGE_NONE][0]['value'];
+        $health_description[$key1]['description']  = $term->description;
+        $health_title[$key1]['name']  = $term->name;
+		$legal_numbers = $term->field_dynamic_legal_numbers[LANGUAGE_NONE][0]['value'];
+		$legal_docs = $term->field_dynamic_legal[$language][0]['value'];
+		$image_style  = file_create_url($term->field_health_benefits_image['en'][0]['uri']);
+		$result  = '<img src="' . $image_style . '"/>';
+        $total[$values1]    = '<div class = "health-wrap"><div class = "health-title">' . $health_title[$key1]['name'] . '</div>' . '<div class ="health-desc">' . $health_description[$key1]['description'] . '</div>' . '<div class ="health-dark">' . $colordark . '</div>' . '<div class ="health-light">' . $colorlight . '</div>' . '<div class ="health-tid">' . $values1->tid . '</div>' . 
+          '<div class ="health-result">' . $result . '</div><div class = "legal_numbers">' . $legal_numbers . '</div></div>';
+      }
+    }
+  }
+  $inactive_values = array_diff($total,$active);
+
+  return $inactive_values;
+}
+
+function health_interest_values_new(&$form_state) {
+  $age_target_id  = isset($_SESSION['age_tout_new']) ? $_SESSION['age_tout_new'] : $form_state['storage']['values']['step1']['age'];
+  $gender_target_id  = $form_state['storage']['values']['step2']['gender'];
+  $other_considerations_target_id = array_filter($form_state['storage']['values']['step3']['other_considerations_new']);
+  $other_consideration_checked_count;
+  $total_keys;
+  foreach ($other_considerations_target_id as $key => $val) {
+    if ($val == 0) {
+      $other_consideration_checked_count++;
+    }
+    $total_keys++;
+  }
+  
+  if ($other_consideration_checked_count == $total_keys) {
+    $language = $GLOBALS['language']->language;
+    $query  = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+		  ->entityCondition('bundle', 'products')->propertyCondition('status', 1)
+		  ->fieldCondition('field_age', 'target_id', $age_target_id, '=')
+		  ->fieldCondition('field_gender', 'target_id', $gender_target_id, '=');
+  } 
+  else {
+    $language = $GLOBALS['language']->language;
+    $query  = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+	      ->entityCondition('bundle', 'products')
+		  ->propertyCondition('status', 1)
+		  ->fieldCondition('field_age', 'target_id', $age_target_id, '=')
+		  ->fieldCondition('field_gender', 'target_id', $gender_target_id, '=');
+		  foreach ($other_considerations_target_id as $key => $value) {
+		  $query->fieldCondition('field_other_considerations', 'target_id', $value, '=');
+		  }
+  }
+  
+  $result = $query->execute();
+  
+  $node_val = array();
+  foreach ($result as $key => $values) {
+    foreach ($values as $key1 => $values1) {
+      $node_val[] = node_load($key1);
+    }
+  }
+  
+  foreach ($node_val as $key => $value) {
+    foreach ($value->field_health_interest['en'] as $key => $value) {
+      foreach ($value as $key1 => $values1) {
+        $term  = taxonomy_term_load($values1);
+        $colordark  = $term->field_dark_color[LANGUAGE_NONE][0]['value'];
+        $colorlight  = $term->field_light_color[LANGUAGE_NONE][0]['value'];
+        $health_description[$key1]['description']  = $term->description;
+        $health_title[$key1]['name']  = $term->name;
+		$legal_numbers = $term->field_dynamic_legal_numbers[LANGUAGE_NONE][0]['value'];
+		$legal_docs = $term->field_dynamic_legal[$language][0]['value'];
+		$image_style  = file_create_url($term->field_health_benefits_image['en'][0]['uri']);
+		$result  = '<img src="' . $image_style . '"/>';
+
+        $health_benefits_term_values[$values1]    = '<div class = "health-wrap"><div class = "health-title">' . $health_title[$key1]['name'] . '</div>' . '<div class ="health-desc">' . $health_description[$key1]['description'] . '</div>' . '<div class ="health-dark">' . $colordark . '</div>' . '<div class ="health-light">' . $colorlight . '</div>' . '<div class ="health-tid">' . $values1->tid . '</div>' . 
+          '<div class ="health-result">' . $result . '</div><div class = "legal_numbers">' . $legal_numbers . '</div></div>';
+      }
+    }
+  }
+  return $health_benefits_term_values;
+}
+
+
+ function health_interest_legal(&$form_state) {
+  $language = $GLOBALS['language']->language;	 
+  $age_target_id  = isset($_SESSION['age_tout_new']) ? $_SESSION['age_tout_new'] : $form_state['storage']['values']['step1']['age'];
+  $gender_target_id  = $form_state['storage']['values']['step2']['gender'];
+  $other_considerations_target_id = array_filter($form_state['storage']['values']['step3']['other_considerations_new']);
+  $other_consideration_checked_count;
+  $total_keys;
+  foreach ($other_considerations_target_id as $key => $val) {
+    if ($val == 0) {
+      $other_consideration_checked_count++;
+    }
+    $total_keys++;
+  }
+  
+  if ($other_consideration_checked_count == $total_keys) {
+    $language = $GLOBALS['language']->language;
+    $query  = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+	      ->entityCondition('bundle', 'products')
+		  ->propertyCondition('status', 1)
+		  ->fieldCondition('field_age', 'target_id', $age_target_id, '=')
+		  ->fieldCondition('field_gender', 'target_id', $gender_target_id, '=');
+  } 
+  else {
+    $language = $GLOBALS['language']->language;
+    $query  = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+	      ->entityCondition('bundle', 'products')
+		  ->propertyCondition('status', 1)
+		  ->fieldCondition('field_age', 'target_id', $age_target_id, '=')
+		  ->fieldCondition('field_gender', 'target_id', $gender_target_id, '=');
+		  foreach ($other_considerations_target_id as $key => $value) {
+		  $query->fieldCondition('field_other_considerations', 'target_id', $value, '=');
+		  }
+  }
+  
+  $result = $query->execute();
+  
+  $node_val = array();
+  foreach ($result as $key => $values) {
+    foreach ($values as $key1 => $values1) {
+      $node_val[] = node_load($key1);
+    }
+  }
+  
+  foreach ($node_val as $key => $value) {
+    foreach ($value->field_health_interest['en'] as $key => $value) {
+      foreach ($value as $key1 => $values1) {
+        $term  = taxonomy_term_load($values1);
+		$dynamic_legal_terms[$term->tid]  = '<div class = "legal_numbers">'
+											. $term->field_dynamic_legal_numbers[LANGUAGE_NONE][0]['value']
+											. '</div><div class = "legal_docs">'
+											. $term->field_dynamic_legal[$language][0]['value']
+											. '</div>';
+      }
+    }
+  }
+  return $dynamic_legal_terms;
+}
+ 
+function term_values_age_tout_new() {
+  global $base_url;
+  $vocabulary_id = taxonomy_vocabulary_machine_name_load('age')->vid;
+  $cnd  = 0;
+  $class  = 'age';
+  
+  $values = taxonomy_get_tree($vocabulary_id);
+  $age_term_values;
+  $age_term_values['selected'] = t('Select age range');
+  foreach ($values as $key => $val) {
+    $age_term_values[$val->tid] = $val->name;
+  }
+  return $age_term_values;
+}
+
+function home_page_age_tout_new($form, &$form_state) {
+  $age_terms  = term_values_age_tout_new();
+  $form['age_tout_new']  = array(
+    '#type' => 'select',
+    '#title' => t('Find the Right Centrum for You'),
+    '#options' => $age_terms,
+    '#prefix' => "<div id = 'age_tout'>",
+    '#suffix' => "</div>",
+	//'#required' => TRUE
+  );
+  
+  $form['submit_value_age_tout_new'] = array(
+    '#type' => 'submit',
+    '#value' => t('START'),
+    '#attributes' => array(
+      'class' => array(
+        'big',
+        'blue',
+        'box-shadow'
+      )
+    ),
+    '#prefix' => "<div id = 'submit_value_age_tout'>",
+    '#suffix' => "</div>",
+    '#submit' => array(
+      'find_your_centrum_tout_submit_new'
+    )
+  );
+  
+  return $form;
+}
+
+function find_your_centrum_tout_submit_new($form, &$form_state) {
+  $_SESSION['age_tout_new'] = $form_state['values']['age_tout_new'];
+  if($_SESSION['age_tout_new'] == "selected"){
+    form_set_error('age_tout_new' , 'Please enter age'); 
+  }	
+  else{
+  $_SESSION['start']  = time();
+  $form_state['redirect']   = 'find_your_centrum';
+  }
+}
+
+function other_considerations_toggle($form, $form_state){
+   $active_consideration_values = array();
+   $inactive_consideration_values = other_considerations_inactive($form_state);
+   
+	$active = '<div class = "active">';
+	foreach($active_consideration_values as $key => $value){
+	 $active .= $value;	
+	}
+	$active .= "</div>"; 
+	
+    $inactive = '<div class = "inactive">';
+	foreach($inactive_consideration_values as $key => $value){
+	 $inactive .= $value;	
+	}
+	$inactive .= "</div>"; 
+  //print_r($form_state['values']['step3']['other_considerations_new']);exit;
+  $active_arr = array();
+  
+  
+  $commands[] = ajax_command_invoke('#other_considerations_new', 'show');
+	$commands[] = ajax_command_replace("#other_considerations_new", "<div>" . render($form['step3']['other_considerations_new']) . "</div>");
+  $commands[] = ajax_command_replace("#other_considerations_inactive", "<div>" . render($form['step3']['other_considerations_inactive']) . "</div>");
+  $commands[] = ajax_command_invoke('#health_interest_new', 'hide');
+  foreach($form_state['values']['step3']['other_considerations_new'] as $key => $value){  
+    if($value !== 0) {
+      $commands[] = ajax_command_invoke('.form-item-step3-other-considerations-new-' . $value, 'addClass', array('active'));
+    }
+  }
+  $commands[] = ajax_command_invoke('#prev', 'show');
+  $commands[] = ajax_command_invoke('#start_over', 'hide');
+  $commands[] = ajax_command_invoke('#product_result', 'hide');
+	$commands[] = ajax_command_invoke('#health_interest_legal' , 'hide');
+  return array(
+    '#type' => 'ajax',
+    '#commands' => $commands,
+  );
+ 	/*return array(
+    '#type' => 'ajax',
+    '#commands' => array(
+      ajax_command_invoke('#other_considerations_new', 'show'),
+      ajax_command_replace("#other_considerations_new", "<div>" . render($form['step3']['other_considerations_new']) . "</div>"),
+      ajax_command_replace("#other_considerations_inactive", "<div>" . render($form['step3']['other_considerations_inactive']) . "</div>"),
+      ajax_command_invoke('#health_interest_new', 'hide'),
+      ajax_command_invoke('.form-item-step3-other-considerations-new-160', 'addClass', array('active')),
+      ajax_command_invoke('#prev', 'show'),
+      ajax_command_invoke('#start_over', 'hide'),
+      ajax_command_invoke('#product_result', 'hide'),
+	  ajax_command_invoke('#health_interest_legal' , 'hide') 
+    )
+  );  */
+   
+}
+
+function health_interest_toggle($form, $form_state){
+   $inactive_values =  health_interest_inactive($form_state);
+   $inactive_values_id;
+   foreach($inactive_values as $key => $value){
+    $inactive_values_id[$key] = $key;
+   }   
+  $inactive_values_id = implode(",", $inactive_values_id);
+ 	return array(
+    '#type' => 'ajax',
+    '#commands' => array(
+      ajax_command_invoke('#other_considerations_new', 'hide'),
+      ajax_command_replace("#health_interest_new", "<div>" . render($form['step4']['health_interest_new']) . "</div>"),
+      ajax_command_replace("#health_interest_inactive", "<div>" . render($form['step4']['health_interest_inactive']) . "</div>"),
+      ajax_command_invoke('#health_interest_new', 'show'),
+      ajax_command_invoke('#prev', 'show'),
+      ajax_command_invoke('#start_over', 'hide'),
+      ajax_command_invoke('#product_result', 'show'),
+	  //ajax_command_invoke('#health_interest_legal' , 'hide'),
+	  ajax_command_invoke(NULL, 'grid_content_loaded', array($inactive_values_id)),
+    )
+  );  
+   
+}
+
+function success($form, $form_state) {
+
+  $product_results = find_your_centrum_wizard_submit($form, $form_state);
+  $results  = '<div class="result"> <h2>'.t('Recommended For You'). '</h2><p><strong>'.t('Click on a product to learn more').'</strong></p>';
+  foreach ($product_results as $k => $v) {
+    $node_url = drupal_get_path_alias('node/' . $v->nid);
+    $results .= '<div class = "recommended_results"><a href = "' . $node_url . '"><div class = "recommended_results_img"><img src="' . image_style_url('medium', $v->field_product_image['en'][0]['uri']) . '" alt="img not found."/></div><span class = "node-title">' . $v->title . '</span></a></div>';
+  }
+  $results .= '</div>';
+  unset($_SESSION['age_tout_new']);
+  return array(
+    '#type' => 'ajax',
+    '#commands' => array(
+      ajax_command_invoke('#inline-messages', 'show'),
+      ajax_command_replace("#inline-messages", "<div id='inline-messages'>" . $results . '</div>'),
+      ajax_command_invoke('#health_interest_new', 'hide'),
+      ajax_command_invoke('#prev', 'hide'),
+      ajax_command_invoke('#start_over', 'show'),
+      ajax_command_invoke('#product_result', 'hide'),
+	  ajax_command_invoke('#health_interest_legal' , 'hide'),
+	  ajax_command_invoke('.product-result' , 'finalsubmit')
+    )
+  );
+}
